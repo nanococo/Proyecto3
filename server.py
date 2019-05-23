@@ -4,7 +4,7 @@ import socket
 import copy
 import itertools
 
-import loadData as data
+import Proyecto3.loadData as data
 
 
 class SocketServer(socket.socket):
