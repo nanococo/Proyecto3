@@ -162,7 +162,7 @@ class logIn(ttk.Frame):
 #TODO Separar las listas de busqueda para las rutas predefinidas y las rutas personalizadas
 
 #TODO Hacer las listas de la seleccion de paises y ciudades de las rutas personalizadas dependientes entre si
-
+print("holis")
     def updateCitiesOnSelection(self, event):
 
         """:param self.searchKey sirve para buscar
