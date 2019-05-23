@@ -63,7 +63,7 @@ class logIn(ttk.Frame):
                 userName = pickle.loads(s.recv(8192))
                 for child in self.winfo_children():
                     child.place_forget()
-                self.draw_recervation()
+                self.chooseRecervation()
                 print("Success")
 
                 # Set logged flag (ESTO DEBE SER UNA VARIABLE GLOBAL)
@@ -83,36 +83,85 @@ class logIn(ttk.Frame):
 
 
         self.userID.delete(0, tk.END)
+    def chooseRecervation(self):
 
-    def draw_recervation(self):
+        self.fixedRouteRecervation=ttk.Button(self, text="Fixed route recervation", command=self.drawFixedRecervation)
+        self.fixedRouteRecervation.place(x=170,y=100)
+
+        self.customRecervation = ttk.Button(self, text="Custom route recervation", command=self.drawCustomRecervation)
+        self.customRecervation.place(x=161,y=250)
+    def drawFixedRecervation(self):
+        for child in self.winfo_children():
+            child.place_forget()
 
         self.searchKey=[]
 
-        self.countryList = ttk.Combobox(self, state="readonly",  width= 40)
+        self.departureCountryList = ttk.Combobox(self, state="readonly", width= 40)
         codeList = ["03"]
         s.send(pickle.dumps(codeList))
-        self.countryList["values"] = pickle.loads(s.recv(8192))
+        self.departureCountryList["values"] = pickle.loads(s.recv(8192))
 
-        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
-        self.countryList.place(x=180, y=50)
-        self.countryListLabel=ttk.Label(self,text="Countries")
-        self.countryListLabel.place(x=100,y=50)
+        self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.departureCountryList.place(x=180, y=50)
+        self.departureCountryListLabel=ttk.Label(self, text="Countries")
+        self.departureCountryListLabel.place(x=100, y=50)
 
-        self.cityList = ttk.Combobox(self, state="readonly")
-        self.cityList.bind("<<ComboboxSelected>>", self.selectCity)
-        self.cityList.place(x=250, y=100)
-        self.cityListLabel=ttk.Label(self,text="Cities")
-        self.cityListLabel.place(x=100, y = 100)
+        self.departureCityList = ttk.Combobox(self, state="readonly")
+        self.departureCityList.bind("<<ComboboxSelected>>", self.selectCity)
+        self.departureCityList.place(x=250, y=100)
+        self.departureCityListLabel=ttk.Label(self, text="Cities")
+        self.departureCityListLabel.place(x=100, y = 100)
 
 
-        self.customRoutes=ttk.Button(self,text="Custom Routes", command= self.customRoute)
-        self.customRoutes.place(x=350,y=200)
-
-        self.predifinedRoutes=ttk.Button(self, text="Predefined Routes", command=self.predefinedRoute)
-        self.predifinedRoutes.place(x=180,y=200)
+        """
+                ADD BILLING BUTTON
+        """
 
         self.backButton=ttk.Button(self, text="Back", command= self.backToLogIn)
         self.backButton.place(x=40,y=200)
+
+    def drawCustomRecervation(self):
+        for child in self.winfo_children():
+            child.place_forget()
+
+        self.searchKey=[]
+
+        self.departureCountryList = ttk.Combobox(self, state="readonly", width= 40)
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        self.departureCountryList["values"] = pickle.loads(s.recv(8192))
+
+        self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.departureCountryList.place(x=180, y=50)
+        self.departureCountryListLabel=ttk.Label(self, text="Departure Country")
+        self.departureCountryListLabel.place(x=100, y=50)
+
+        self.departureCityList = ttk.Combobox(self, state="readonly")
+        self.departureCityList.bind("<<ComboboxSelected>>", self.selectCity)
+        self.departureCityList.place(x=250, y=100)
+        self.departureCityListLabel=ttk.Label(self, text="Departure City")
+        self.departureCityListLabel.place(x=100, y = 100)
+
+        self.ArrivalCountryList = ttk.Combobox(self, state="readonly", width=40)
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        self.ArrivalCountryList["values"] = pickle.loads(s.recv(8192))
+
+        self.ArrivalCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.ArrivalCountryList.place(x=180, y=200)
+        self.ArrivalCountryListLabel = ttk.Label(self, text="Arrival Country")
+        self.ArrivalCountryListLabel.place(x=100, y=200)
+
+        self.ArrivalCityList = ttk.Combobox(self, state="readonly")
+        self.ArrivalCityList.bind("<<ComboboxSelected>>", self.selectCity)
+        self.ArrivalCityList.place(x=250, y=250)
+        self.ArrivalCityListLabel = ttk.Label(self, text="Arrival City")
+        self.ArrivalCityListLabel.place(x=100, y=250)
+
+
+#TODO Separar las listas de busqueda para las rutas predefinidas y las rutas personalizadas
+
+#TODO Hacer las listas de la seleccion de paises y ciudades de las rutas personalizadas dependientes entre si
 
     def updateCitiesOnSelection(self, event):
 
@@ -120,35 +169,29 @@ class logIn(ttk.Frame):
          en la base de datos las rutas relacionadas
           con los lugares que ingreso el usuario"""
 
-        self.searchKey=[self.countryList.get().split(" ")[0]]
+        self.searchKey=[self.departureCountryList.get().split(" ")[0]]
 
         # agregar las ciudades segun el pais escogido (si se puede hacer mas eficiente mejor xd)
         print(self.searchKey[0])
         codeList = ["04", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
-        self.cityList["values"] = pickle.loads(s.recv(8192))
+        self.departureCityList["values"] = pickle.loads(s.recv(8192))
         print(self.searchKey)
 
     def selectCity(self, event):
 
         if len(self.searchKey)==1:
-             self.searchKey+=[self.cityList.get().split(" ")[0]]
+             self.searchKey+=[self.departureCityList.get().split(" ")[0]]
         else:
-            self.searchKey[1]=self.cityList.get().split(" ")[0]
+            self.searchKey[1]=self.departureCityList.get().split(" ")[0]
         print(self.searchKey)
 
     def backToLogIn(self):
         for child in self.winfo_children():
             child.place_forget()
-        self.userID = ttk.Entry(self, show="*")
-        self.userID.place(x=230, y=80)
-        self.userIDLabel = ttk.Label(self, text="User ID")
-        self.userIDLabel.place(x=120, y=80)
+        self.chooseRecervation()
 
-        self.logIn = ttk.Button(self, text="Log In", command=self.getLoginInfo)
-        self.logIn.place(x=200, y=200)
-
-    def predefinedRoute(self):
+    def predefinedRouteList(self):
         if self.searchKey==[]:
             messagebox.showinfo("","Please select a contry and a city")
         elif len(self.searchKey)==2:
@@ -177,7 +220,7 @@ class logIn(ttk.Frame):
             self.amountOfSeats = ttk.Entry (self, validate = 'key',validatecommand=self.vcmd)
             self.amountOfSeats.place(x=165, y=350)
 
-    def customRoute(self):
+    def customRouteList(self):
         if self.searchKey == []:
             messagebox.showinfo("", "Please select a contry and a city")
         elif len(self.searchKey) == 2:
