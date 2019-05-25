@@ -41,7 +41,6 @@ class logIn(ttk.Frame):
 
         self.logIn=ttk.Button(self,text="Log In",command=self.getLoginInfo)
         self.logIn.place(x=200,y=200)
-
     def getLoginInfo(self):
         userId=self.userID.get()
 
@@ -83,6 +82,7 @@ class logIn(ttk.Frame):
 
 
         self.userID.delete(0, tk.END)
+
     def chooseRecervation(self):
 
         self.fixedRouteRecervation=ttk.Button(self, text="Fixed route recervation", command=self.drawFixedRecervation)
@@ -90,6 +90,7 @@ class logIn(ttk.Frame):
 
         self.customRecervation = ttk.Button(self, text="Custom route recervation", command=self.drawCustomRecervation)
         self.customRecervation.place(x=161,y=250)
+
     def drawFixedRecervation(self):
         for child in self.winfo_children():
             child.place_forget()
@@ -100,14 +101,13 @@ class logIn(ttk.Frame):
         codeList = ["03"]
         s.send(pickle.dumps(codeList))
         self.departureCountryList["values"] = pickle.loads(s.recv(8192))
-
-        self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionFixed)
         self.departureCountryList.place(x=180, y=50)
         self.departureCountryListLabel=ttk.Label(self, text="Countries")
         self.departureCountryListLabel.place(x=100, y=50)
 
         self.departureCityList = ttk.Combobox(self, state="readonly")
-        self.departureCityList.bind("<<ComboboxSelected>>", self.selectCity)
+        self.departureCityList.bind("<<ComboboxSelected>>", self.selectCityFixed)
         self.departureCityList.place(x=250, y=100)
         self.departureCityListLabel=ttk.Label(self, text="Cities")
         self.departureCityListLabel.place(x=100, y = 100)
@@ -130,14 +130,13 @@ class logIn(ttk.Frame):
         codeList = ["03"]
         s.send(pickle.dumps(codeList))
         self.departureCountryList["values"] = pickle.loads(s.recv(8192))
-
-        self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionCustom1)
         self.departureCountryList.place(x=180, y=50)
         self.departureCountryListLabel=ttk.Label(self, text="Departure Country")
         self.departureCountryListLabel.place(x=100, y=50)
 
         self.departureCityList = ttk.Combobox(self, state="readonly")
-        self.departureCityList.bind("<<ComboboxSelected>>", self.selectCity)
+        self.departureCityList.bind("<<ComboboxSelected>>", self.selectCityCustom1)
         self.departureCityList.place(x=250, y=100)
         self.departureCityListLabel=ttk.Label(self, text="Departure City")
         self.departureCityListLabel.place(x=100, y = 100)
@@ -147,44 +146,77 @@ class logIn(ttk.Frame):
         s.send(pickle.dumps(codeList))
         self.ArrivalCountryList["values"] = pickle.loads(s.recv(8192))
 
-        self.ArrivalCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.ArrivalCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionCustom2)
         self.ArrivalCountryList.place(x=180, y=200)
         self.ArrivalCountryListLabel = ttk.Label(self, text="Arrival Country")
         self.ArrivalCountryListLabel.place(x=100, y=200)
 
         self.ArrivalCityList = ttk.Combobox(self, state="readonly")
-        self.ArrivalCityList.bind("<<ComboboxSelected>>", self.selectCity)
+        self.ArrivalCityList.bind("<<ComboboxSelected>>", self.selectCityCustom2)
         self.ArrivalCityList.place(x=250, y=250)
         self.ArrivalCityListLabel = ttk.Label(self, text="Arrival City")
         self.ArrivalCityListLabel.place(x=100, y=250)
 
 
-#TODO Separar las listas de busqueda para las rutas predefinidas y las rutas personalizadas
 
-#TODO Hacer las listas de la seleccion de paises y ciudades de las rutas personalizadas dependientes entre si
-print("holis")
-    def updateCitiesOnSelection(self, event):
 
-        """:param self.searchKey sirve para buscar
-         en la base de datos las rutas relacionadas
-          con los lugares que ingreso el usuario"""
+    def updateCitiesOnSelectionFixed(self, event):
+
 
         self.searchKey=[self.departureCountryList.get().split(" ")[0]]
 
-        # agregar las ciudades segun el pais escogido (si se puede hacer mas eficiente mejor xd)
+
         print(self.searchKey[0])
         codeList = ["04", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         self.departureCityList["values"] = pickle.loads(s.recv(8192))
         print(self.searchKey)
-
-    def selectCity(self, event):
+    def selectCityFixed(self, event):
 
         if len(self.searchKey)==1:
              self.searchKey+=[self.departureCityList.get().split(" ")[0]]
         else:
             self.searchKey[1]=self.departureCityList.get().split(" ")[0]
         print(self.searchKey)
+    def updateCitiesOnSelectionCustom1(self, event):
+
+
+        self.searchKey=[self.departureCountryList.get().split(" ")[0]]
+
+        print(self.searchKey[0])
+        codeList = ["04", self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        self.departureCityList["values"] = pickle.loads(s.recv(8192))
+        print(self.searchKey)
+    def selectCityCustom1(self, event):
+
+        if len(self.searchKey)==1:
+             self.searchKey+=[self.departureCityList.get().split(" ")[0]]
+        else:
+            self.searchKey[1]=self.departureCityList.get().split(" ")[0]
+        print(self.searchKey)
+
+#####################
+    def updateCitiesOnSelectionCustom2(self, event):
+
+        if len(self.searchKey)==2:
+            self.searchKey+=[self.departureCountryList.get().split(" ")[0]]
+        else:
+            self.searchKey[2]= self.departureCountryList.get().split(" ")[0]
+
+        print(self.searchKey[0])
+        codeList = ["04", self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        self.departureCityList["values"] = pickle.loads(s.recv(8192))
+        print(self.searchKey)
+    def selectCityCustom2(self, event):
+
+        if len(self.searchKey)==1:
+             self.searchKey+=[self.departureCityList.get().split(" ")[0]]
+        else:
+            self.searchKey[1]=self.departureCityList.get().split(" ")[0]
+        print(self.searchKey)
+#####################
 
     def backToLogIn(self):
         for child in self.winfo_children():
