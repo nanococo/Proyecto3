@@ -97,12 +97,12 @@ class logIn(ttk.Frame):
 
         self.searchKey=[]
 
-        self.departureCountryList = ttk.Combobox(self, state="readonly", width= 40)
+        self.departureCountryList = ttk.Combobox(self, state="readonly")
         codeList = ["03"]
         s.send(pickle.dumps(codeList))
         self.departureCountryList["values"] = pickle.loads(s.recv(8192))
         self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionFixed)
-        self.departureCountryList.place(x=180, y=50)
+        self.departureCountryList.place(x=250, y=50)
         self.departureCountryListLabel=ttk.Label(self, text="Countries")
         self.departureCountryListLabel.place(x=100, y=50)
 
@@ -113,12 +113,11 @@ class logIn(ttk.Frame):
         self.departureCityListLabel.place(x=100, y = 100)
 
 
-        """
-                ADD BILLING BUTTON
-        """
+        self.routeRecervation=ttk.Button(self, text="Continue", command=self.routeList)
+        self.routeRecervation.place(x=300, y =200)
 
         self.backButton=ttk.Button(self, text="Back", command= self.backToLogIn)
-        self.backButton.place(x=40,y=200)
+        self.backButton.place(x=80,y=200)
 
     def drawCustomRecervation(self):
         for child in self.winfo_children():
@@ -126,12 +125,12 @@ class logIn(ttk.Frame):
 
         self.searchKey=[]
 
-        self.departureCountryList = ttk.Combobox(self, state="readonly", width= 40)
+        self.departureCountryList = ttk.Combobox(self, state="readonly")
         codeList = ["03"]
         s.send(pickle.dumps(codeList))
         self.departureCountryList["values"] = pickle.loads(s.recv(8192))
         self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionCustom1)
-        self.departureCountryList.place(x=180, y=50)
+        self.departureCountryList.place(x=250, y=50)
         self.departureCountryListLabel=ttk.Label(self, text="Departure Country")
         self.departureCountryListLabel.place(x=100, y=50)
 
@@ -141,21 +140,27 @@ class logIn(ttk.Frame):
         self.departureCityListLabel=ttk.Label(self, text="Departure City")
         self.departureCityListLabel.place(x=100, y = 100)
 
-        self.ArrivalCountryList = ttk.Combobox(self, state="readonly", width=40)
+        self.arrivalCountryList = ttk.Combobox(self, state="readonly")
         codeList = ["03"]
         s.send(pickle.dumps(codeList))
-        self.ArrivalCountryList["values"] = pickle.loads(s.recv(8192))
+        self.arrivalCountryList["values"] = pickle.loads(s.recv(8192))
 
-        self.ArrivalCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionCustom2)
-        self.ArrivalCountryList.place(x=180, y=200)
+        self.arrivalCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionCustom2)
+        self.arrivalCountryList.place(x=250, y=200)
         self.ArrivalCountryListLabel = ttk.Label(self, text="Arrival Country")
         self.ArrivalCountryListLabel.place(x=100, y=200)
 
-        self.ArrivalCityList = ttk.Combobox(self, state="readonly")
-        self.ArrivalCityList.bind("<<ComboboxSelected>>", self.selectCityCustom2)
-        self.ArrivalCityList.place(x=250, y=250)
-        self.ArrivalCityListLabel = ttk.Label(self, text="Arrival City")
-        self.ArrivalCityListLabel.place(x=100, y=250)
+        self.arrivalCityList = ttk.Combobox(self, state="readonly")
+        self.arrivalCityList.bind("<<ComboboxSelected>>", self.selectCityCustom2)
+        self.arrivalCityList.place(x=250, y=250)
+        self.arrivalCityListLabel = ttk.Label(self, text="Arrival City")
+        self.arrivalCityListLabel.place(x=100, y=250)
+
+        self.routeRecervation = ttk.Button(self, text="Continue", command=self.routeList)
+        self.routeRecervation.place(x=300, y=350)
+
+        self.backButton = ttk.Button(self, text="Back", command=self.backToLogIn)
+        self.backButton.place(x=80, y=350)
 
 
 
@@ -195,38 +200,37 @@ class logIn(ttk.Frame):
         else:
             self.searchKey[1]=self.departureCityList.get().split(" ")[0]
         print(self.searchKey)
-
-#####################
     def updateCitiesOnSelectionCustom2(self, event):
 
         if len(self.searchKey)==2:
-            self.searchKey+=[self.departureCountryList.get().split(" ")[0]]
+            self.searchKey+=[self.arrivalCountryList.get().split(" ")[0]]
         else:
-            self.searchKey[2]= self.departureCountryList.get().split(" ")[0]
+            self.searchKey[2]= self.arrivalCountryList.get().split(" ")[0]
 
         print(self.searchKey[0])
-        codeList = ["04", self.searchKey[0]]
+        codeList = ["04", self.searchKey[2]]
         s.send(pickle.dumps(codeList))
-        self.departureCityList["values"] = pickle.loads(s.recv(8192))
+        self.arrivalCityList["values"] = pickle.loads(s.recv(8192))
         print(self.searchKey)
     def selectCityCustom2(self, event):
 
-        if len(self.searchKey)==1:
-             self.searchKey+=[self.departureCityList.get().split(" ")[0]]
-        else:
-            self.searchKey[1]=self.departureCityList.get().split(" ")[0]
+        if len(self.searchKey)==3:
+             self.searchKey+=[self.arrivalCityList.get().split(" ")[0]]
+        elif len(self.searchKey)==4:
+            self.searchKey[3]=self.arrivalCityList.get().split(" ")[0]
         print(self.searchKey)
-#####################
+
+
 
     def backToLogIn(self):
         for child in self.winfo_children():
             child.place_forget()
         self.chooseRecervation()
 
-    def predefinedRouteList(self):
+    def routeList(self):
         if self.searchKey==[]:
             messagebox.showinfo("","Please select a contry and a city")
-        elif len(self.searchKey)==2:
+        elif len(self.searchKey)==2 or len(self.searchKey)==4:
             for child in self.winfo_children():
                 child.place_forget()
             """ routes es la lista que se va a cargar para que el usuario seleccione la ruta que desea"""
@@ -242,7 +246,7 @@ class logIn(ttk.Frame):
             for i in routes:
                 self.routesListBox.insert(tk.END,i)
 
-            self.backButton=ttk.Button(self, text="Back", command=self.backToRecervation)
+            self.backButton=ttk.Button(self, text="Back", command=self.backToCountCitSelect)
             self.backButton.place(x=90,y=380)
 
             self.billingButton=ttk.Button(self, text="Continue", command = self.continueToBilling)
@@ -299,10 +303,13 @@ class logIn(ttk.Frame):
         #     for child in self.winfo_children():
         #         child.place_forget()
 
-    def backToRecervation(self):
+    def backToCountCitSelect(self):
         for child in self.winfo_children():
             child.place_forget()
-        self.draw_recervation()
+        if len(self.searchKey)==2:
+            self.drawFixedRecervation()
+        elif len(self.searchKey)==4:
+            self.drawCustomRecervation()
 
     def validate(self, action, index, value_if_allowed,prior_value, text, validation_type, trigger_type, widget_name):
         if text in '0123456789.-+':
