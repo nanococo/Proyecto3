@@ -352,8 +352,6 @@ class logIn(ttk.Frame):
         self.backButton.place(x=80, y=350)
 
 
-
-
     def updateCitiesOnSelectionFixed(self, event):
 
 
@@ -408,7 +406,6 @@ class logIn(ttk.Frame):
         elif len(self.searchKey)==4:
             self.searchKey[3]=self.arrivalCityList.get().split(" ")[0]
         print(self.searchKey)
-
 
 
     def backToLogIn(self):
@@ -514,6 +511,32 @@ class logIn(ttk.Frame):
         else:
             return False
 
+
+class check(ttk.Frame):
+    def __init__(self, *args,**kwargs):
+        super().__init__(*args,**kwargs)
+
+        self.checkCountries=ttk.Button(self, text="Countries")
+        self.checkCountries.pack()
+
+        self.checkCities=ttk.Button(self, text="Cities")
+        self.checkCities.pack()
+
+        self.checkConnections=ttk.Button(self, text="Conections")
+        self.checkConnections.pack()
+
+        self.checkTrains=ttk.Button(self,text="Trains")
+        self.checkTrains.pack()
+
+        self.checkPrices=ttk.Button(self, text="Prices")
+        self.checkPrices.pack()
+
+        self.checkTrainSeats=ttk.Button(self, text="Train Seats")
+        self.checkTrainSeats.pack()
+
+        self.checkRoutes=ttk.Button(self,text="Routes")
+        self.checkRoutes.pack()
+
 class MainApp(ttk.Frame):
     def __init__(self,main_window):
         super().__init__(main_window)
@@ -529,6 +552,10 @@ class MainApp(ttk.Frame):
 
         self.reservation_page=logIn(self.notebook)
         self.notebook.add(self.reservation_page,text="Reservations",padding=10)
+
+        self.checkDataBase=check(self.notebook)
+        self.notebook.add(self.checkDataBase,text="Queries", padding=10)
+
 
         self.notebook.pack(padx=10, pady=10)
 
