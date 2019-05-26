@@ -7,26 +7,215 @@ import socket, os, pickle
 class map(ttk.Frame):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
-        self.counter = 0
         self.img = Image.open("newDataFiles/Assets/europe_map(3).png")
         self.display =ImageTk.PhotoImage(self.img)
         self.map= tk.Label(self,image=self.display, bd=5, relief="ridge")
         self.map.pack()
 
-
+        #Spain
         self.pin= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin = ImageTk.PhotoImage(self.pin)
-        self.pinButton=ttk.Button(self, command=self.create_window)
+        self.pinButton=ttk.Button(self, command= lambda: self.addNewMenu())
         self.pinButton.config(image=self.displayPin)
         self.pinButton.place(x=90,y=330)
 
-    def create_window(self):
-        self.counter += 1
+        #Portugal
+        self.pin2= Image.open("newDataFiles/Assets/rsz_pin2.png")
+        self.displayPin2 = ImageTk.PhotoImage(self.pin2)
+        self.pinButton2=ttk.Button(self, command= lambda :self.create_window("PT"))
+        self.pinButton2.config(image=self.displayPin2)
+        self.pinButton2.place(x=50,y=330)
+
+        #France
+        self.pin3= Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin3 = ImageTk.PhotoImage(self.pin3)
+        self.pinButton3=ttk.Button(self, command= lambda :self.create_window("FR"))
+        self.pinButton3.config(image=self.displayPin3)
+        self.pinButton3.place(x=150,y=270)
+
+        #Switzerland
+        self.pin4= Image.open("newDataFiles/Assets/rsz_pin2.png")
+        self.displayPin4 = ImageTk.PhotoImage(self.pin4)
+        self.pinButton4=ttk.Button(self, command= lambda :self.create_window("SZ"))
+        self.pinButton4.config(image=self.displayPin4)
+        self.pinButton4.place(x=190,y=270)
+
+        #UK
+        self.pin5= Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin5 = ImageTk.PhotoImage(self.pin5)
+        self.pinButton5=ttk.Button(self, command= lambda :self.create_window("UK"))
+        self.pinButton5.config(image=self.displayPin5)
+        self.pinButton5.place(x=120,y=190)
+
+        #Jordan
+        self.pin6= Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin6 = ImageTk.PhotoImage(self.pin6)
+        self.pinButton6=ttk.Button(self, command= lambda :self.create_window("JO"))
+        self.pinButton6.config(image=self.displayPin6)
+        self.pinButton6.place(x=400,y=380)
+
+        #Netherlands
+        self.pin7= Image.open("newDataFiles/Assets/rsz_pin2.png")
+        self.displayPin7 = ImageTk.PhotoImage(self.pin7)
+        self.pinButton7=ttk.Button(self, command= lambda :self.create_window("NT"))
+        self.pinButton7.config(image=self.displayPin7)
+        self.pinButton7.place(x=175,y=210)
+
+        #Turkey
+        self.pin8= Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin8 = ImageTk.PhotoImage(self.pin8)
+        self.pinButton8=ttk.Button(self, command= lambda :self.create_window("TR"))
+        self.pinButton8.config(image=self.displayPin8)
+        self.pinButton8.place(x=380,y=330)
+
+        #Antillas Holandesas
+        self.pin9= Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin9 = ImageTk.PhotoImage(self.pin9)
+        self.pinButton9=ttk.Button(self, command= lambda :self.create_window("AH"))
+        self.pinButton9.config(image=self.displayPin9)
+        self.pinButton9.place(x=30,y=200)
+
+        #Belgium
+        self.pin10= Image.open("newDataFiles/Assets/rsz_pin2.png")
+        self.displayPin10 = ImageTk.PhotoImage(self.pin10)
+        self.pinButton10=ttk.Button(self, command= lambda :self.create_window("BE"))
+        self.pinButton10.config(image=self.displayPin10)
+        self.pinButton10.place(x=165,y=230)
+
+        #Samoa
+        self.pin11= Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin11 = ImageTk.PhotoImage(self.pin11)
+        self.pinButton11=ttk.Button(self, command= lambda :self.create_window("SA"))
+        self.pinButton11.config(image=self.displayPin11)
+        self.pinButton11.place(x=420,y=380)
+
+        #Greece
+        self.pin12= Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin12 = ImageTk.PhotoImage(self.pin12)
+        self.pinButton12=ttk.Button(self, command= lambda :self.create_window("GR"))
+        self.pinButton12.config(image=self.displayPin12)
+        self.pinButton12.place(x=315,y=353)
+
+        #Czech republic
+        self.pin13= Image.open("newDataFiles/Assets/rsz_pin2.png")
+        self.displayPin13 = ImageTk.PhotoImage(self.pin13)
+        self.pinButton13=ttk.Button(self, command= lambda :self.create_window("CZ"))
+        self.pinButton13.config(image=self.displayPin13)
+        self.pinButton13.place(x=235,y=240)
+
+        #Poland
+        self.pin14= Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin14 = ImageTk.PhotoImage(self.pin14)
+        self.pinButton14=ttk.Button(self, command= lambda :self.create_window("PO"))
+        self.pinButton14.config(image=self.displayPin14)
+        self.pinButton14.place(x=260,y=205)
+
+        #Romain
+        self.pin15= Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin15 = ImageTk.PhotoImage(self.pin15)
+        self.pinButton15=ttk.Button(self, command= lambda :self.create_window("RM"))
+        self.pinButton15.config(image=self.displayPin15)
+        self.pinButton15.place(x=315,y=270)
+
+        #Ukraine
+        self.pin16= Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin16 = ImageTk.PhotoImage(self.pin16)
+        self.pinButton16=ttk.Button(self, command= lambda :self.create_window("UR"))
+        self.pinButton16.config(image=self.displayPin16)
+        self.pinButton16.place(x=350,y=220)
+
+        #Bulgaria
+        self.pin17= Image.open("newDataFiles/Assets/rsz_pin2.png")
+        self.displayPin17 = ImageTk.PhotoImage(self.pin17)
+        self.pinButton17=ttk.Button(self, command= lambda :self.create_window("BL"))
+        self.pinButton17.config(image=self.displayPin17)
+        self.pinButton17.place(x=330,y=310)
+
+        #Finland
+        self.pin18= Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin18 = ImageTk.PhotoImage(self.pin18)
+        self.pinButton18=ttk.Button(self, command= lambda :self.create_window("FI"))
+        self.pinButton18.config(image=self.displayPin18)
+        self.pinButton18.place(x=280,y=90)
+
+        #Sweden
+        self.pin19= Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin19 = ImageTk.PhotoImage(self.pin19)
+        self.pinButton19=ttk.Button(self, command= lambda :self.create_window("SW"))
+        self.pinButton19.config(image=self.displayPin19)
+        self.pinButton19.place(x=230,y=90)
+
+        #Germany
+        self.pin20 = Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin20 = ImageTk.PhotoImage(self.pin20)
+        self.pinButton20 = ttk.Button(self, command= lambda : self.create_window("GE"))
+        self.pinButton20.config(image=self.displayPin20)
+        self.pinButton20.place(x=200, y=220)
+
+    def addNewMenu(self):
         t = tk.Toplevel(self)
-        t.wm_title("Window #%s" % self.counter)
-        l = tk.Label(t, text="This is window #%s" % self.counter)
+        t.img = Image.open("newDataFiles/Assets/europe_map(3).png")
+        self.display =ImageTk.PhotoImage(self.img)
+        #t.wm_title(country)
+        l = tk.Label(t, text="This is window is country")
         l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
 
+    def create_window(self, country):
+        self.newWindow = newWindow(country)
+
+class newWindow:
+    def __init__(self, country):
+        self.createCountryMap(country)
+
+    def createCountryMap(self, country):
+        self._sideWindow = tk.Toplevel()
+        imageURL = ""
+        if country=="PT":
+            imageURL = "newDataFiles/Assets/portugal.png"
+        elif country == "FR":
+            imageURL = "newDataFiles/Assets/france.gif"
+        elif country == "SZ":
+            imageURL = "newDataFiles/Assets/switzerland.png"
+        elif country == "UK":
+            imageURL = "newDataFiles/Assets/UK.png"
+        elif country == "JO":
+            imageURL = "newDataFiles/Assets/jordan.png"
+        elif country == "NT":
+            imageURL = "newDataFiles/Assets/netherlands.png"
+        elif country == "TR":
+            imageURL = "newDataFiles/Assets/turkey.png"
+        elif country == "AH":
+            imageURL = "newDataFiles/Assets/antillas.jpg"
+        elif country == "BE":
+            imageURL = "newDataFiles/Assets/belgium.png"
+        elif country == "SA":
+            imageURL = "newDataFiles/Assets/samoa.png"
+        elif country == "GR":
+            imageURL = "newDataFiles/Assets/Greece.jpg"
+        elif country == "CZ":
+            imageURL = "newDataFiles/Assets/Czech Republic.jpg"
+        elif country == "PO":
+            imageURL = "newDataFiles/Assets/poland.png"
+        elif country == "RM":
+            imageURL = "newDataFiles/Assets/romania.jpg"
+        elif country == "UR":
+            imageURL = "newDataFiles/Assets/ukraine.jpg"
+        elif country == "BL":
+            imageURL = "newDataFiles/Assets/bulgaria.jpg"
+        elif country == "FI":
+            imageURL = "newDataFiles/Assets/finland.png"
+        elif country == "SW":
+            imageURL = "newDataFiles/Assets/switzerland.png"
+        elif country == "GE":
+            imageURL = "newDataFiles/Assets/Germany.jpg"
+
+        self.imageGIF2 = tk.PhotoImage(file=imageURL)
+        self.imageLabel2 = tk.Label(self._sideWindow, image=self.imageGIF2)
+        self.imageLabel2.grid(row=0, column=1, padx=10, pady=10)
+        #self.imageLabel2 = tk.Label(self._sideWindow, image=self.imageGIF2)
+        #self.imageLabel2.grid(row=0, column=1, padx=10, pady=10)
+        #l = tk.Label(t, text="This is window is country")
+        #l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
 
 
 class logIn(ttk.Frame):
