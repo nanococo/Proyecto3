@@ -159,7 +159,7 @@ class newWindow:
         if country=="23":
             imageURL = "newDataFiles/Assets/portugal.png"
         elif country == "90":
-            imageURL = "newDataFiles/Assets/portugal.png"
+            imageURL = "newDataFiles/Assets/spain.png"
         elif country == "78":
             imageURL = "newDataFiles/Assets/france.gif"
         elif country == "234":
@@ -414,10 +414,21 @@ class logIn(ttk.Frame):
                 child.place_forget()
             """ routes es la lista que se va a cargar para que el usuario seleccione la ruta que desea"""
             routes=[]
-            if self.searchKey==['1','a']:
-                routes=[1,2,3,4,5,6]
-            elif self.searchKey==['2','c']:
-                routes=['a','b','c','d']
+            if len(self.searchKey)==2:
+                codeList = ["10", self.searchKey[0], self.searchKey[1]]
+                s.send(pickle.dumps(codeList))
+                tempList = pickle.loads(s.recv(8192))
+
+                for i in tempList:
+                     print(i)
+
+            elif len(self.searchKey)==4:
+                codeList = ["41", self.searchKey[0], self.searchKey[1], self.searchKey[2], self.searchKey[3]]
+                s.send(pickle.dumps(codeList))
+                routes = pickle.loads(s.recv(8192))
+
+                for i in routes:
+                     print(i)
 
             self.routesListBox = tk.Listbox(self,width=69,height=20, selectmode=tk.SINGLE)
             self.routesListBox.bind("<<ListboxSelect>>", self.getListBox )
@@ -560,10 +571,19 @@ class Queries(ttk.Frame):
         for child in self.winfo_children():
             child.pack_forget()
 
+
+
         self.countryList=tk.Listbox(self)
-        """
-        ingresar lista de paises
-        """
+
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        countryList = pickle.loads(s.recv(8192))
+
+        os.system("cls")
+        print("These are the found countries: ")
+        for i in countryList:
+            print(i)
+        input("Press enter to continue...")
 
         self.countryList.pack()
 
@@ -582,6 +602,13 @@ class Queries(ttk.Frame):
         self.selectCountry["values"] = pickle.loads(s.recv(8192))
         self.selectCountry.bind("<<ComboboxSelected>>", self.cities1_get)
         self.selectCountry.pack()
+
+        codeList = ["04", self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        cityList = pickle.loads(s.recv(8192))
+
+        for i in cityList:
+            print(i)
 
         self.continueToCities=ttk.Button(self, text="Continue")
         self.continueToCities.pack()
@@ -663,6 +690,13 @@ class Queries(ttk.Frame):
         ingresar lista de paises
         """
 
+        codeList = ["05", self.searchKey[0], self.searchKey[1]]
+        s.send(pickle.dumps(codeList))
+        connectionList = pickle.loads(s.recv(8192))
+
+        for i in connectionList:
+            print(i)
+
         self.countryList.pack()
 
         self.back = ttk.Button(self, text="back", command=self.conections1)
@@ -696,6 +730,13 @@ class Queries(ttk.Frame):
         """
         ingresar lista de paises
         """
+
+        codeList = ["06", self.searchKey]
+        s.send(pickle.dumps(codeList))
+        trainList = pickle.loads(s.recv(8192))
+
+        for i in trainList:
+            print(i)
 
         self.countryList.pack()
 
@@ -733,6 +774,14 @@ class Queries(ttk.Frame):
         """
         SearchTrain
         """
+
+        codeList = ["07", self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        prices = pickle.loads(s.recv(8192))
+
+        for i in prices:
+            print(i)
+
         if self.trainType.get()=='1':
             self.trainCode["values"] =['a','b','c']
         else:
@@ -786,6 +835,14 @@ class Queries(ttk.Frame):
 
 
         self.searchKey=[self.trainType.get().split(" ")[0]]
+
+
+        codeList = ["08", self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        seats = pickle.loads(s.recv(8192))
+
+        for i in seats:
+            print(i)
 
 
         """
@@ -859,6 +916,13 @@ class Queries(ttk.Frame):
         """
         ingresar lista de paises
         """
+
+        codeList = ["09", self.searchKey[2]]
+        s.send(pickle.dumps(codeList))
+        routes = pickle.loads(s.recv(8192))
+
+        for i in routes:
+            print(i)
 
         self.countryList.pack()
 
