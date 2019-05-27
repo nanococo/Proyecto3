@@ -606,6 +606,7 @@ class SocketServer(socket.socket):
                     i[2] += [[newCityCode, newCityName, []]]
                     self.dat.citiesByUsage.append([[countryCodeForCity, [newCityCode, newCityName]], 0])
                     self.dat.lastCityInsert = [countryCodeForCity, newCityCode, newCityName]
+                    success = True
         return success
 
     def insertConnections(self, newConnDepCountry, newConnDepCity, newConnCode, newConnArrCountry, newConnArrCity, newConnDuration):

@@ -600,6 +600,7 @@ class Queries(ttk.Frame):
     def cities1_get(self, event):
         self.searchKey=[self.selectCountry.get().split(" ")[0]]
         print(self.searchKey)
+
     def cities2(self):
         for child in self.winfo_children():
             child.place_forget()
