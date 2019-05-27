@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import *
 from PIL import Image,ImageTk
+import socket, os, pickle
 
 loggedIn = ''
 
@@ -28,7 +29,7 @@ class mainApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        tk.Tk.iconbitmap(self,default='C:/Users\jguty\OneDrive\Pictures/icono.ico')
+        #tk.Tk.iconbitmap(self,default='C:/Users\jguty\OneDrive\Pictures/icono.ico')
 
         container = tk.Frame(self)
         container.pack(side='top', fill='both',  expand = True)
@@ -141,7 +142,8 @@ class ConsultPrices(tk.Frame):
 
     def checkPrices(self):
 
-        global trainsFormat
+        #global trainsFormat
+
 
         y = 0
         for train in trainsFormat:
@@ -409,23 +411,40 @@ class Insert(tk.Frame):
 
     def createNewCountry(self, controller):
 
-        code = self.code.get()
-        name = self.name.get()
+        newCountryCode = self.code.get()
+        newCountryName = self.name.get()
 
-        if code == '' or name == '':
+        if newCountryCode == '' or newCountryName == '':
             messagebox.showinfo('ERROR','Please fill all the gaps.')
         else:
-            newCountry = [code, name, []]
-            messagebox.showinfo("Done", "The country "+name+'('+code+")  was succesfully inserted.")
+
+            codeList = ["14", newCountryCode, newCountryName]
+            s.send(pickle.dumps(codeList))
+            success = pickle.loads(s.recv(8192))
+
+            if not success:
+
+                #AQUI PONE MENSAJE DE EXITO
+
+                print("Country is already present. Press enter to re-try.")
+                input("Press enter to continue...")
+            else:
+
+                #AQUI PONE MENSAJE DE ERROR
+
+                print("Successfully inserted:")
+                input("Press enter to continue...")
+                end = True
+
+           # newCountry = [code, name, []]
+           # messagebox.showinfo("Done", "The country "+name+'('+code+")  was succesfully inserted.")
             self.back_insert(controller)
 
     def draw_insertCity(self, controller):
 
-        global countriesFormat
-
-        countries = []
-        for country in countriesFormat:
-            countries += [country[0]+'-'+country[1]]
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        countries = pickle.loads(s.recv(8192))
 
         for child in self.winfo_children():
             child.place_forget()
@@ -458,20 +477,36 @@ class Insert(tk.Frame):
 
     def createNewCity(self,controller):
 
-        code = self.code.get()
-        name = self.name.get()
-        addTo = self.availableCountries.get()
+        newCityCode = self.code.get()
+        newCityName = self.name.get()
+        countryCodeForCity = self.availableCountries.get()
 
-        if code == '' or name == '':
+        if newCityCode == '' or newCityName == '':
             messagebox.showinfo('ERROR','Please fill all the gaps.')
 
-        elif addTo == '':
+        elif countryCodeForCity == '':
             messagebox.showinfo('ERROR', 'Please select a country.')
 
         else:
-            newCity = [code, name, []]
-            messagebox.showinfo("Done", name+'('+code+")  was succesfully inserted to the cities of "+addTo)
-            self.back_insert(controller)
+            print(newCityCode)
+            print(newCityName)
+            print(countryCodeForCity)
+            codeList = ["15", countryCodeForCity, newCityCode, newCityName]
+            s.send(pickle.dumps(codeList))
+            success = pickle.loads(s.recv(8192))
+
+            if not success:
+                print("City is already present. Press enter to re-try.")
+                input("Press enter to continue...")
+            else:
+                print("Successfully inserted:")
+                input("Press enter to continue...")
+                end = True
+
+
+            # newCity = [code, name, []]
+            # messagebox.showinfo("Done", name+'('+code+")  was succesfully inserted to the cities of "+addTo)
+            # self.back_insert(controller)
 
     def draw_insertConnection(self, controller):
 
@@ -719,26 +754,67 @@ class logIn(tk.Frame):
 
     def getLoginInfo(self, controller):
         password=self.password.get()
-        global adminFormatList
-        login_success=False
-        #Eddit to fit logInList indexes
-        registeredUser = ''
-        for user in adminFormatList:
-            if password==user[1]:
-                registeredUser = user
-                login_success=True
-        if not login_success:
-            messagebox.showinfo("Access denied", "Wrong Admin ID")
-        elif login_success:
-            loggedIn = registeredUser[0]
+
+        codeList = ["12", password]
+        s.send(pickle.dumps(codeList))
+        adminValidate = pickle.loads(s.recv(8192))
+
+
+
+        if adminValidate:
+
+            # AQUI DEJA CARGAR NUEVA VENTANA
+            # Set userName here:
+            codeList = ["02", password]
+            s.send(pickle.dumps(codeList))
+            userName = pickle.loads(s.recv(8192))
+
             self.draw_mainMenu(controller)
+            print("success")
+
+            # Set logged flag (ESTO DEBE SER UNA VARIABLE GLOBAL)
+            logged = True
+
+
+        else:
+
+            messagebox.showinfo("Access denied", "Wrong User Name or password")
+
+            loginError = True
+
+        # #global adminFormatList
+        # login_success=False
+        # #Eddit to fit logInList indexes
+        # registeredUser = ''
+        # for user in adminFormatList:
+        #     if password==user[1]:
+        #         registeredUser = user
+        #         login_success=True
+        # if not login_success:
+        #     messagebox.showinfo("Access denied", "Wrong Admin ID")
+        # elif login_success:
+        #     loggedIn = registeredUser[0]
+        #     self.draw_mainMenu(controller)
 
     def draw_mainMenu(self, controller):
         controller.show_frame(AdminMainMenu)
 
 
-app = mainApp()
-app.title('UTS Europe - Admin Module')
-app.geometry('500x600')
-app.resizable(0,0)
-app.mainloop()
+if __name__ == '__main__':
+    """
+        MAIN APPLICATION METHOD. INVOKES METHODS ON ADMIN AND USER MODULES
+
+    """
+    host = '127.0.0.1'
+    # Define the port on which you want to connect
+    port = 5000
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # connect to server on local computer
+    s.connect((host, port))
+
+
+    app = mainApp()
+    app.title('UTS Europe - Admin Module')
+    app.geometry('500x600')
+    app.resizable(0,0)
+    app.mainloop()

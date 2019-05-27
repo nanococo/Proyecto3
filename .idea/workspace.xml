@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e0eb49f2-0f39-4f8b-862d-e71b6bfdc6d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User_app_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/User_app_main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/Bulgaria.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/Czech Republic.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/Germany.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/Greece.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/antillas.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/belgium.png" beforeDir="false" afterPath="$PROJECT_DIR$/newDataFiles/Assets/belgium.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/netherlands.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/romania.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin_App_Beta1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Admin_App_Beta1.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,11 +12,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/User_app_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="173" column="57" lean-forward="true" selection-start-line="173" selection-start-column="57" selection-end-line="173" selection-end-column="57" />
+            <state relative-caret-position="241">
+              <caret line="321" column="72" lean-forward="true" selection-start-line="319" selection-start-column="8" selection-end-line="321" selection-end-column="72" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -34,11 +24,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Admin_App_Beta1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2320">
-              <caret line="148" column="15" selection-start-line="148" selection-start-column="15" selection-end-line="148" selection-end-column="15" />
+            <state relative-caret-position="231">
+              <caret line="492" column="36" selection-start-line="492" selection-start-column="36" selection-end-line="492" selection-end-column="36" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -49,7 +39,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Admin_App_Beta2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2704">
+            <state relative-caret-position="1840">
               <caret line="172" selection-start-line="172" selection-end-line="172" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
@@ -73,8 +63,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17152">
-              <caret line="1072" column="52" selection-start-line="1072" selection-start-column="52" selection-end-line="1072" selection-end-column="52" />
+            <state relative-caret-position="251">
+              <caret line="417" column="26" lean-forward="true" selection-start-line="407" selection-start-column="12" selection-end-line="417" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -100,7 +90,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="16736">
+            <state relative-caret-position="246">
               <caret line="1052" lean-forward="true" selection-start-line="1052" selection-end-line="1052" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
@@ -129,6 +119,11 @@
     <findStrings>
       <find>print(&quot;hola&quot;)</find>
       <find>PRINT</find>
+      <find>Format</find>
+      <find>login</find>
+      <find>logi</find>
+      <find>code</find>
+      <find>data</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -143,6 +138,7 @@
         <option value="$PROJECT_DIR$/dataFiles/Usuarios.txt" />
         <option value="$PROJECT_DIR$/User_app_main.py" />
         <option value="$PROJECT_DIR$/server.py" />
+        <option value="$PROJECT_DIR$/Admin_App_Beta1.py" />
       </list>
     </option>
   </component>
@@ -193,7 +189,28 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.client">
+  <component name="RunManager" selected="Python.Admin_App_Beta1">
+    <configuration name="Admin_App_Beta1" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Proyecto_3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Admin_App_Beta1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="User_app_main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Proyecto_3" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -259,8 +276,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.client" />
+        <item itemvalue="Python.Admin_App_Beta1" />
         <item itemvalue="Python.server" />
+        <item itemvalue="Python.client" />
         <item itemvalue="Python.User_app_main" />
       </list>
     </recent_temporary>
@@ -282,15 +300,15 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12747689" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13936591" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Debug" order="2" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="2" weight="0.39886847" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="Run" order="5" weight="0.4483734" />
+      <window_info active="true" anchor="bottom" id="Run" order="5" visible="true" weight="0.4483734" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
@@ -332,30 +350,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/User_app_main.py">
+    <entry file="file://$PROJECT_DIR$/dataFiles/Trenes.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="173" column="57" lean-forward="true" selection-start-line="173" selection-start-column="57" selection-end-line="173" selection-end-column="57" />
+        <state relative-caret-position="16">
+          <caret line="1" column="8" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataFiles/Usuarios.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="3" column="18" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="1052" lean-forward="true" selection-start-line="1052" selection-end-line="1052" />
           <folding>
-            <element signature="e#0#20#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Admin_App_Beta1.py">
+    <entry file="file://$PROJECT_DIR$/dataFiles/Administradores.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2320">
-          <caret line="148" column="15" selection-start-line="148" selection-start-column="15" selection-end-line="148" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="10" selection-end-column="10" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loadData.py">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Admin_App_Beta2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2704">
+        <state relative-caret-position="1840">
           <caret line="172" selection-start-line="172" selection-end-line="172" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/User_app_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="321" column="72" lean-forward="true" selection-start-line="319" selection-start-column="8" selection-end-line="321" selection-end-column="72" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
@@ -374,42 +416,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17152">
-          <caret line="1072" column="52" selection-start-line="1072" selection-start-column="52" selection-end-line="1072" selection-end-column="52" />
+        <state relative-caret-position="251">
+          <caret line="417" column="26" lean-forward="true" selection-start-line="407" selection-start-column="12" selection-end-line="417" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Administradores.txt">
+    <entry file="file://$PROJECT_DIR$/Admin_App_Beta1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="10" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Trenes.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
-          <caret line="1" column="8" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16736">
-          <caret line="1052" lean-forward="true" selection-start-line="1052" selection-end-line="1052" />
+        <state relative-caret-position="231">
+          <caret line="492" column="36" selection-start-line="492" selection-start-column="36" selection-end-line="492" selection-end-column="36" />
           <folding>
-            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#0#20#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/loadData.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Usuarios.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="18" />
         </state>
       </provider>
     </entry>
