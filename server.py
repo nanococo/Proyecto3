@@ -444,7 +444,6 @@ class SocketServer(socket.socket):
                 if i[2]:
                     for j in i[2]:
                         returnList.append([j[0], j[1]])
-        print(returnList)
         return returnList
 
     def getConnectionsByCityAndCountry(self, country, city):
@@ -1038,9 +1037,10 @@ class SocketServer(socket.socket):
             i.append(distance)
 
 
-        print(realLists)
+
         finalList = []
         for i in realLists:
+            print(i)
             tempFinalList = []
             for j in self.dat.trainRoutes:
                 for k in j[6]:
@@ -1048,9 +1048,9 @@ class SocketServer(socket.socket):
                         tempFinalList.append(j[:6]+[i[0]])
                     elif k==i[1]:
                         tempFinalList.append(j[:6]+[i[1]])
-            tempFinalList.append(i[2])
+            tempFinalList.append(i[len(i)-1])
             finalList.append(tempFinalList)
-        print(finalList)
+
 
         return finalList
 
