@@ -15,142 +15,128 @@ class map(ttk.Frame):
         #Spain
         self.pin= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin = ImageTk.PhotoImage(self.pin)
-        self.pinButton=ttk.Button(self, command= lambda:self.create_window("SP"))
+        self.pinButton=ttk.Button(self, command= lambda:self.create_window("90"))
         self.pinButton.config(image=self.displayPin)
         self.pinButton.place(x=90,y=330)
 
         #Portugal
         self.pin2= Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin2 = ImageTk.PhotoImage(self.pin2)
-        self.pinButton2=ttk.Button(self, command= lambda :self.create_window("PT"))
+        self.pinButton2=ttk.Button(self, command= lambda :self.create_window("23"))
         self.pinButton2.config(image=self.displayPin2)
         self.pinButton2.place(x=50,y=330)
 
         #France
         self.pin3= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin3 = ImageTk.PhotoImage(self.pin3)
-        self.pinButton3=ttk.Button(self, command= lambda :self.create_window("FR"))
+        self.pinButton3=ttk.Button(self, command= lambda :self.create_window("78"))
         self.pinButton3.config(image=self.displayPin3)
         self.pinButton3.place(x=150,y=270)
 
         #Switzerland
         self.pin4= Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin4 = ImageTk.PhotoImage(self.pin4)
-        self.pinButton4=ttk.Button(self, command= lambda :self.create_window("SZ"))
+        self.pinButton4=ttk.Button(self, command= lambda :self.create_window("234"))
         self.pinButton4.config(image=self.displayPin4)
         self.pinButton4.place(x=190,y=270)
-
-        #UK
-        self.pin5= Image.open("newDataFiles/Assets/pin(2).png")
-        self.displayPin5 = ImageTk.PhotoImage(self.pin5)
-        self.pinButton5=ttk.Button(self, command= lambda :self.create_window("UK"))
-        self.pinButton5.config(image=self.displayPin5)
-        self.pinButton5.place(x=120,y=190)
 
         #Jordan
         self.pin6= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin6 = ImageTk.PhotoImage(self.pin6)
-        self.pinButton6=ttk.Button(self, command= lambda :self.create_window("JO"))
+        self.pinButton6=ttk.Button(self, command= lambda :self.create_window("45"))
         self.pinButton6.config(image=self.displayPin6)
         self.pinButton6.place(x=400,y=380)
 
         #Netherlands
         self.pin7= Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin7 = ImageTk.PhotoImage(self.pin7)
-        self.pinButton7=ttk.Button(self, command= lambda :self.create_window("NT"))
+        self.pinButton7=ttk.Button(self, command= lambda :self.create_window("134"))
         self.pinButton7.config(image=self.displayPin7)
         self.pinButton7.place(x=175,y=210)
 
         #Turkey
         self.pin8= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin8 = ImageTk.PhotoImage(self.pin8)
-        self.pinButton8=ttk.Button(self, command= lambda :self.create_window("TR"))
+        self.pinButton8=ttk.Button(self, command= lambda :self.create_window("24"))
         self.pinButton8.config(image=self.displayPin8)
         self.pinButton8.place(x=380,y=330)
-
-        #Antillas Holandesas
-        self.pin9= Image.open("newDataFiles/Assets/pin(2).png")
-        self.displayPin9 = ImageTk.PhotoImage(self.pin9)
-        self.pinButton9=ttk.Button(self, command= lambda :self.create_window("AH"))
-        self.pinButton9.config(image=self.displayPin9)
-        self.pinButton9.place(x=30,y=200)
 
         #Belgium
         self.pin10= Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin10 = ImageTk.PhotoImage(self.pin10)
-        self.pinButton10=ttk.Button(self, command= lambda :self.create_window("BE"))
+        self.pinButton10=ttk.Button(self, command= lambda :self.create_window("32"))
         self.pinButton10.config(image=self.displayPin10)
         self.pinButton10.place(x=165,y=230)
-
-        #Samoa
-        self.pin11= Image.open("newDataFiles/Assets/pin(2).png")
-        self.displayPin11 = ImageTk.PhotoImage(self.pin11)
-        self.pinButton11=ttk.Button(self, command= lambda :self.create_window("SA"))
-        self.pinButton11.config(image=self.displayPin11)
-        self.pinButton11.place(x=420,y=380)
 
         #Greece
         self.pin12= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin12 = ImageTk.PhotoImage(self.pin12)
-        self.pinButton12=ttk.Button(self, command= lambda :self.create_window("GR"))
+        self.pinButton12=ttk.Button(self, command= lambda :self.create_window("02"))
         self.pinButton12.config(image=self.displayPin12)
         self.pinButton12.place(x=315,y=353)
 
         #Czech republic
         self.pin13= Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin13 = ImageTk.PhotoImage(self.pin13)
-        self.pinButton13=ttk.Button(self, command= lambda :self.create_window("CZ"))
+        self.pinButton13=ttk.Button(self, command= lambda :self.create_window("456"))
         self.pinButton13.config(image=self.displayPin13)
         self.pinButton13.place(x=235,y=240)
 
         #Poland
         self.pin14= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin14 = ImageTk.PhotoImage(self.pin14)
-        self.pinButton14=ttk.Button(self, command= lambda :self.create_window("PO"))
+        self.pinButton14=ttk.Button(self, command= lambda :self.create_window("120"))
         self.pinButton14.config(image=self.displayPin14)
         self.pinButton14.place(x=260,y=205)
 
         #Romain
         self.pin15= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin15 = ImageTk.PhotoImage(self.pin15)
-        self.pinButton15=ttk.Button(self, command= lambda :self.create_window("RM"))
+        self.pinButton15=ttk.Button(self, command= lambda :self.create_window("149"))
         self.pinButton15.config(image=self.displayPin15)
         self.pinButton15.place(x=315,y=270)
 
         #Ukraine
         self.pin16= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin16 = ImageTk.PhotoImage(self.pin16)
-        self.pinButton16=ttk.Button(self, command= lambda :self.create_window("UR"))
+        self.pinButton16=ttk.Button(self, command= lambda :self.create_window("256"))
         self.pinButton16.config(image=self.displayPin16)
         self.pinButton16.place(x=350,y=220)
 
         #Bulgaria
         self.pin17= Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin17 = ImageTk.PhotoImage(self.pin17)
-        self.pinButton17=ttk.Button(self, command= lambda :self.create_window("BL"))
+        self.pinButton17=ttk.Button(self, command= lambda :self.create_window("280"))
         self.pinButton17.config(image=self.displayPin17)
         self.pinButton17.place(x=330,y=310)
 
         #Finland
         self.pin18= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin18 = ImageTk.PhotoImage(self.pin18)
-        self.pinButton18=ttk.Button(self, command= lambda :self.create_window("FI"))
+        self.pinButton18=ttk.Button(self, command= lambda :self.create_window("18"))
         self.pinButton18.config(image=self.displayPin18)
         self.pinButton18.place(x=280,y=90)
 
         #Sweden
         self.pin19= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin19 = ImageTk.PhotoImage(self.pin19)
-        self.pinButton19=ttk.Button(self, command= lambda :self.create_window("SW"))
+        self.pinButton19=ttk.Button(self, command= lambda :self.create_window("180"))
         self.pinButton19.config(image=self.displayPin19)
         self.pinButton19.place(x=230,y=90)
 
         #Germany
         self.pin20 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin20 = ImageTk.PhotoImage(self.pin20)
-        self.pinButton20 = ttk.Button(self, command= lambda : self.create_window("GE"))
+        self.pinButton20 = ttk.Button(self, command= lambda : self.create_window("499"))
         self.pinButton20.config(image=self.displayPin20)
         self.pinButton20.place(x=200, y=220)
+
+        #Eritrea
+        self.pin21 = Image.open("newDataFiles/Assets/pin(2).png")
+        self.displayPin21 = ImageTk.PhotoImage(self.pin21)
+        self.pinButton21 = ttk.Button(self, command= lambda : self.create_window("05"))
+        self.pinButton21.config(image=self.displayPin21)
+        self.pinButton21.place(x=200, y=220)
 
     def addNewMenu(self):
         t = tk.Toplevel(self)
@@ -170,54 +156,59 @@ class newWindow:
     def createCountryMap(self, country):
         self._sideWindow = tk.Toplevel()
         imageURL = ""
-        if country=="PT":
+        if country=="23":
             imageURL = "newDataFiles/Assets/portugal.png"
-        elif country == "SP":
+        elif country == "90":
             imageURL = "newDataFiles/Assets/portugal.png"
-        elif country == "FR":
+        elif country == "78":
             imageURL = "newDataFiles/Assets/france.gif"
-        elif country == "SZ":
+        elif country == "234":
             imageURL = "newDataFiles/Assets/switzerland.png"
-        elif country == "UK":
-            imageURL = "newDataFiles/Assets/UK.png"
-        elif country == "JO":
+        elif country == "45":
             imageURL = "newDataFiles/Assets/jordan.png"
-        elif country == "NT":
+        elif country == "134":
             imageURL = "newDataFiles/Assets/netherlands.png"
-        elif country == "TR":
+        elif country == "24":
             imageURL = "newDataFiles/Assets/turkey.gif"
-        elif country == "AH":
-            imageURL = "newDataFiles/Assets/antillas.png"
-        elif country == "BE":
+        elif country == "32":
             imageURL = "newDataFiles/Assets/belgium.png"
-        elif country == "SA":
-            imageURL = "newDataFiles/Assets/samoa.png"
-        elif country == "GR":
+        elif country == "02":
             imageURL = "newDataFiles/Assets/Greece.png"
-        elif country == "CZ":
+        elif country == "456":
             imageURL = "newDataFiles/Assets/Czech Republic.png"
-        elif country == "PO":
+        elif country == "120":
             imageURL = "newDataFiles/Assets/poland.png"
-        elif country == "RM":
+        elif country == "149":
             imageURL = "newDataFiles/Assets/romania.png"
-        elif country == "UR":
+        elif country == "256":
             imageURL = "newDataFiles/Assets/ukraine.png"
-        elif country == "BL":
+        elif country == "280":
             imageURL = "newDataFiles/Assets/bulgaria.png"
-        elif country == "FI":
+        elif country == "18":
             imageURL = "newDataFiles/Assets/finland.png"
-        elif country == "SW":
+        elif country == "180":
             imageURL = "newDataFiles/Assets/switzerland.png"
-        elif country == "GE":
+        elif country == "499":
             imageURL = "newDataFiles/Assets/Germany.png"
+        elif country == "05":
+            imageURL = "newDataFiles/Assets/Eritrea.png"
 
+        codeList = ["42", country]
+        s.send(pickle.dumps(codeList))
+        countryName = pickle.loads(s.recv(8192))
+        amount = "Country: "+countryName
         self.imageGIF2 = tk.PhotoImage(file=imageURL)
         self.imageLabel2 = tk.Label(self._sideWindow, image=self.imageGIF2)
-        self.imageLabel2.grid(row=0, column=1, padx=10, pady=10)
+        tk.Label(self._sideWindow, text=amount, font="none 15 bold").grid(row=0, column=1, sticky='N', padx=10, pady=10)
+        self.imageLabel2.grid(row=0, column=0, padx=10, pady=10)
+
         #self.imageLabel2 = tk.Label(self._sideWindow, image=self.imageGIF2)
         #self.imageLabel2.grid(row=0, column=1, padx=10, pady=10)
         #l = tk.Label(t, text="This is window is country")
         #l.pack(side="top", fill="both", expand=True, padx=100, pady=100)
+
+    def displayCityData(self, city):
+        pass
 
 
 class logIn(ttk.Frame):
@@ -533,10 +524,10 @@ class Queries(ttk.Frame):
         self.checkPrices=ttk.Button(self, text="Prices", command= self.prices1)
         self.checkPrices.pack(pady=10)
 
-        self.checkTrainSeats=ttk.Button(self, text="Train Seats")
+        self.checkTrainSeats=ttk.Button(self, text="Train Seats", command= self.seats)
         self.checkTrainSeats.pack(pady=10)
 
-        self.checkRoutes=ttk.Button(self,text="Routes")
+        self.checkRoutes=ttk.Button(self,text="Routes", command= self.routes1)
         self.checkRoutes.pack(pady=10)
 
     def init(self):
@@ -559,10 +550,10 @@ class Queries(ttk.Frame):
         self.checkPrices = ttk.Button(self, text="Prices", command= self.prices1)
         self.checkPrices.pack(pady=10)
 
-        self.checkTrainSeats = ttk.Button(self, text="Train Seats")
+        self.checkTrainSeats = ttk.Button(self, text="Train Seats", command= self.seats)
         self.checkTrainSeats.pack(pady=10)
 
-        self.checkRoutes = ttk.Button(self, text="Routes")
+        self.checkRoutes = ttk.Button(self, text="Routes", command= self.routes1)
         self.checkRoutes.pack(pady=10)
 
     def countries(self):
@@ -716,45 +707,43 @@ class Queries(ttk.Frame):
             child.pack_forget()
             child.place_forget()
 
-        self.searchKey = []
+        self.searchKey=[]
 
-        self.departureCountryList = ttk.Combobox(self, state="readonly")
-        codeList = ["03"]
-        s.send(pickle.dumps(codeList))
-        self.departureCountryList["values"] = pickle.loads(s.recv(8192))
-        self.departureCountryList.bind("<<ComboboxSelected>>", self.prices_citiesUpdate)
-        self.departureCountryList.place(x=250, y=50)
-        self.departureCountryListLabel = ttk.Label(self, text="Countries")
-        self.departureCountryListLabel.place(x=100, y=50)
+        self.trainType=ttk.Combobox(self)
+        self.trainType["values"]=['1','2','3','4']
+        self.trainType.bind("<<ComboboxSelected>>", self.pricesUpdate)
+        self.trainType.pack()
 
-        self.departureCityList = ttk.Combobox(self, state="readonly")
-        self.departureCityList.bind("<<ComboboxSelected>>", self.pricesAdd)
-        self.departureCityList.place(x=250, y=100)
-        self.departureCityListLabel = ttk.Label(self, text="Cities")
-        self.departureCityListLabel.place(x=100, y=100)
+        self.trainCode = ttk.Combobox(self)
+        self.trainCode["values"] = ['1', '2', '3', '4']
+        self.trainCode.bind("<<ComboboxSelected>>", self.pricesAdd)
+        self.trainCode.pack()
 
         self.continueToRoutes=ttk.Button(self, text="Continue", command = self.prices2)
         self.continueToRoutes.pack(side=tk.BOTTOM)
 
         self.back=ttk.Button(self, text="Back", command=self.init)
         self.back.pack(side=tk.BOTTOM)
-    def prices_citiesUpdate(self, event):
+    def pricesUpdate(self, event):
 
 
-        self.searchKey=[self.departureCountryList.get().split(" ")[0]]
+        self.searchKey=[self.trainType.get().split(" ")[0]]
 
 
-        print(self.searchKey[0])
-        codeList = ["04", self.searchKey[0]]
-        s.send(pickle.dumps(codeList))
-        self.departureCityList["values"] = pickle.loads(s.recv(8192))
+        """
+        SearchTrain
+        """
+        if self.trainType.get()=='1':
+            self.trainCode["values"] =['a','b','c']
+        else:
+            self.trainCode["values"]= ['x','y','z']
         print(self.searchKey)
     def pricesAdd(self, event):
 
         if len(self.searchKey)==1:
-             self.searchKey+=[self.departureCityList.get().split(" ")[0]]
+             self.searchKey+=[self.trainCode.get().split(" ")[0]]
         else:
-            self.searchKey[1]=self.departureCityList.get().split(" ")[0]
+            self.searchKey[1]=self.trainCode.get().split(" ")[0]
         print(self.searchKey)
     def prices2(self):
         for child in self.winfo_children():
@@ -771,8 +760,110 @@ class Queries(ttk.Frame):
         self.back = ttk.Button(self, text="back", command=self.prices1)
         self.back.pack()
 
+    def seats(self):
+        for child in self.winfo_children():
+            child.pack_forget()
+            child.place_forget()
+
+        self.searchKey=[]
+
+        self.trainType=ttk.Combobox(self)
+        self.trainType["values"]=['1','2','3','4']
+        self.trainType.bind("<<ComboboxSelected>>", self.seatsUpdate)
+        self.trainType.pack()
+
+        self.trainCode = ttk.Combobox(self)
+        self.trainCode["values"] = ['1', '2', '3', '4']
+        self.trainCode.bind("<<ComboboxSelected>>", self.seatsAdd)
+        self.trainCode.pack()
+
+        self.continueToRoutes=ttk.Button(self, text="Continue", command = self.seats2)
+        self.continueToRoutes.pack(side=tk.BOTTOM)
+
+        self.back=ttk.Button(self, text="Back", command=self.init)
+        self.back.pack(side=tk.BOTTOM)
+    def seatsUpdate(self, event):
 
 
+        self.searchKey=[self.trainType.get().split(" ")[0]]
+
+
+        """
+        SearchTrain
+        """
+        if self.trainType.get()=='1':
+            self.trainCode["values"] =['a','b','c']
+        else:
+            self.trainCode["values"]= ['x','y','z']
+        print(self.searchKey)
+    def seatsAdd(self, event):
+
+        if len(self.searchKey)==1:
+             self.searchKey+=[self.trainCode.get().split(" ")[0]]
+        else:
+            self.searchKey[1]=self.trainCode.get().split(" ")[0]
+        print(self.searchKey)
+    def seats2(self):
+        messagebox.showinfo("Number of seats","this it the number of seats")
+
+
+    def routes1(self):
+        for child in self.winfo_children():
+            child.place_forget()
+
+        self.searchKey=[]
+
+        self.departureCountryList = ttk.Combobox(self, state="readonly")
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        self.departureCountryList["values"] = pickle.loads(s.recv(8192))
+        self.departureCountryList.bind("<<ComboboxSelected>>", self.routesUpdate)
+        self.departureCountryList.place(x=250, y=50)
+        self.departureCountryListLabel=ttk.Label(self, text="Countries")
+        self.departureCountryListLabel.place(x=100, y=50)
+
+        self.departureCityList = ttk.Combobox(self, state="readonly")
+        self.departureCityList.bind("<<ComboboxSelected>>", self.routesAdd)
+        self.departureCityList.place(x=250, y=100)
+        self.departureCityListLabel=ttk.Label(self, text="Cities")
+        self.departureCityListLabel.place(x=100, y = 100)
+
+
+        self.routeRecervation=ttk.Button(self, text="Continue", command=self.routes2)
+        self.routeRecervation.place(x=300, y =200)
+
+        self.backButton=ttk.Button(self, text="Back", command= self.init)
+        self.backButton.place(x=80,y=200)
+    def routesUpdate(self, event):
+
+        self.searchKey = [self.departureCountryList.get().split(" ")[0]]
+
+        print(self.searchKey[0])
+        codeList = ["04", self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        self.departureCityList["values"] = pickle.loads(s.recv(8192))
+        print(self.searchKey)
+    def routesAdd(self, event):
+
+        if len(self.searchKey) == 1:
+            self.searchKey += [self.departureCityList.get().split(" ")[0]]
+        else:
+            self.searchKey[1] = self.departureCityList.get().split(" ")[0]
+        print(self.searchKey)
+    def routes2(self):
+        for child in self.winfo_children():
+            child.place_forget()
+            child.pack_forget()
+
+        self.countryList = tk.Listbox(self)
+        """
+        ingresar lista de paises
+        """
+
+        self.countryList.pack()
+
+        self.back = ttk.Button(self, text="back", command=self.routes1)
+        self.back.pack()
 
 class MainApp(ttk.Frame):
     def __init__(self,main_window):
