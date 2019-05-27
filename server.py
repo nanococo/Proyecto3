@@ -404,6 +404,17 @@ class SocketServer(socket.socket):
             returnValue = self.getCountryByCode(dataList[1])
             client.send(pickle.dumps(returnValue))
 
+        elif dataList[0] == "43":
+            # getAllTrains
+            returnValue = self.getAllTrains()
+            client.send(pickle.dumps(returnValue))
+
+        elif dataList[0] == "44":
+            # getAllCities
+            returnValue = self.getAllCities()
+            client.send(pickle.dumps(returnValue))
+
+
 
 
 
@@ -1070,7 +1081,20 @@ class SocketServer(socket.socket):
                 break
         return result
 
+    def getAllTrains(self):
+        """Returns a list with all present trains on system"""
+        result = []
+        for i in self.dat.trainRoutes:
+            result.append(i)
+        return result
 
+    def getAllCities(self):
+        """Returns a list with all cities in the system"""
+        result = []
+        for i in self.dat.countryCitiesConnections:
+            for j in i[2]:
+                result.append(j[:2])
+        return result
 
     def broadcast(self, message):
         #Sending message to all clients
