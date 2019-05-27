@@ -2,7 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e0eb49f2-0f39-4f8b-862d-e71b6bfdc6d9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User_app_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/User_app_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/Bulgaria.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/Czech Republic.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/Germany.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/Greece.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/antillas.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/belgium.png" beforeDir="false" afterPath="$PROJECT_DIR$/newDataFiles/Assets/belgium.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/netherlands.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/newDataFiles/Assets/romania.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/User_app_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="990">
-              <caret line="210" lean-forward="true" selection-start-line="210" selection-end-line="210" />
+            <state relative-caret-position="456">
+              <caret line="173" column="57" lean-forward="true" selection-start-line="173" selection-start-column="57" selection-end-line="173" selection-end-column="57" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -90,8 +100,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="84" selection-start-line="84" selection-end-line="84" />
+            <state relative-caret-position="16736">
+              <caret line="1052" lean-forward="true" selection-start-line="1052" selection-end-line="1052" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -100,10 +110,15 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/loadData.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataFiles/Usuarios.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="48">
-              <caret line="3" column="18" lean-forward="true" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="18" />
+              <caret line="3" column="18" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -113,6 +128,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>print(&quot;hola&quot;)</find>
+      <find>PRINT</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -125,16 +141,16 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/dataFiles/Usuarios.txt" />
-        <option value="$PROJECT_DIR$/server.py" />
         <option value="$PROJECT_DIR$/User_app_main.py" />
+        <option value="$PROJECT_DIR$/server.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
-    <option name="width" value="1389" />
-    <option name="height" value="790" />
+    <option name="width" value="1400" />
+    <option name="height" value="785" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -162,7 +178,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents/Python_Tec" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RunDashboard">
@@ -177,7 +193,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.User_app_main">
+  <component name="RunManager" selected="Python.client">
     <configuration name="User_app_main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Proyecto_3" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -243,9 +259,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.User_app_main" />
-        <item itemvalue="Python.server" />
         <item itemvalue="Python.client" />
+        <item itemvalue="Python.server" />
+        <item itemvalue="Python.User_app_main" />
       </list>
     </recent_temporary>
   </component>
@@ -266,7 +282,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12747689" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12747689" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -274,7 +290,7 @@
       <window_info anchor="bottom" id="Debug" order="2" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info active="true" anchor="bottom" id="Run" order="5" visible="true" weight="0.23338048" />
+      <window_info anchor="bottom" id="Run" order="5" weight="0.4483734" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
@@ -309,6 +325,23 @@
     </layout-to-restore>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="2261" selection-start-line="2261" selection-end-line="2261" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/User_app_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="173" column="57" lean-forward="true" selection-start-line="173" selection-start-column="57" selection-end-line="173" selection-end-column="57" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Admin_App_Beta1.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2320">
@@ -346,13 +379,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Trenes.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
-          <caret line="1" column="8" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dataFiles/Administradores.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -360,37 +386,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Usuarios.txt">
+    <entry file="file://$PROJECT_DIR$/dataFiles/Trenes.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="3" column="18" lean-forward="true" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="18" />
+        <state relative-caret-position="16">
+          <caret line="1" column="8" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="84" selection-start-line="84" selection-end-line="84" />
+        <state relative-caret-position="16736">
+          <caret line="1052" lean-forward="true" selection-start-line="1052" selection-end-line="1052" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tkinter/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="2261" selection-start-line="2261" selection-end-line="2261" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/loadData.py">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/User_app_main.py">
+    <entry file="file://$PROJECT_DIR$/dataFiles/Usuarios.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="210" lean-forward="true" selection-start-line="210" selection-end-line="210" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="48">
+          <caret line="3" column="18" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="18" />
         </state>
       </provider>
     </entry>

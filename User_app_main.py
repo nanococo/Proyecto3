@@ -15,7 +15,7 @@ class map(ttk.Frame):
         #Spain
         self.pin= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin = ImageTk.PhotoImage(self.pin)
-        self.pinButton=ttk.Button(self, command= lambda: self.addNewMenu())
+        self.pinButton=ttk.Button(self, command= lambda:self.create_window("SP"))
         self.pinButton.config(image=self.displayPin)
         self.pinButton.place(x=90,y=330)
 
@@ -172,6 +172,8 @@ class newWindow:
         imageURL = ""
         if country=="PT":
             imageURL = "newDataFiles/Assets/portugal.png"
+        elif country == "SP":
+            imageURL = "newDataFiles/Assets/portugal.png"
         elif country == "FR":
             imageURL = "newDataFiles/Assets/france.gif"
         elif country == "SZ":
@@ -183,31 +185,31 @@ class newWindow:
         elif country == "NT":
             imageURL = "newDataFiles/Assets/netherlands.png"
         elif country == "TR":
-            imageURL = "newDataFiles/Assets/turkey.png"
+            imageURL = "newDataFiles/Assets/turkey.gif"
         elif country == "AH":
-            imageURL = "newDataFiles/Assets/antillas.jpg"
+            imageURL = "newDataFiles/Assets/antillas.png"
         elif country == "BE":
             imageURL = "newDataFiles/Assets/belgium.png"
         elif country == "SA":
             imageURL = "newDataFiles/Assets/samoa.png"
         elif country == "GR":
-            imageURL = "newDataFiles/Assets/Greece.jpg"
+            imageURL = "newDataFiles/Assets/Greece.png"
         elif country == "CZ":
-            imageURL = "newDataFiles/Assets/Czech Republic.jpg"
+            imageURL = "newDataFiles/Assets/Czech Republic.png"
         elif country == "PO":
             imageURL = "newDataFiles/Assets/poland.png"
         elif country == "RM":
-            imageURL = "newDataFiles/Assets/romania.jpg"
+            imageURL = "newDataFiles/Assets/romania.png"
         elif country == "UR":
-            imageURL = "newDataFiles/Assets/ukraine.jpg"
+            imageURL = "newDataFiles/Assets/ukraine.png"
         elif country == "BL":
-            imageURL = "newDataFiles/Assets/bulgaria.jpg"
+            imageURL = "newDataFiles/Assets/bulgaria.png"
         elif country == "FI":
             imageURL = "newDataFiles/Assets/finland.png"
         elif country == "SW":
             imageURL = "newDataFiles/Assets/switzerland.png"
         elif country == "GE":
-            imageURL = "newDataFiles/Assets/Germany.jpg"
+            imageURL = "newDataFiles/Assets/Germany.png"
 
         self.imageGIF2 = tk.PhotoImage(file=imageURL)
         self.imageLabel2 = tk.Label(self._sideWindow, image=self.imageGIF2)
