@@ -514,7 +514,7 @@ class logIn(ttk.Frame):
             return False
 
 
-class check(ttk.Frame):
+class Queries(ttk.Frame):
     def __init__(self, *args,**kwargs):
         super().__init__(*args,**kwargs)
 
@@ -524,13 +524,13 @@ class check(ttk.Frame):
         self.checkCities=ttk.Button(self, text="Cities", command=self.cities1)
         self.checkCities.pack(pady=10)
 
-        self.checkConnections=ttk.Button(self, text="Conections")
+        self.checkConnections=ttk.Button(self, text="Conections", command=self.conections1)
         self.checkConnections.pack(pady=10)
 
-        self.checkTrains=ttk.Button(self,text="Trains")
+        self.checkTrains=ttk.Button(self,text="Trains", command=self.trains1)
         self.checkTrains.pack(pady=10)
 
-        self.checkPrices=ttk.Button(self, text="Prices")
+        self.checkPrices=ttk.Button(self, text="Prices", command= self.prices1)
         self.checkPrices.pack(pady=10)
 
         self.checkTrainSeats=ttk.Button(self, text="Train Seats")
@@ -542,6 +542,7 @@ class check(ttk.Frame):
     def init(self):
         for child in self.winfo_children():
             child.pack_forget()
+            child.place_forget()
 
         self.checkCountries = ttk.Button(self, text="Countries", command=self.countries)
         self.checkCountries.pack(pady=10)
@@ -549,13 +550,13 @@ class check(ttk.Frame):
         self.checkCities = ttk.Button(self, text="Cities", command=self.cities1)
         self.checkCities.pack(pady=10)
 
-        self.checkConnections = ttk.Button(self, text="Conections")
+        self.checkConnections = ttk.Button(self, text="Conections", command=self.conections1)
         self.checkConnections.pack(pady=10)
 
-        self.checkTrains = ttk.Button(self, text="Trains")
+        self.checkTrains = ttk.Button(self, text="Trains", command=self.trains1)
         self.checkTrains.pack(pady=10)
 
-        self.checkPrices = ttk.Button(self, text="Prices")
+        self.checkPrices = ttk.Button(self, text="Prices", command= self.prices1)
         self.checkPrices.pack(pady=10)
 
         self.checkTrainSeats = ttk.Button(self, text="Train Seats")
@@ -577,6 +578,7 @@ class check(ttk.Frame):
 
         self.back=ttk.Button(self, text="back", command= self.init)
         self.back.pack()
+
     def cities1(self):
         for child in self.winfo_children():
             child.pack_forget()
@@ -600,7 +602,176 @@ class check(ttk.Frame):
         print(self.searchKey)
     def cities2(self):
         for child in self.winfo_children():
+            child.place_forget()
             child.pack_forget()
+
+        self.countryList = tk.Listbox(self)
+        """
+        ingresar lista de paises
+        """
+
+        self.countryList.pack()
+
+        self.back = ttk.Button(self, text="back", command=self.cities1)
+        self.back.pack()
+
+    def conections1(self):
+        for child in self.winfo_children():
+            child.place_forget()
+            child.pack_forget()
+
+        self.searchKey=[]
+
+        self.departureCountryList = ttk.Combobox(self, state="readonly")
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        self.departureCountryList["values"] = pickle.loads(s.recv(8192))
+        self.departureCountryList.bind("<<ComboboxSelected>>", self.conections_update)
+        self.departureCountryList.place(x=250, y=50)
+        self.departureCountryListLabel=ttk.Label(self, text="Countries")
+        self.departureCountryListLabel.place(x=100, y=50)
+
+        self.departureCityList = ttk.Combobox(self, state="readonly")
+        self.departureCityList.bind("<<ComboboxSelected>>", self.conections_addToSearch)
+        self.departureCityList.place(x=250, y=100)
+        self.departureCityListLabel=ttk.Label(self, text="Cities")
+        self.departureCityListLabel.place(x=100, y = 100)
+
+
+        self.routeRecervation=ttk.Button(self, text="Continue", command=self.conections2)
+        self.routeRecervation.place(x=300, y =200)
+
+        self.backButton=ttk.Button(self, text="Back", command= self.init)
+        self.backButton.place(x=80,y=200)
+    def conections_update(self, event):
+
+
+        self.searchKey=[self.departureCountryList.get().split(" ")[0]]
+
+
+        print(self.searchKey[0])
+        codeList = ["04", self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        self.departureCityList["values"] = pickle.loads(s.recv(8192))
+        print(self.searchKey)
+    def conections_addToSearch(self, event):
+
+        if len(self.searchKey)==1:
+             self.searchKey+=[self.departureCityList.get().split(" ")[0]]
+        else:
+            self.searchKey[1]=self.departureCityList.get().split(" ")[0]
+        print(self.searchKey)
+    def conections2(self):
+        for child in self.winfo_children():
+            child.place_forget()
+            child.pack_forget()
+
+        self.countryList = tk.Listbox(self)
+        """
+        ingresar lista de paises
+        """
+
+        self.countryList.pack()
+
+        self.back = ttk.Button(self, text="back", command=self.conections1)
+        self.back.pack()
+
+    def trains1(self):
+        for child in self.winfo_children():
+            child.place_forget()
+            child.pack_forget()
+
+        self.trainType=ttk.Combobox(self)
+        self.trainType["values"]=['1','2','3','4']
+        self.trainType.bind("<<ComboboxSelected>>", self.trains_get)
+        self.trainType.pack()
+
+        self.continueToTrains=ttk.Button(self, text="Continue", command=self.trains2)
+        self.continueToTrains.pack()
+
+
+        self.back=ttk.Button(self, text="Back", command=self.init)
+        self.back.pack()
+    def trains_get(self, event):
+        self.searchKey=self.trainType.get()
+        print(self.searchKey)
+    def trains2(self):
+        for child in self.winfo_children():
+            child.place_forget()
+            child.pack_forget()
+
+        self.countryList = tk.Listbox(self)
+        """
+        ingresar lista de paises
+        """
+
+        self.countryList.pack()
+
+        self.back = ttk.Button(self, text="back", command=self.trains1)
+        self.back.pack()
+
+    def prices1(self):
+        for child in self.winfo_children():
+            child.pack_forget()
+            child.place_forget()
+
+        self.searchKey = []
+
+        self.departureCountryList = ttk.Combobox(self, state="readonly")
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        self.departureCountryList["values"] = pickle.loads(s.recv(8192))
+        self.departureCountryList.bind("<<ComboboxSelected>>", self.prices_citiesUpdate)
+        self.departureCountryList.place(x=250, y=50)
+        self.departureCountryListLabel = ttk.Label(self, text="Countries")
+        self.departureCountryListLabel.place(x=100, y=50)
+
+        self.departureCityList = ttk.Combobox(self, state="readonly")
+        self.departureCityList.bind("<<ComboboxSelected>>", self.pricesAdd)
+        self.departureCityList.place(x=250, y=100)
+        self.departureCityListLabel = ttk.Label(self, text="Cities")
+        self.departureCityListLabel.place(x=100, y=100)
+
+        self.continueToRoutes=ttk.Button(self, text="Continue", command = self.prices2)
+        self.continueToRoutes.pack(side=tk.BOTTOM)
+
+        self.back=ttk.Button(self, text="Back", command=self.init)
+        self.back.pack(side=tk.BOTTOM)
+    def prices_citiesUpdate(self, event):
+
+
+        self.searchKey=[self.departureCountryList.get().split(" ")[0]]
+
+
+        print(self.searchKey[0])
+        codeList = ["04", self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        self.departureCityList["values"] = pickle.loads(s.recv(8192))
+        print(self.searchKey)
+    def pricesAdd(self, event):
+
+        if len(self.searchKey)==1:
+             self.searchKey+=[self.departureCityList.get().split(" ")[0]]
+        else:
+            self.searchKey[1]=self.departureCityList.get().split(" ")[0]
+        print(self.searchKey)
+    def prices2(self):
+        for child in self.winfo_children():
+            child.place_forget()
+            child.pack_forget()
+
+        self.countryList = tk.Listbox(self)
+        """
+        ingresar lista de paises
+        """
+
+        self.countryList.pack()
+
+        self.back = ttk.Button(self, text="back", command=self.prices1)
+        self.back.pack()
+
+
+
 
 class MainApp(ttk.Frame):
     def __init__(self,main_window):
@@ -618,7 +789,7 @@ class MainApp(ttk.Frame):
         self.reservation_page=logIn(self.notebook)
         self.notebook.add(self.reservation_page,text="Reservations",padding=10)
 
-        self.checkDataBase=check(self.notebook)
+        self.checkDataBase=Queries(self.notebook)
         self.notebook.add(self.checkDataBase,text="Queries", padding=10)
 
 
