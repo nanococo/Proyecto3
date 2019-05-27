@@ -396,8 +396,12 @@ class SocketServer(socket.socket):
         elif dataList[0] == "41":
             # validateAdmin
             # [0] is code 41
-
             returnValue = self.getCustomRoutes(dataList[1], dataList[2], dataList[3], dataList[4])
+            client.send(pickle.dumps(returnValue))
+
+        elif dataList[0] == "42":
+            # getCountryByCode
+            returnValue = self.getCountryByCode(dataList[1])
             client.send(pickle.dumps(returnValue))
 
 
@@ -627,7 +631,7 @@ class SocketServer(socket.socket):
                     if data.countryAndCityExistInList(newConnArrCountry, newConnArrCity, self.dat.countryCitiesConnections):
                         # Arrive city or country do exist
 
-                        possibleConnections = data.getConnectionById(self.dat.countryCitiesConnections, newConnCode)
+                        possibleConnections = self.dat.getConnectionById(self.dat.countryCitiesConnections, newConnCode)
                         if len(possibleConnections) > 0:
                             presentConnection = True
                             break
@@ -1054,6 +1058,16 @@ class SocketServer(socket.socket):
 
         return finalList
 
+    def getCountryByCode(self, countryCode):
+        """Returns a country name as standalone string
+        :param countryCode is the code of the country to search for"""
+        result = ""
+        for i in self.dat.countryCitiesConnections:
+            print(i[0])
+            if i[0]==countryCode:
+                result = i[1]
+                break
+        return result
 
 
 
