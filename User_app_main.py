@@ -516,26 +516,89 @@ class check(ttk.Frame):
     def __init__(self, *args,**kwargs):
         super().__init__(*args,**kwargs)
 
-        self.checkCountries=ttk.Button(self, text="Countries")
-        self.checkCountries.pack()
+        self.checkCountries=ttk.Button(self, text="Countries", command=self.countries)
+        self.checkCountries.pack(pady=10)
 
-        self.checkCities=ttk.Button(self, text="Cities")
-        self.checkCities.pack()
+        self.checkCities=ttk.Button(self, text="Cities", command=self.cities1)
+        self.checkCities.pack(pady=10)
 
         self.checkConnections=ttk.Button(self, text="Conections")
-        self.checkConnections.pack()
+        self.checkConnections.pack(pady=10)
 
         self.checkTrains=ttk.Button(self,text="Trains")
-        self.checkTrains.pack()
+        self.checkTrains.pack(pady=10)
 
         self.checkPrices=ttk.Button(self, text="Prices")
-        self.checkPrices.pack()
+        self.checkPrices.pack(pady=10)
 
         self.checkTrainSeats=ttk.Button(self, text="Train Seats")
-        self.checkTrainSeats.pack()
+        self.checkTrainSeats.pack(pady=10)
 
         self.checkRoutes=ttk.Button(self,text="Routes")
-        self.checkRoutes.pack()
+        self.checkRoutes.pack(pady=10)
+
+    def init(self):
+        for child in self.winfo_children():
+            child.pack_forget()
+
+        self.checkCountries = ttk.Button(self, text="Countries", command=self.countries)
+        self.checkCountries.pack(pady=10)
+
+        self.checkCities = ttk.Button(self, text="Cities", command=self.cities1)
+        self.checkCities.pack(pady=10)
+
+        self.checkConnections = ttk.Button(self, text="Conections")
+        self.checkConnections.pack(pady=10)
+
+        self.checkTrains = ttk.Button(self, text="Trains")
+        self.checkTrains.pack(pady=10)
+
+        self.checkPrices = ttk.Button(self, text="Prices")
+        self.checkPrices.pack(pady=10)
+
+        self.checkTrainSeats = ttk.Button(self, text="Train Seats")
+        self.checkTrainSeats.pack(pady=10)
+
+        self.checkRoutes = ttk.Button(self, text="Routes")
+        self.checkRoutes.pack(pady=10)
+
+    def countries(self):
+        for child in self.winfo_children():
+            child.pack_forget()
+
+        self.countryList=tk.Listbox(self)
+        """
+        ingresar lista de paises
+        """
+
+        self.countryList.pack()
+
+        self.back=ttk.Button(self, text="back", command= self.init)
+        self.back.pack()
+    def cities1(self):
+        for child in self.winfo_children():
+            child.pack_forget()
+
+        self.searchKey=[]
+
+        self.selectCountry=ttk.Combobox(self)
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        self.selectCountry["values"] = pickle.loads(s.recv(8192))
+        self.selectCountry.bind("<<ComboboxSelected>>", self.cities1_get)
+        self.selectCountry.pack()
+
+        self.continueToCities=ttk.Button(self, text="Continue")
+        self.continueToCities.pack()
+
+        self.back = ttk.Button(self, text="back", command=self.init)
+        self.back.pack()
+    def cities1_get(self, event):
+        self.searchKey=[self.selectCountry.get().split(" ")[0]]
+        print(self.searchKey)
+    def cities2(self):
+        for child in self.winfo_children():
+            child.pack_forget()
 
 class MainApp(ttk.Frame):
     def __init__(self,main_window):
