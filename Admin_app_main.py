@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import *
 from PIL import Image,ImageTk
+from tkinter import Tk, Canvas
 import socket, os, pickle
 
 loggedIn = ''
@@ -142,28 +143,37 @@ class ConsultPrices(tk.Frame):
 
     def checkPrices(self):
 
-        #global trainsFormat
+        codeList = ["06.5"]
+        s.send(pickle.dumps(codeList))
+        trains = pickle.loads(s.recv(8192))
+        print(trains)
 
+        for child in self.winfo_children():
+            child.place_forget()
 
-        y = 0
-        for train in trainsFormat:
-            if train[6]:
-                x = 0
-                y += 20
-                label = tk.Label(self, text='Train:' + train[2])
-                label.config(font=('Calibri', 10))
-                label.place(x=x, y=y)
-                for route in train[6]:
-                    y += 20
-                    x = 40
-                    label = tk.Label(self,text='Route:' + ' (' + train[4] + ',' + train[5] + ') ' + '-' + ' (' + route[0] + ',' +
-                                          route[1] + ') ')
-                    label.config(font=('Calibri', 10))
-                    label.place(x=x, y=y)
+        self.selection = StringVar()
 
-                    label = tk.Label(self, text='Price: '+route[2])
-                    label.config(font=('Calibri', 10))
-                    label.place(x=x+130, y=y)
+        self.availableCountries = ttk.Combobox(self, state="readonly", textvariable=self.selection)
+        self.availableCountries["values"] = trains
+
+        self.availableCountries.bind("<<ComboboxSelected>>")
+        self.availableCountries.place(x=165, y=50)
+        self.availableCountriesLabel = ttk.Label(self, text="Please choose a train to find assosiated route prices")
+        self.availableCountriesLabel.place(x=105, y=20)
+
+        self.label = tk.Label(self, text='The prices should appear here')
+        self.label.config(font=('Calibri', 10))
+        self.label.place(x=160, y=120)
+
+        Continue = ttk.Button(self, text='Continue',
+                              command=lambda: self.labelCities())
+        Continue.place(x=200, y=80)
+
+        self.cityListbox = tk.Listbox(self)
+        self.cityListbox.place(x=180, y=150)
+
+        print(self.selection.get())
+
 
 class ConsultCountries(tk.Frame):
 
@@ -172,6 +182,7 @@ class ConsultCountries(tk.Frame):
         label = tk.Label(self, text='These are the registered countries:')
         label.config(font=('Calibri', 11))
         label.place(x=0, y=0)
+
         self.checkCoutries()
 
         buttonBACK = ttk.Button(self, text='BACK',
@@ -180,12 +191,14 @@ class ConsultCountries(tk.Frame):
 
     def checkCoutries(self):
 
-        global countriesFormat
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        countries = pickle.loads(s.recv(8192))
 
         y = 0
-        for country in countriesFormat:
+        for country in countries:
             y += 20
-            label = tk.Label(self, text=country[0] + '-' + country[1])
+            label = tk.Label(self, text=country[0]+', '+country[1])
             label.config(font=('Calibri', 12))
             label.place(x=2, y=y)
 
@@ -205,21 +218,55 @@ class ConsultCities(tk.Frame):
 
     def checkCities(self):
 
-        global countriesFormat
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        countries = pickle.loads(s.recv(8192))
+        print(countries)
 
-        y = 0
-        for country in countriesFormat:
-            x = 0
-            y += 30
-            label = tk.Label(self, text='Country: ' + country[1] + ',  Cities:')
-            label.config(font=('Calibri', 10))
-            label.place(x=x, y=y)
-            for city in country[2]:
-                y += 30
-                x = 20
-                label = tk.Label(self,text=city[0]+' - '+city[1])
-                label.config(font=('Calibri', 13))
-                label.place(x=x, y=y)
+        for child in self.winfo_children():
+            child.place_forget()
+
+        self.selection = StringVar()
+
+        self.availableCountries = ttk.Combobox(self, state="readonly", textvariable=self.selection)
+        self.availableCountries["values"] = countries
+
+        self.availableCountries.bind("<<ComboboxSelected>>")
+        self.availableCountries.place(x=165, y=50)
+        self.availableCountriesLabel = ttk.Label(self, text="Please choose a country to find associated cities:")
+        self.availableCountriesLabel.place(x=105, y=20)
+
+        self.label = tk.Label(self, text='The cities should appear here')
+        self.label.config(font=('Calibri', 10))
+        self.label.place(x=160, y=120)
+
+        Continue = ttk.Button(self, text='Continue',
+                                command=lambda: self.labelCities())
+        Continue.place(x=200,y=80)
+
+        self.cityListbox = tk.Listbox(self)
+        self.cityListbox.place(x=180, y=150)
+
+        print(self.selection.get())
+
+    def fillWithCities(self):
+
+        self.cityListbox.delete(0, tk.END)
+
+        self.searchKey = self.availableCountries.get().split(' ')[0]
+        codeList = ["04", self.searchKey]
+        s.send(pickle.dumps(codeList))
+        cities = pickle.loads(s.recv(8192))
+
+        self.label.configure(text='The cities of '+self.selection.get()+' are:')
+        self.label.config(font=('Calibri',10))
+        self.label.place(x=160,y=120)
+
+        y = 130
+        index = 0
+        for city in cities:
+            y += 20
+            self.cityListbox.insert(index, city[0]+' '+city[1])
 
 class ConsultConnections(tk.Frame):
 
@@ -236,6 +283,7 @@ class ConsultConnections(tk.Frame):
         buttonBACK.pack(side='bottom')
 
     def checkConnections(self):
+
 
         global countriesFormat
 
@@ -414,6 +462,8 @@ class Insert(tk.Frame):
         newCountryCode = self.code.get()
         newCountryName = self.name.get()
 
+        print(newCountryCode, newCountryName)
+
         if newCountryCode == '' or newCountryName == '':
             messagebox.showinfo('ERROR','Please fill all the gaps.')
         else:
@@ -423,22 +473,13 @@ class Insert(tk.Frame):
             success = pickle.loads(s.recv(8192))
 
             if not success:
-
-                #AQUI PONE MENSAJE DE EXITO
-
-                print("Country is already present. Press enter to re-try.")
-                input("Press enter to continue...")
+                messagebox.showinfo('ERROR','The typed code already exists')
             else:
+                messagebox.showinfo("Done", "The country " + newCountryName + '(' + newCountryCode + ")  was succesfully inserted.")
+                self.back_insert(controller)
 
-                #AQUI PONE MENSAJE DE ERROR
 
-                print("Successfully inserted:")
-                input("Press enter to continue...")
-                end = True
 
-           # newCountry = [code, name, []]
-           # messagebox.showinfo("Done", "The country "+name+'('+code+")  was succesfully inserted.")
-            self.back_insert(controller)
 
     def draw_insertCity(self, controller):
 
@@ -479,7 +520,7 @@ class Insert(tk.Frame):
 
         newCityCode = self.code.get()
         newCityName = self.name.get()
-        countryCodeForCity = self.availableCountries.get()
+        countryCodeForCity = self.availableCountries.get().split(' ')[0]
 
         if newCityCode == '' or newCityName == '':
             messagebox.showinfo('ERROR','Please fill all the gaps.')
@@ -496,17 +537,11 @@ class Insert(tk.Frame):
             success = pickle.loads(s.recv(8192))
 
             if not success:
-                print("City is already present. Press enter to re-try.")
-                input("Press enter to continue...")
+                messagebox.showinfo('ERROR','The city is already present')
             else:
-                print("Successfully inserted:")
-                input("Press enter to continue...")
-                end = True
-
-
-            # newCity = [code, name, []]
-            # messagebox.showinfo("Done", name+'('+code+")  was succesfully inserted to the cities of "+addTo)
-            # self.back_insert(controller)
+                messagebox.showinfo("Done", newCityName+'('+newCityCode+")  was succesfully inserted to the cities of "+
+                                    self.availableCountries.get())
+                self.back_insert(controller)
 
     def draw_insertConnection(self, controller):
 
