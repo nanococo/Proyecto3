@@ -533,10 +533,10 @@ class Queries(ttk.Frame):
         self.checkPrices=ttk.Button(self, text="Prices", command= self.prices1)
         self.checkPrices.pack(pady=10)
 
-        self.checkTrainSeats=ttk.Button(self, text="Train Seats")
+        self.checkTrainSeats=ttk.Button(self, text="Train Seats", command= self.seats)
         self.checkTrainSeats.pack(pady=10)
 
-        self.checkRoutes=ttk.Button(self,text="Routes")
+        self.checkRoutes=ttk.Button(self,text="Routes", command= self.routes1)
         self.checkRoutes.pack(pady=10)
 
     def init(self):
@@ -559,10 +559,10 @@ class Queries(ttk.Frame):
         self.checkPrices = ttk.Button(self, text="Prices", command= self.prices1)
         self.checkPrices.pack(pady=10)
 
-        self.checkTrainSeats = ttk.Button(self, text="Train Seats")
+        self.checkTrainSeats = ttk.Button(self, text="Train Seats", command= self.seats)
         self.checkTrainSeats.pack(pady=10)
 
-        self.checkRoutes = ttk.Button(self, text="Routes")
+        self.checkRoutes = ttk.Button(self, text="Routes", command= self.routes1)
         self.checkRoutes.pack(pady=10)
 
     def countries(self):
@@ -715,45 +715,43 @@ class Queries(ttk.Frame):
             child.pack_forget()
             child.place_forget()
 
-        self.searchKey = []
+        self.searchKey=[]
 
-        self.departureCountryList = ttk.Combobox(self, state="readonly")
-        codeList = ["03"]
-        s.send(pickle.dumps(codeList))
-        self.departureCountryList["values"] = pickle.loads(s.recv(8192))
-        self.departureCountryList.bind("<<ComboboxSelected>>", self.prices_citiesUpdate)
-        self.departureCountryList.place(x=250, y=50)
-        self.departureCountryListLabel = ttk.Label(self, text="Countries")
-        self.departureCountryListLabel.place(x=100, y=50)
+        self.trainType=ttk.Combobox(self)
+        self.trainType["values"]=['1','2','3','4']
+        self.trainType.bind("<<ComboboxSelected>>", self.pricesUpdate)
+        self.trainType.pack()
 
-        self.departureCityList = ttk.Combobox(self, state="readonly")
-        self.departureCityList.bind("<<ComboboxSelected>>", self.pricesAdd)
-        self.departureCityList.place(x=250, y=100)
-        self.departureCityListLabel = ttk.Label(self, text="Cities")
-        self.departureCityListLabel.place(x=100, y=100)
+        self.trainCode = ttk.Combobox(self)
+        self.trainCode["values"] = ['1', '2', '3', '4']
+        self.trainCode.bind("<<ComboboxSelected>>", self.pricesAdd)
+        self.trainCode.pack()
 
         self.continueToRoutes=ttk.Button(self, text="Continue", command = self.prices2)
         self.continueToRoutes.pack(side=tk.BOTTOM)
 
         self.back=ttk.Button(self, text="Back", command=self.init)
         self.back.pack(side=tk.BOTTOM)
-    def prices_citiesUpdate(self, event):
+    def pricesUpdate(self, event):
 
 
-        self.searchKey=[self.departureCountryList.get().split(" ")[0]]
+        self.searchKey=[self.trainType.get().split(" ")[0]]
 
 
-        print(self.searchKey[0])
-        codeList = ["04", self.searchKey[0]]
-        s.send(pickle.dumps(codeList))
-        self.departureCityList["values"] = pickle.loads(s.recv(8192))
+        """
+        SearchTrain
+        """
+        if self.trainType.get()=='1':
+            self.trainCode["values"] =['a','b','c']
+        else:
+            self.trainCode["values"]= ['x','y','z']
         print(self.searchKey)
     def pricesAdd(self, event):
 
         if len(self.searchKey)==1:
-             self.searchKey+=[self.departureCityList.get().split(" ")[0]]
+             self.searchKey+=[self.trainCode.get().split(" ")[0]]
         else:
-            self.searchKey[1]=self.departureCityList.get().split(" ")[0]
+            self.searchKey[1]=self.trainCode.get().split(" ")[0]
         print(self.searchKey)
     def prices2(self):
         for child in self.winfo_children():
@@ -770,8 +768,110 @@ class Queries(ttk.Frame):
         self.back = ttk.Button(self, text="back", command=self.prices1)
         self.back.pack()
 
+    def seats(self):
+        for child in self.winfo_children():
+            child.pack_forget()
+            child.place_forget()
+
+        self.searchKey=[]
+
+        self.trainType=ttk.Combobox(self)
+        self.trainType["values"]=['1','2','3','4']
+        self.trainType.bind("<<ComboboxSelected>>", self.seatsUpdate)
+        self.trainType.pack()
+
+        self.trainCode = ttk.Combobox(self)
+        self.trainCode["values"] = ['1', '2', '3', '4']
+        self.trainCode.bind("<<ComboboxSelected>>", self.seatsAdd)
+        self.trainCode.pack()
+
+        self.continueToRoutes=ttk.Button(self, text="Continue", command = self.seats2)
+        self.continueToRoutes.pack(side=tk.BOTTOM)
+
+        self.back=ttk.Button(self, text="Back", command=self.init)
+        self.back.pack(side=tk.BOTTOM)
+    def seatsUpdate(self, event):
 
 
+        self.searchKey=[self.trainType.get().split(" ")[0]]
+
+
+        """
+        SearchTrain
+        """
+        if self.trainType.get()=='1':
+            self.trainCode["values"] =['a','b','c']
+        else:
+            self.trainCode["values"]= ['x','y','z']
+        print(self.searchKey)
+    def seatsAdd(self, event):
+
+        if len(self.searchKey)==1:
+             self.searchKey+=[self.trainCode.get().split(" ")[0]]
+        else:
+            self.searchKey[1]=self.trainCode.get().split(" ")[0]
+        print(self.searchKey)
+    def seats2(self):
+        messagebox.showinfo("Number of seats","this it the number of seats")
+
+
+    def routes1(self):
+        for child in self.winfo_children():
+            child.place_forget()
+
+        self.searchKey=[]
+
+        self.departureCountryList = ttk.Combobox(self, state="readonly")
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        self.departureCountryList["values"] = pickle.loads(s.recv(8192))
+        self.departureCountryList.bind("<<ComboboxSelected>>", self.routesUpdate)
+        self.departureCountryList.place(x=250, y=50)
+        self.departureCountryListLabel=ttk.Label(self, text="Countries")
+        self.departureCountryListLabel.place(x=100, y=50)
+
+        self.departureCityList = ttk.Combobox(self, state="readonly")
+        self.departureCityList.bind("<<ComboboxSelected>>", self.routesAdd)
+        self.departureCityList.place(x=250, y=100)
+        self.departureCityListLabel=ttk.Label(self, text="Cities")
+        self.departureCityListLabel.place(x=100, y = 100)
+
+
+        self.routeRecervation=ttk.Button(self, text="Continue", command=self.routes2)
+        self.routeRecervation.place(x=300, y =200)
+
+        self.backButton=ttk.Button(self, text="Back", command= self.init)
+        self.backButton.place(x=80,y=200)
+    def routesUpdate(self, event):
+
+        self.searchKey = [self.departureCountryList.get().split(" ")[0]]
+
+        print(self.searchKey[0])
+        codeList = ["04", self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        self.departureCityList["values"] = pickle.loads(s.recv(8192))
+        print(self.searchKey)
+    def routesAdd(self, event):
+
+        if len(self.searchKey) == 1:
+            self.searchKey += [self.departureCityList.get().split(" ")[0]]
+        else:
+            self.searchKey[1] = self.departureCityList.get().split(" ")[0]
+        print(self.searchKey)
+    def routes2(self):
+        for child in self.winfo_children():
+            child.place_forget()
+            child.pack_forget()
+
+        self.countryList = tk.Listbox(self)
+        """
+        ingresar lista de paises
+        """
+
+        self.countryList.pack()
+
+        self.back = ttk.Button(self, text="back", command=self.routes1)
+        self.back.pack()
 
 class MainApp(ttk.Frame):
     def __init__(self,main_window):
