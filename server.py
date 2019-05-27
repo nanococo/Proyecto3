@@ -100,7 +100,7 @@ class SocketServer(socket.socket):
             # getConnectionsByCityAndCountry
             # [0] is code 05
             # [1] is country
-            # [1] is city
+            # [2] is city
             returnValue = self.getConnectionsByCityAndCountry(dataList[1], dataList[2])
             client.send(pickle.dumps(returnValue))
 
@@ -457,7 +457,7 @@ class SocketServer(socket.socket):
                 for k in range(len(self.dat.countryCitiesConnections[i][2][j][2])):
                     if self.dat.countryCitiesConnections[i][0] == country:
                         if self.dat.countryCitiesConnections[i][2][j][0] == city:
-                            returnList.append(str(count) + ") ID: " + str(
+                            returnList.append( str(
                                 self.dat.countryCitiesConnections[i][2][j][2][k][0]) + ". From: " + str(
                                 self.dat.countryCitiesConnections[i][0]) + ", " + str(
                                 self.dat.countryCitiesConnections[i][2][j][0]) + "; to " + str(

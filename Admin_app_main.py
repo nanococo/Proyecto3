@@ -143,37 +143,48 @@ class ConsultPrices(tk.Frame):
 
     def checkPrices(self):
 
-        codeList = ["06.5"]
-        s.send(pickle.dumps(codeList))
-        trains = pickle.loads(s.recv(8192))
-        print(trains)
-
         for child in self.winfo_children():
             child.place_forget()
 
-        self.selection = StringVar()
+        self.trainCodeLabel = ttk.Label(self, text="Please type a train code to find assosiated route prices")
+        self.trainCodeLabel.place(x=100, y=20)
 
-        self.availableCountries = ttk.Combobox(self, state="readonly", textvariable=self.selection)
-        self.availableCountries["values"] = trains
+        self.trainCode = ttk.Entry(self)
+        self.trainCode.place(x=175, y=40)
 
-        self.availableCountries.bind("<<ComboboxSelected>>")
-        self.availableCountries.place(x=165, y=50)
-        self.availableCountriesLabel = ttk.Label(self, text="Please choose a train to find assosiated route prices")
-        self.availableCountriesLabel.place(x=105, y=20)
-
-        self.label = tk.Label(self, text='The prices should appear here')
+        self.label = tk.Label(self, text='')
         self.label.config(font=('Calibri', 10))
-        self.label.place(x=160, y=120)
+        self.label.place(x=155, y=120)
 
         Continue = ttk.Button(self, text='Continue',
-                              command=lambda: self.labelCities())
+                              command=lambda: self.fillWithPrices())
         Continue.place(x=200, y=80)
 
-        self.cityListbox = tk.Listbox(self)
-        self.cityListbox.place(x=180, y=150)
+        self.pricesListbox = tk.Listbox(self, width=79)
+        self.pricesListbox.place(x=10, y=150)
 
-        print(self.selection.get())
+    def fillWithPrices(self):
 
+        self.pricesListbox.delete(0, tk.END)
+
+        code = self.trainCode.get()
+        print(code)
+        if code == '':
+            messagebox.showinfo('ERROR','Please type a train code')
+        else:
+            codeList = ["07", code]
+            s.send(pickle.dumps(codeList))
+            prices = pickle.loads(s.recv(8192))
+            print(prices)
+
+            self.label.configure(text='The route prices of are:')
+            self.label.config(font=('Calibri', 10))
+            self.label.place(x=160, y=120)
+
+
+            index = 0
+            for route in prices:
+                self.cityListbox.insert(index, route)
 
 class ConsultCountries(tk.Frame):
 
@@ -181,7 +192,7 @@ class ConsultCountries(tk.Frame):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text='These are the registered countries:')
         label.config(font=('Calibri', 11))
-        label.place(x=0, y=0)
+        label.place(x=130, y=20)
 
         self.checkCoutries()
 
@@ -195,12 +206,12 @@ class ConsultCountries(tk.Frame):
         s.send(pickle.dumps(codeList))
         countries = pickle.loads(s.recv(8192))
 
-        y = 0
+        self.countryListbox = tk.Listbox(self, width=30, height=30)
+
+        index = 0
         for country in countries:
-            y += 20
-            label = tk.Label(self, text=country[0]+', '+country[1])
-            label.config(font=('Calibri', 12))
-            label.place(x=2, y=y)
+            self.countryListbox.insert(index, country[0]+' '+country[1])
+        self.countryListbox.place(x=155, y=50)
 
 class ConsultCities(tk.Frame):
 
@@ -236,16 +247,16 @@ class ConsultCities(tk.Frame):
         self.availableCountriesLabel = ttk.Label(self, text="Please choose a country to find associated cities:")
         self.availableCountriesLabel.place(x=105, y=20)
 
-        self.label = tk.Label(self, text='The cities should appear here')
+        self.label = tk.Label(self, text='')
         self.label.config(font=('Calibri', 10))
-        self.label.place(x=160, y=120)
+        self.label.place(x=155, y=120)
 
         Continue = ttk.Button(self, text='Continue',
-                                command=lambda: self.labelCities())
+                                command=lambda: self.fillWithCities())
         Continue.place(x=200,y=80)
 
         self.cityListbox = tk.Listbox(self)
-        self.cityListbox.place(x=180, y=150)
+        self.cityListbox.place(x=175, y=150)
 
         print(self.selection.get())
 
@@ -262,19 +273,14 @@ class ConsultCities(tk.Frame):
         self.label.config(font=('Calibri',10))
         self.label.place(x=160,y=120)
 
-        y = 130
         index = 0
         for city in cities:
-            y += 20
             self.cityListbox.insert(index, city[0]+' '+city[1])
 
 class ConsultConnections(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text='These are the registered connections:')
-        label.config(font=('Calibri', 11))
-        label.place(x=0, y=0)
 
         self.checkConnections()
 
@@ -283,24 +289,81 @@ class ConsultConnections(tk.Frame):
         buttonBACK.pack(side='bottom')
 
     def checkConnections(self):
+        self.searchKey = []
+
+        self.countryList = ttk.Combobox(self, state="readonly")
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        countries = pickle.loads(s.recv(8192))
+        self.countryList["values"] = countries
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionFixed)
+        self.countryList.place(x=165, y=50)
+        self.countryListLabel = ttk.Label(self, text="Select a country")
+        self.countryListLabel.place(x=195, y=30)
+
+        self.cityList = ttk.Combobox(self, state="readonly")
+        self.cityList.bind("<<ComboboxSelected>>", self.selectCityFixed)
+        self.cityList.place(x=165, y=130)
+        self.cityListLabel = ttk.Label(self, text="Select a city")
+        self.cityListLabel.place(x=205, y=100)
+
+        self.label = tk.Label(self, text='')
+        self.label.config(font=('Calibri', 10))
+
+        self.connectionListbox = tk.Listbox(self, width=50)
+        self.connectionListbox.place(x=85, y=250)
+
+        Continue = ttk.Button(self, text='Continue',
+                              command=lambda: self.fillWithConnections())
+        Continue.place(x=200, y=180)
+
+    def fillWithConnections(self):
+
+        self.connectionListbox.delete(0, tk.END)
+
+        countryCode = self.countryList.get().split(' ')[0]
+        cityCode = self.cityList.get().split(' ')[0]
+
+        if countryCode == '':
+            messagebox.showinfo('ERROR','Please select a country')
+        elif cityCode == '':
+            messagebox.showinfo('ERROR', 'Please select a city')
+        else:
+
+            codeList = ["05",countryCode,cityCode]
+            s.send(pickle.dumps(codeList))
+            connections = pickle.loads(s.recv(8192))
+
+            if not connections:
+                self.label.configure(text=self.cityList.get() + ' does not have registered connections')
+                self.label.place(x=85,y=230)
+
+            else:
+                self.label.configure(text='The connections of '+self.cityList.get()+' are:')
+                self.label.place(x=135, y=230)
+                index = 0
+                for connection in connections:
+                    self.connectionListbox.insert(index, connection)
 
 
-        global countriesFormat
+    def updateCitiesOnSelectionFixed(self, event):
 
-        y = 0
-        for country in countriesFormat:
-            for city in country[2]:
-                y += 30
-                x = 0
-                label = tk.Label(self,text='City:'+city[1]+', Connections:')
-                label.config(font=('Calibri', 10))
-                label.place(x=x, y=y)
-                for connection in city[2]:
-                    x = 30
-                    y += 20
-                    label = tk.Label(self, text='Code: '+connection[0]+' / '+city[0] + '-' + connection[2]+' / '+connection[3]+'h')
-                    label.config(font=('Calibri', 13))
-                    label.place(x=x, y=y)
+
+        self.searchKey=[self.countryList.get().split(" ")[0]]
+        print(self.searchKey[0])
+        codeList = ["04", self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        cities = pickle.loads(s.recv(8192))
+        self.cityList["values"] = cities
+        print(self.searchKey)
+
+    def selectCityFixed(self, event):
+
+        if len(self.searchKey)==1:
+             self.searchKey+=[self.cityList.get().split(" ")[0]]
+        else:
+            self.searchKey[1]=self.cityList.get().split(" ")[0]
+        print(self.searchKey)
 
 class ConsultRoutes(tk.Frame):
 
