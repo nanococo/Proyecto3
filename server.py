@@ -491,7 +491,7 @@ class SocketServer(socket.socket):
                 train = "0" + train
             for i in range(len(self.dat.trainRoutes)):
                 if train == self.dat.trainRoutes[i][0]:
-                    returnList.append("Train Type: " + self.dat.trainRoutes[i][0] + ". Code: " + self.dat.trainRoutes[i][1] + ". Name: " + self.dat.trainRoutes[i][2] + ". Capacity: " + self.dat.trainRoutes[i][3])
+                    returnList.append(" Code: " + self.dat.trainRoutes[i][1] + ". Name: " + self.dat.trainRoutes[i][2] + ". Capacity: " + self.dat.trainRoutes[i][3])
         return returnList
 
     def getPricesByTrainCode(self, train):
