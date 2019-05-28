@@ -573,7 +573,7 @@ class Queries(ttk.Frame):
 
 
 
-        self.countryList=tk.Listbox(self)
+        self.countryList=tk.Listbox(self, width=50)
 
         codeList = ["03"]
         s.send(pickle.dumps(codeList))
@@ -615,7 +615,7 @@ class Queries(ttk.Frame):
             child.place_forget()
             child.pack_forget()
 
-        self.cityList = tk.Listbox(self)
+        self.cityList = tk.Listbox(self, width=50)
         codeList = ["04", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         cityListServer = pickle.loads(s.recv(8192))
@@ -680,7 +680,7 @@ class Queries(ttk.Frame):
             child.place_forget()
             child.pack_forget()
 
-        self.conectionsList = tk.Listbox(self)
+        self.conectionsList = tk.Listbox(self, width=50)
 
         codeList = ["05", self.searchKey[0], self.searchKey[1]]
         s.send(pickle.dumps(codeList))
@@ -718,7 +718,7 @@ class Queries(ttk.Frame):
             child.place_forget()
             child.pack_forget()
 
-        self.trainList = tk.Listbox(self)
+        self.trainList = tk.Listbox(self, width=50)
 
         codeList = ["06", self.searchKey]
         s.send(pickle.dumps(codeList))
@@ -764,7 +764,7 @@ class Queries(ttk.Frame):
                 child.place_forget()
                 child.pack_forget()
 
-            self.prices=tk.Listbox(self)
+            self.prices=tk.Listbox(self, width=50)
 
             for i in pricesServer:
                 self.prices.insert(tk.END,i)
@@ -775,7 +775,6 @@ class Queries(ttk.Frame):
 
             self.back = ttk.Button(self, text="back", command=self.prices1)
             self.back.pack()
-
 
 
     def seats1(self):
@@ -808,7 +807,7 @@ class Queries(ttk.Frame):
                 child.place_forget()
                 child.pack_forget()
 
-            self.seats = tk.Listbox(self)
+            self.seats = tk.Listbox(self, width=50)
 
             for i in seatsServer:
                 self.seats.insert(tk.END, i)
@@ -873,7 +872,7 @@ class Queries(ttk.Frame):
                 child.place_forget()
                 child.pack_forget()
 
-            self.routeList = tk.Listbox(self)
+            self.routeList = tk.Listbox(self, width=50)
 
             codeList = ["09", self.searchKey[1]]
             s.send(pickle.dumps(codeList))
@@ -881,7 +880,7 @@ class Queries(ttk.Frame):
 
             for i in routesServer:
                 self.routeList.insert(tk.END,i)
-                print(i)
+
 
             self.routeList.pack()
 
