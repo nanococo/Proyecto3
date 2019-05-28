@@ -523,12 +523,12 @@ class Insert(tk.Frame):
 
         self.clear()
 
-        self.code = tk.Entry(self)
+        self.code = ttk.Entry(self)
         self.code.place(x=230, y=80)
         self.countryCodeLabel = ttk.Label(self, text="Code")
         self.countryCodeLabel.place(x=120, y=80)
 
-        self.name = tk.Entry(self)
+        self.name = ttk.Entry(self)
         self.name.place(x=230, y=160)
         self.countryNameLabel = ttk.Label(self, text="Name")
         self.countryNameLabel.place(x=120, y=160)
@@ -579,12 +579,12 @@ class Insert(tk.Frame):
         self.availableCountriesLabel = ttk.Label(self, text="Add to")
         self.availableCountriesLabel.place(x=100, y=50)
 
-        self.code = tk.Entry(self)
+        self.code = ttk.Entry(self)
         self.code.place(x=180, y=105)
         self.countryCodeLabel = ttk.Label(self, text="Code")
         self.countryCodeLabel.place(x=100, y=105)
 
-        self.name = tk.Entry(self)
+        self.name = ttk.Entry(self)
         self.name.place(x=180, y=160)
         self.countryNameLabel = ttk.Label(self, text="Name")
         self.countryNameLabel.place(x=100, y=160)
@@ -659,12 +659,12 @@ class Insert(tk.Frame):
         self.arrival_cityListLabel = ttk.Label(self, text="Select an arrival city")
         self.arrival_cityListLabel.place(x=186, y=210)
 
-        self.code = tk.Entry(self)
+        self.code = ttk.Entry(self)
         self.code.place(x=180, y=290)
         self.codeLabel = ttk.Label(self, text="Enter a code")
         self.codeLabel.place(x=203, y=270)
 
-        self.duration = tk.Entry(self)
+        self.duration = ttk.Entry(self)
         self.duration.place(x=180, y=350)
         self.durationLabel = ttk.Label(self, text="Enter a duration (numbers)")
         self.durationLabel.place(x=169, y=330)
@@ -713,15 +713,6 @@ class Insert(tk.Frame):
                 messagebox.showinfo("Error","The connection is already present")
             else:
                 messagebox.showinfo("Done","The connection was succesfully added.")
-
-
-
-
-
-
-
-
-
 
     def updateCitiesOnSelection(self, event):
 
