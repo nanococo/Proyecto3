@@ -925,7 +925,6 @@ if __name__ == '__main__':
     s.connect((host, port))
 
 
-
     main_window=tk.Tk()
     main_window.geometry("500x600")
     main_window.iconbitmap(default="icono.ico")

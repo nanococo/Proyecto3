@@ -499,4 +499,3 @@ class loadData:
         self.initialize(self.trainRoutes, self.countryCitiesConnections, self.users)
 
         # print("Connections: ", self.countryCitiesConnections)
-        # print("TrainRoutes:", self.trainRoutes)

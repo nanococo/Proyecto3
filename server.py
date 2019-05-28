@@ -126,7 +126,7 @@ class SocketServer(socket.socket):
             client.send(pickle.dumps(returnValue))
 
         elif dataList[0] == "09":
-            # getPricesByTrainCode
+            # getRoutesByCity
             # [0] is code 09
             # [1] is city code
             returnValue = self.getRoutesByCity(dataList[1])
@@ -404,6 +404,17 @@ class SocketServer(socket.socket):
             returnValue = self.getCountryByCode(dataList[1])
             client.send(pickle.dumps(returnValue))
 
+        elif dataList[0] == "43":
+            # getAllTrains
+            returnValue = self.getAllTrains()
+            client.send(pickle.dumps(returnValue))
+
+        elif dataList[0] == "44":
+            # getAllCities
+            returnValue = self.getAllCities()
+            client.send(pickle.dumps(returnValue))
+
+
 
 
 
@@ -480,7 +491,7 @@ class SocketServer(socket.socket):
                 train = "0" + train
             for i in range(len(self.dat.trainRoutes)):
                 if train == self.dat.trainRoutes[i][0]:
-                    returnList.append("Train Type: " + self.dat.trainRoutes[i][0] + ". Code: " + self.dat.trainRoutes[i][1] + ". Name: " + self.dat.trainRoutes[i][2] + ". Capacity: " + self.dat.trainRoutes[i][3])
+                    returnList.append(" Code: " + self.dat.trainRoutes[i][1] + ". Name: " + self.dat.trainRoutes[i][2] + ". Capacity: " + self.dat.trainRoutes[i][3])
         return returnList
 
     def getPricesByTrainCode(self, train):
@@ -519,7 +530,7 @@ class SocketServer(socket.socket):
                 for j in range(len(self.dat.trainRoutes[i][6])):
                     if city == self.dat.trainRoutes[i][6][j][1]:
                         count += 1
-                        print(str(count) + ") Train Code: " + self.dat.trainRoutes[i][
+                        returnList.append("Train Code: " + self.dat.trainRoutes[i][
                             1] + ". Goes from " + self.dat.trainRoutes[i][6][j][0] + ", " +
                               self.dat.trainRoutes[i][6][j][1] + " to " + self.dat.trainRoutes[i][6][j][2] + ", " +
                               self.dat.trainRoutes[i][6][j][3])
@@ -1070,7 +1081,20 @@ class SocketServer(socket.socket):
                 break
         return result
 
+    def getAllTrains(self):
+        """Returns a list with all present trains on system"""
+        result = []
+        for i in self.dat.trainRoutes:
+            result.append(i[1:3])
+        return result
 
+    def getAllCities(self):
+        """Returns a list with all cities in the system"""
+        result = []
+        for i in self.dat.countryCitiesConnections:
+            for j in i[2]:
+                result.append(j[:2])
+        return result
 
     def broadcast(self, message):
         #Sending message to all clients

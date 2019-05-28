@@ -131,9 +131,6 @@ class ConsultPrices(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text='These are the current ticket prices for our routes:')
-        label.config(font=('Calibri', 11))
-        label.place(x=0, y=0)
 
         self.checkPrices()
 
@@ -143,14 +140,20 @@ class ConsultPrices(tk.Frame):
 
     def checkPrices(self):
 
-        for child in self.winfo_children():
-            child.place_forget()
+        codeList = ["43"]
+        s.send(pickle.dumps(codeList))
+        trains = pickle.loads(s.recv(8192))
+        print(trains)
 
         self.trainCodeLabel = ttk.Label(self, text="Please type a train code to find assosiated route prices")
         self.trainCodeLabel.place(x=100, y=20)
 
-        self.trainCode = ttk.Entry(self)
-        self.trainCode.place(x=175, y=40)
+
+        self.trainCode = ttk.Combobox(self, state="readonly")
+        self.trainCode["values"] = trains
+
+        self.trainCode.bind("<<ComboboxSelected>>")
+        self.trainCode.place(x=165, y=50)
 
         self.label = tk.Label(self, text='')
         self.label.config(font=('Calibri', 10))
@@ -167,24 +170,33 @@ class ConsultPrices(tk.Frame):
 
         self.pricesListbox.delete(0, tk.END)
 
-        code = self.trainCode.get()
+        code = self.trainCode.get().split(' ')[0]
         print(code)
+
         if code == '':
             messagebox.showinfo('ERROR','Please type a train code')
         else:
+
             codeList = ["07", code]
             s.send(pickle.dumps(codeList))
             prices = pickle.loads(s.recv(8192))
             print(prices)
 
-            self.label.configure(text='The route prices of are:')
-            self.label.config(font=('Calibri', 10))
-            self.label.place(x=160, y=120)
+            if not prices:
 
+                self.label.configure(text='There are no route prices associated with ' + self.trainCode.get().split(' ')[1])
+                self.label.config(font=('Calibri', 10))
+                self.label.place(x=105, y=120)
 
-            index = 0
-            for route in prices:
-                self.cityListbox.insert(index, route)
+            else:
+
+                self.label.configure(text='The route prices are:')
+                self.label.config(font=('Calibri', 10))
+                self.label.place(x=179, y=120)
+
+                index = 0
+                for route in prices:
+                    self.pricesListbox.insert(index, route)
 
 class ConsultCountries(tk.Frame):
 
@@ -233,9 +245,6 @@ class ConsultCities(tk.Frame):
         s.send(pickle.dumps(codeList))
         countries = pickle.loads(s.recv(8192))
         print(countries)
-
-        for child in self.winfo_children():
-            child.place_forget()
 
         self.selection = StringVar()
 
@@ -291,18 +300,19 @@ class ConsultConnections(tk.Frame):
     def checkConnections(self):
         self.searchKey = []
 
-        self.countryList = ttk.Combobox(self, state="readonly")
         codeList = ["03"]
         s.send(pickle.dumps(codeList))
         countries = pickle.loads(s.recv(8192))
+
+        self.countryList = ttk.Combobox(self, state="readonly")
         self.countryList["values"] = countries
-        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionFixed)
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
         self.countryList.place(x=165, y=50)
         self.countryListLabel = ttk.Label(self, text="Select a country")
         self.countryListLabel.place(x=195, y=30)
 
         self.cityList = ttk.Combobox(self, state="readonly")
-        self.cityList.bind("<<ComboboxSelected>>", self.selectCityFixed)
+        self.cityList.bind("<<ComboboxSelected>>", self.selectCity)
         self.cityList.place(x=165, y=130)
         self.cityListLabel = ttk.Label(self, text="Select a city")
         self.cityListLabel.place(x=205, y=100)
@@ -346,7 +356,7 @@ class ConsultConnections(tk.Frame):
                     self.connectionListbox.insert(index, connection)
 
 
-    def updateCitiesOnSelectionFixed(self, event):
+    def updateCitiesOnSelection(self, event):
 
 
         self.searchKey=[self.countryList.get().split(" ")[0]]
@@ -357,7 +367,7 @@ class ConsultConnections(tk.Frame):
         self.cityList["values"] = cities
         print(self.searchKey)
 
-    def selectCityFixed(self, event):
+    def selectCity(self, event):
 
         if len(self.searchKey)==1:
              self.searchKey+=[self.cityList.get().split(" ")[0]]
@@ -381,31 +391,62 @@ class ConsultRoutes(tk.Frame):
 
     def checkRoutes(self):
 
-        global trainsFormat
+        codeList = ["44"]
+        s.send(pickle.dumps(codeList))
+        cities = pickle.loads(s.recv(8192))
 
-        y = 0
-        for train in trainsFormat:
-            if train[6]:
-                x = 0
-                y += 30
-                label = tk.Label(self, text='Train:' + train[2])
-                label.config(font=('Calibri', 10))
-                label.place(x=x, y=y)
-                for route in train[6]:
-                    y += 30
-                    x = 20
-                    label = tk.Label(self,text='Route: ' + train[4] + ', ' + train[5] + ' - ' + route[0] +', '+route[1])
-                    label.config(font=('Calibri', 13))
-                    label.place(x=x, y=y)
 
+        self.cityCodeLabel = ttk.Label(self, text="Please type a city code to find assosiated routes")
+        self.cityCodeLabel.place(x=110, y=20)
+
+        self.cityCode = ttk.Combobox(self, state="readonly")
+        self.cityCode["values"] = cities
+        self.cityCode.bind("<<ComboboxSelected>>")
+        self.cityCode.place(x=165, y=50)
+
+        self.label = tk.Label(self, text='')
+        self.label.config(font=('Calibri', 10))
+        self.label.place(x=155, y=120)
+
+        Continue = ttk.Button(self, text='Continue',
+                              command=lambda: self.fillWithRoutes())
+        Continue.place(x=200, y=80)
+
+        self.routesListbox = tk.Listbox(self, width=48)
+        self.routesListbox.place(x=98, y=150)
+
+    def fillWithRoutes(self):
+
+        self.routesListbox.delete(0, tk.END)
+
+        city = self.cityCode.get()
+
+        if not city:
+            messagebox.showinfo('ERROR', 'Please select a country')
+
+        else:
+            code = self.cityCode.get().split()[0]
+            codeList = ["09", code]
+            s.send(pickle.dumps(codeList))
+            routes = pickle.loads(s.recv(8192))
+
+            if not routes:
+                self.label.configure(text='There are no routes associated with ' + self.cityCode.get().split(' ')[1])
+                self.label.config(font=('Calibri', 10))
+                self.label.place(x=110, y=120)
+
+            else:
+                self.label.configure(text='The routes associated with '+self.cityCode.get().split(' ')[1]+' are:')
+                self.label.config(font=('Calibri', 10))
+                self.label.place(x=120, y=120)
+                index = 0
+                for route in routes:
+                    self.routesListbox.insert(index, route)
 
 class ConsultTrains(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text='These are the registered trains:')
-        label.config(font=('Calibri', 11))
-        label.place(x=0, y=0)
 
         self.checkTrains()
 
@@ -415,17 +456,59 @@ class ConsultTrains(tk.Frame):
 
     def checkTrains(self):
 
-        global trainsFormat
+        self.typeLabel = ttk.Label(self, text="Select a train type.")
+        self.typeLabel.place(x=185, y=20)
 
-        y = 0
-        for train in trainsFormat:
-            if train[6]:
-                x = 0
-                y += 30
-                label = tk.Label(self, text=train[1]+' - '+train[2]+', Type: '+train[0])
-                label.config(font=('Calibri', 12))
-                label.place(x=x, y=y)
-#########
+        self.type = ttk.Combobox(self, state="readonly")
+        self.type["values"] = ['01',
+                               '02',
+                               '03',
+                               '04',]
+
+        self.type.bind("<<ComboboxSelected>>")
+        self.type.place(x=165, y=50)
+
+        self.label = tk.Label(self, text='')
+        self.label.config(font=('Calibri', 10))
+        self.label.place(x=155, y=120)
+
+        self.trainsListbox = tk.Listbox(self, width=48)
+        self.trainsListbox.place(x=98, y=150)
+
+        Continue = ttk.Button(self, text='Continue',
+                              command=lambda: self.fillWithTrains())
+        Continue.place(x=200, y=80)
+
+    def fillWithTrains(self):
+
+        self.trainsListbox.delete(0, tk.END)
+
+        type = self.type.get()
+        if not type:
+            messagebox.showinfo('ERROR','Please select a train type')
+
+        else:
+            codeList = ["06", type]
+            s.send(pickle.dumps(codeList))
+            trains = pickle.loads(s.recv(8192))
+            print(trains)
+
+            if not trains:
+                self.label.configure(text='There are no type '+self.type.get()+' trains.')
+                self.label.config(font=('Calibri', 10))
+                self.label.place(x=160, y=120)
+
+            else:
+
+                self.label.configure(text='The type ' + self.type.get() + ' trains are:')
+                self.label.config(font=('Calibri', 10))
+                self.label.place(x=170, y=120)
+                index = 0
+                for train in trains:
+                    self.trainsListbox.insert(index, train)
+
+
+########
 
 
 class DataBase(tk.Frame):
