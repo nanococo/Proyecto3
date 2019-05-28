@@ -126,7 +126,7 @@ class SocketServer(socket.socket):
             client.send(pickle.dumps(returnValue))
 
         elif dataList[0] == "09":
-            # getPricesByTrainCode
+            # getRoutesByCity
             # [0] is code 09
             # [1] is city code
             returnValue = self.getRoutesByCity(dataList[1])
@@ -530,7 +530,7 @@ class SocketServer(socket.socket):
                 for j in range(len(self.dat.trainRoutes[i][6])):
                     if city == self.dat.trainRoutes[i][6][j][1]:
                         count += 1
-                        print(str(count) + ") Train Code: " + self.dat.trainRoutes[i][
+                        returnList.append("Train Code: " + self.dat.trainRoutes[i][
                             1] + ". Goes from " + self.dat.trainRoutes[i][6][j][0] + ", " +
                               self.dat.trainRoutes[i][6][j][1] + " to " + self.dat.trainRoutes[i][6][j][2] + ", " +
                               self.dat.trainRoutes[i][6][j][3])
