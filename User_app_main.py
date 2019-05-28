@@ -40,7 +40,7 @@ class map(ttk.Frame):
         self.pinButton4.config(image=self.displayPin4)
         self.pinButton4.place(x=190,y=270)
 
-        #Jordan
+        #Jordania
         self.pin6= Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin6 = ImageTk.PhotoImage(self.pin6)
         self.pinButton6=ttk.Button(self, command= lambda :self.create_window("45"))
@@ -414,15 +414,18 @@ class logIn(ttk.Frame):
         elif len(self.searchKey)==2 or len(self.searchKey)==4:
             for child in self.winfo_children():
                 child.place_forget()
-            """ routes es la lista que se va a cargar para que el usuario seleccione la ruta que desea"""
-            routes=[]
+
+
+            self.routesListBox = tk.Listbox(self, width=69, height=20, selectmode=tk.SINGLE)
+
             if len(self.searchKey)==2:
                 codeList = ["10", self.searchKey[0], self.searchKey[1]]
                 s.send(pickle.dumps(codeList))
                 tempList = pickle.loads(s.recv(8192))
 
                 for i in tempList:
-                     print(i)
+                    self.routesListBox.insert(tk.END,i)
+
 
             elif len(self.searchKey)==4:
                 codeList = ["41", self.searchKey[0], self.searchKey[1], self.searchKey[2], self.searchKey[3]]
@@ -430,13 +433,12 @@ class logIn(ttk.Frame):
                 routes = pickle.loads(s.recv(8192))
 
                 for i in routes:
-                     print(i)
+                    self.routesListBox.insert(tk.END,i)
+                
 
-            self.routesListBox = tk.Listbox(self,width=69,height=20, selectmode=tk.SINGLE)
             self.routesListBox.bind("<<ListboxSelect>>", self.getListBox )
             self.routesListBox.place(x=19,y=20)
-            for i in routes:
-                self.routesListBox.insert(tk.END,i)
+
 
             self.backButton=ttk.Button(self, text="Back", command=self.backToCountCitSelect)
             self.backButton.place(x=90,y=380)
@@ -446,35 +448,6 @@ class logIn(ttk.Frame):
 
             self.vcmd = (self.register(self.validate),'%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
             self.amountOfSeats = ttk.Entry (self, validate = 'key',validatecommand=self.vcmd)
-            self.amountOfSeats.place(x=165, y=350)
-
-    def customRouteList(self):
-        if self.searchKey == []:
-            messagebox.showinfo("", "Please select a contry and a city")
-        elif len(self.searchKey) == 2:
-            for child in self.winfo_children():
-                child.place_forget()
-            """ routes es la lista que se va a cargar para que el usuario seleccione la ruta que desea"""
-            routes = []
-            if self.searchKey == ['1', 'a']:
-                routes = [1, 2, 3, 4, 5, 6]
-            elif self.searchKey == ['2', 'c']:
-                routes = ['a', 'b', 'c', 'd']
-
-            self.routesListBox = tk.Listbox(self, width=69, height=20, selectmode=tk.SINGLE)
-            self.routesListBox.bind("<<ListboxSelect>>", self.getListBox)
-            self.routesListBox.place(x=19, y=20)
-            for i in routes:
-                self.routesListBox.insert(tk.END, i)
-
-            self.backButton = ttk.Button(self, text="Back", command=self.backToRecervation)
-            self.backButton.place(x=90, y=380)
-
-            self.billingButton = ttk.Button(self, text="Continue", command = self.continueToBilling)
-            self.billingButton.place(x=290, y=380)
-
-            self.vcmd = (self.register(self.validate), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
-            self.amountOfSeats = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
             self.amountOfSeats.place(x=165, y=350)
 
     def getListBox(self, event):
@@ -916,8 +889,8 @@ class MainApp(ttk.Frame):
 if __name__ == '__main__':
     """
         MAIN APPLICATION METHOD. INVOKES METHODS ON ADMIN AND USER MODULES
-
     """
+
     host = '127.0.0.1'
     # Define the port on which you want to connect
     port = 5000
