@@ -140,14 +140,25 @@ class ConsultPrices(tk.Frame):
 
     def checkPrices(self):
 
+        codeList = ["43"]
+        s.send(pickle.dumps(codeList))
+        trains = pickle.loads(s.recv(8192))
+        print(trains)
+
+
         for child in self.winfo_children():
             child.place_forget()
 
         self.trainCodeLabel = ttk.Label(self, text="Please type a train code to find assosiated route prices")
         self.trainCodeLabel.place(x=100, y=20)
 
-        self.trainCode = ttk.Entry(self)
-        self.trainCode.place(x=175, y=40)
+        self.selection = StringVar()
+
+        self.trainCode = ttk.Combobox(self, state="readonly", textvariable=self.selection)
+        self.trainCode["values"] = trains
+
+        self.trainCode.bind("<<ComboboxSelected>>")
+        self.trainCode.place(x=165, y=50)
 
         self.label = tk.Label(self, text='')
         self.label.config(font=('Calibri', 10))
@@ -164,8 +175,9 @@ class ConsultPrices(tk.Frame):
 
         self.pricesListbox.delete(0, tk.END)
 
-        code = self.trainCode.get()
+        code = self.trainCode.get().split(' ')[1]
         print(code)
+
         if code == '':
             messagebox.showinfo('ERROR','Please type a train code')
         else:
@@ -425,8 +437,6 @@ class ConsultRoutes(tk.Frame):
             if not routes:
                 messagebox.showinfo('ERROR','The selected city does not have designated routes')
 
-            else:
-                
 
 
 class ConsultTrains(tk.Frame):
