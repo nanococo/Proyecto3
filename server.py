@@ -1101,7 +1101,7 @@ class SocketServer(socket.socket):
         """Returns a list with all present trains on system"""
         result = []
         for i in self.dat.trainRoutes:
-            result.append(i[1:3])
+            result.append(i[:6])
         return result
 
     def getAllCities(self):
