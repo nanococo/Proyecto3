@@ -199,8 +199,10 @@ class newWindow:
         amount = "Country: "+countryName
         self.imageGIF2 = tk.PhotoImage(file=imageURL)
         self.imageLabel2 = tk.Label(self._sideWindow, image=self.imageGIF2)
-        tk.Label(self._sideWindow, text=amount, font="none 15 bold").grid(row=0, column=1, sticky='N', padx=10, pady=10)
+        self.countryName = tk.Label(self._sideWindow, text=amount, font="none 15")
+
         self.imageLabel2.grid(row=0, column=0, padx=10, pady=10)
+        self.countryName.grid(row=0, column=1, sticky='N', padx=10, pady=10)
 
         #self.imageLabel2 = tk.Label(self._sideWindow, image=self.imageGIF2)
         #self.imageLabel2.grid(row=0, column=1, padx=10, pady=10)
