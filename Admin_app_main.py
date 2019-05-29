@@ -48,7 +48,7 @@ class mainApp(tk.Tk):
             # METHOD TO UNLOCK SERVER
             codeList = ["46", adminID]
             s.send(pickle.dumps(codeList))
-        self.quit()
+
 
 
     def show_frame(self, cont):
