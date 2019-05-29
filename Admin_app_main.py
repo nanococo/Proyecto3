@@ -10,7 +10,7 @@ class mainApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        #tk.Tk.iconbitmap(self,default='C:/Users\jguty\OneDrive\Pictures/icono.ico')
+        tk.Tk.iconbitmap(self,default='C:/Users\jguty\OneDrive\Documents/GitHub/Proyecto3/icono.ico')
 
         container = tk.Frame(self)
         container.pack(side='top', fill='both',  expand = True)
@@ -80,9 +80,10 @@ class Consult(tk.Frame):
         codeList = ["43"]
         s.send(pickle.dumps(codeList))
         trains = pickle.loads(s.recv(8192))
+        trains = self.sliceTrains(trains)
 
-        self.trainCodeLabel = ttk.Label(self, text="Please type a train code to find assosiated route prices")
-        self.trainCodeLabel.place(x=80, y=20)
+        self.trainCodeLabel = ttk.Label(self, text="Please select a train code to find assosiated route prices")
+        self.trainCodeLabel.place(x=78, y=20)
 
         self.trainCode = ttk.Combobox(self, state="readonly")
         self.trainCode["values"] = trains
@@ -131,6 +132,13 @@ class Consult(tk.Frame):
                 index = 0
                 for route in prices:
                     self.pricesListbox.insert(index, route)
+
+    def sliceTrains(self, list):
+        newList = []
+        for i in list:
+            newList += [i[1]+' '+i[2]]
+        return newList
+
     #
 
     #Check countries
@@ -469,10 +477,7 @@ class DataBase(tk.Frame):
                                   command=lambda: controller.show_frame(Modify))
         buttonModify.place(x=5, y=120)
 
-
 class Insert(tk.Frame):
-
-    mp = mainApp
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -501,12 +506,12 @@ class Insert(tk.Frame):
 
 
         buttonInsertTrain = ttk.Button(self, text='Train',
-                                  command=lambda: controller.show_frame('PENDIENTE'))
+                                  command=lambda: self.draw_insertTrain(controller))
         buttonInsertTrain.place(x=130, y=40)
 
 
         buttonInsertRoute = ttk.Button(self, text='Route',
-                                  command=lambda: controller.show_frame('PENDIENTE'))
+                                  command=lambda: self.draw_insertRoute(controller))
         buttonInsertRoute.place(x=130, y=80)
 
         buttonInsertAtraction = ttk.Button(self, text='Atraction',
@@ -594,7 +599,6 @@ class Insert(tk.Frame):
         enter.place(x=200, y=240)
 
         self.buttonBackToInsert(controller)
-
 
     def createNewCity(self):
 
@@ -749,6 +753,68 @@ class Insert(tk.Frame):
         else:
             self.searchKey[1] = self.arrival_cityList.get().split(" ")[0]
         print(self.searchKey)
+    #
+
+    #Insert route
+    def draw_insertRoute(self, controller):
+        self.clear()
+
+        self.label = tk.Label(self, text='')
+        self.label.config(font=('Calibri', 10))
+        self.label.place(x=143, y=120)
+
+        codeList = ["43"]
+        s.send(pickle.dumps(codeList))
+        self.trains = pickle.loads(s.recv(8192))
+        self.short_trains = self.sliceTrains(self.trains)
+        print(self.trains)
+
+        self.trainCodeLabel = ttk.Label(self, text="Please select a train for the new route")
+        self.trainCodeLabel.place(x=120, y=30)
+
+        self.trainCode = ttk.Combobox(self, state="readonly")
+        self.trainCode["values"] = self.short_trains
+        self.trainCode.bind("<<ComboboxSelected>>")
+        self.trainCode.place(x=153, y=50)
+
+        self.buttonBackToInsert(controller)
+
+        codeList = ["03"]
+        s.send(pickle.dumps(codeList))
+        countries = pickle.loads(s.recv(8192))
+
+        self.countryList = ttk.Combobox(self, state="readonly")
+        self.countryList["values"] = countries
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.countryList.place(x=153, y=110)
+        self.countryListLabel = ttk.Label(self, text="Select a departure country")
+        self.countryListLabel.place(x=153, y=90)
+
+        self.cityList = ttk.Combobox(self, state="readonly")
+        self.cityList.bind("<<ComboboxSelected>>", self.selectCity)
+        self.cityList.place(x=153, y=170)
+        self.cityListLabel = ttk.Label(self, text="Select a departure city")
+        self.cityListLabel.place(x=164, y=150)
+
+        self.price = ttk.Entry(self)
+
+    def sliceTrains(self, list):
+        newList = []
+        for i in list:
+            newList += [[i[1], i[2]]]
+        return newList
+
+    def getSelectedTrain(self):
+
+        self.selected = []
+        searchFor = self.trainCode.get().split(" ")[0]
+        for train in self.trains:
+            if train[1] == searchFor:
+                self.selected = train
+        return self.selected
+    #
+
+    #Insert train
 
     #
 
@@ -815,19 +881,20 @@ class Insert(tk.Frame):
         #                                    command=lambda: self.draw_insertTrainType(controller))
         # buttonInsertTrainType.place(x=10, y=160)
 
-        self.buttonBackToMenu(controller)
+        buttonInsertRoute = ttk.Button(self, text='Route',
+                                       command=lambda: self.draw_insertRoute(controller))
+        buttonInsertRoute.place(x=130, y=80)
 
+        self.buttonBackToMenu(controller)
 
     def buttonBackToMenu(self, controller):
         buttonBACK = ttk.Button(self, text='BACK',
                                 command=lambda: self.back_toManagment(controller))
         buttonBACK.place(x=200, y=550)
-
     def buttonBackToInsert(self, controller):
         buttonBACK = ttk.Button(self, text='BACK',
                                 command=lambda: self.init_insert(controller))
         buttonBACK.place(x=200, y=550)
-
     def clear(self):
         for child in self.winfo_children():
             child.place_forget()
@@ -913,6 +980,7 @@ class Modify(ttk.Frame):
         button = ttk.Button(self, text='BACK',
                             command=lambda: controller.show_frame(AdminMainMenu))
         button.pack(side='bottom')
+#########
 
 class History(ttk.Frame):
 
