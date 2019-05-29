@@ -770,12 +770,12 @@ class Insert(tk.Frame):
         print(self.trains)
 
         self.trainCodeLabel = ttk.Label(self, text="Please select a train for the new route")
-        self.trainCodeLabel.place(x=120, y=30)
+        self.trainCodeLabel.place(x=136, y=30)
 
         self.trainCode = ttk.Combobox(self, state="readonly")
         self.trainCode["values"] = self.short_trains
         self.trainCode.bind("<<ComboboxSelected>>")
-        self.trainCode.place(x=153, y=50)
+        self.trainCode.place(x=169, y=50)
 
         self.buttonBackToInsert(controller)
 
@@ -786,17 +786,24 @@ class Insert(tk.Frame):
         self.countryList = ttk.Combobox(self, state="readonly")
         self.countryList["values"] = countries
         self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
-        self.countryList.place(x=153, y=110)
+        self.countryList.place(x=169, y=110)
         self.countryListLabel = ttk.Label(self, text="Select a departure country")
-        self.countryListLabel.place(x=153, y=90)
+        self.countryListLabel.place(x=169, y=90)
 
         self.cityList = ttk.Combobox(self, state="readonly")
         self.cityList.bind("<<ComboboxSelected>>", self.selectCity)
-        self.cityList.place(x=153, y=170)
+        self.cityList.place(x=169, y=170)
         self.cityListLabel = ttk.Label(self, text="Select a departure city")
-        self.cityListLabel.place(x=164, y=150)
+        self.cityListLabel.place(x=180, y=150)
 
+        self.priceLabel = ttk.Label(self, text="Enter a price")
+        self.priceLabel.place(x=203, y=210)
         self.price = ttk.Entry(self)
+        self.price.place(x=177,y=230)
+
+        self.DONE = ttk.Button(self, text="DONE",
+                               command=lambda: self.createNewConnection())
+        self.DONE.place(x=200, y=300)
 
     def sliceTrains(self, list):
         newList = []
