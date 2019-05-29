@@ -298,12 +298,11 @@ class logIn(ttk.Frame):
             for child in self.winfo_children():
                 child.place_forget()
                 child.pack_forget()
-
             self.searchKey = []
 
             self.departureCountryList = ttk.Combobox(self, state="readonly")
 
-            self.departureCountryList["values"] = pickle.loads(s.recv(8192))
+            self.departureCountryList["values"] = country
             self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionFixed)
             self.departureCountryList.place(x=250, y=50)
             self.departureCountryListLabel=ttk.Label(self, text="Countries")
@@ -386,6 +385,10 @@ class logIn(ttk.Frame):
             self.billList.insert(tk.END,i)
 
         self.billList.pack()
+
+        #TODO
+        #HACER BOTON
+        #Agarrar UserId
 
         self.backButton=ttk.Button(self,text="Back", command=self.chooseRecervation)
         self.backButton.pack(side=tk.BOTTOM)
