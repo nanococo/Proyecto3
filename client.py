@@ -196,38 +196,20 @@ def customRoutes(s):
                     else:
                         count+=1
                         print(str(count) + ") Train Type: " + i[j][0] +". Train Code: " + i[j][1] +". Train Name: " + i[j][2] + ". Capacity: " + i[j][3] +". Goes from " + i[j][6][0] + ", " +i[j][6][1] + " to " + i[j][6][2] + ", " +i[j][6][3] +". Cost: " + i[j][6][4])
-                        # userOp = input("Would you like to reserve seats with this route? (Y/N)")
-                        # if userOp == "Y" or userOp == "y":
-                        #     try:
-                        #         for i in routes:
-                        #             print("Train: " + i[2] + ". Available seats: " + i[6][4] + ". Price per seat: " + i[3])
-                        #         print("Please state how many seats you would like to reserve")
-                        #         seatsToReserve = int(input("# of Seats to reserve: "))
-                        #         price = 0
-                        #         for i in routes:
-                        #             selectedList = [i[0], i[1], i[2], i[6][0], i[6][1], i[6][2], i[6][3], i[3], i[6][4]]
-                        #             if int(i[6][4]) < seatsToReserve:
-                        #                 print("Not enough seats to reserve. Try again")
-                        #                 input("Press enter...")
-                        #                 end = True
-                        #                 break
-                        #             else:
-                        #                 price += (int(i[3]) * seatsToReserve)
-                        #                 price2 = (int(i[3]) * seatsToReserve)
-                        #                 selectedList.append(seatsToReserve)
-                        #                 selectedList.append(price2)
-                        #                 reservations += [selectedList]
-                        #         print(reservations)
-                        #         print("Total Cost: " + str(price))
-                        #         input("Press enter...")
-                        #         end = True
-                        #         return reservations
-                        #     except ValueError:
-                        #         print("Error with provided values. Please try again")
-                        #         input("Press enter to continue...")
-                        #         return []
-                        # else:
-                        #     return []
+
+            cheapest = 0
+            count = 0
+            chosenRoute = []
+            for i in routes:
+                for j in range(len(i)):
+                    if j == len(i) - 1:
+                        if count == 0:
+                            cheapest=i[j]
+                            chosenRoute.append(i)
+                            count+=1
+                        if i[j]<cheapest:
+                            chosenRoute = []
+            print(chosenRoute)
 
 
 

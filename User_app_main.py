@@ -400,6 +400,14 @@ class logIn(ttk.Frame):
         self.backButton.pack(side=tk.BOTTOM)
     def acceptReservations(self):
         print("meta aqui la ostia")
+        global reservations
+        global userID
+        codeList = ["11", "", reservations, userID]
+        s.send(pickle.dumps(codeList))
+        confirmation = pickle.loads(s.recv(8192))
+        print(confirmation)
+
+
     def eraseReservations(self):
         global reservations
         global userID

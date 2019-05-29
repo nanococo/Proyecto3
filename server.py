@@ -767,8 +767,8 @@ class SocketServer(socket.socket):
                         if not countryToDel in k:
                             countryCityConnectionsHolder[i][2][j][2] += [k]
 
-            data.countryCitiesConnections = countryCityConnectionsHolder
-            data.trainRoutes = trainRoutesHolder
+            self.dat.countryCitiesConnections = countryCityConnectionsHolder
+            self.dat.trainRoutes = trainRoutesHolder
 
             # Deletes in reports
             reportsCountryInsert = self.dat.deleteCountryReports(countryToDel)
@@ -810,7 +810,7 @@ class SocketServer(socket.socket):
                             if not cityToDelete in countryCityConnectionsHolder2[i][2][j][2][k]:
                                 self.dat.countryCitiesConnections[i][2][j][2].append(countryCityConnectionsHolder2[i][2][j][2][k])
 
-            data.trainRoutes = trainRoutesHolder
+            self.dat.trainRoutes = trainRoutesHolder
 
             # Delete on reports
             cityReportsDel = self.dat.deleteCityReports(countryCode, cityToDelete)
@@ -888,7 +888,7 @@ class SocketServer(socket.socket):
             if not (i[0] == newTrainType and i[1] == newTrainCode):
                 trainRoutesHolder.append(i)
 
-        data.trainRoutes = trainRoutesHolder
+        self.dat.trainRoutes = trainRoutesHolder
         if self.dat.trainRoutes == trainRoutesHolder:
             pass
         else:

@@ -1126,6 +1126,7 @@ class Delete(tk.Frame):
                 messagebox.showinfo("ERROR", "Please select a country")
             else:
                 countryToDelCode = self.deleteCountry.get().split(" ")[0]
+                print(countryToDelCode)
                 codeList = ["19", adminID, countryToDelCode]
                 s.send(pickle.dumps(codeList))
                 success = pickle.loads(s.recv(8192))
