@@ -52,7 +52,9 @@ class mainApp(tk.Tk):
 
 
     def show_frame(self, cont):
-
+        # METHOD TO UNLOCK SERVER
+        codeList = ["46", adminID]
+        s.send(pickle.dumps(codeList))
         frame = self.frames[cont]
         frame.tkraise()
 
