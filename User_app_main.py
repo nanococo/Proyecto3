@@ -5,10 +5,11 @@ from PIL import Image,ImageTk
 import socket, os, pickle
 
 #
-recervations=[]
+reservations=[]
+userID=str
 #
 
-class map(ttk.Frame):
+class Map(ttk.Frame):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.img = Image.open("newDataFiles/Assets/europe_map(3).png")
@@ -231,23 +232,24 @@ class logIn(ttk.Frame):
         self.logIn=ttk.Button(self,text="Log In",command=self.getLoginInfo)
         self.logIn.place(x=200,y=200)
     def getLoginInfo(self):
-        userId=self.userID.get()
+        global userID
+        userID=self.userID.get()
 
-        codeList = ["00", "", userId]
+        codeList = ["00", "", userID]
         s.send(pickle.dumps(codeList))
         userValidated = pickle.loads(s.recv(8192))
 
         if userValidated != "1":
             if userValidated:
 
-                codeList = ["01", "", userId]
+                codeList = ["01", "", userID]
                 s.send(pickle.dumps(codeList))
                 userStatus = pickle.loads(s.recv(8192))
 
                 if userStatus == "0":
                     # AQUI DEJA CARGAR NUEVA VENTANA
                     # Set userName here:
-                    codeList = ["02", "", userId]
+                    codeList = ["02", "", userID]
                     s.send(pickle.dumps(codeList))
                     userName = pickle.loads(s.recv(8192))
                     for child in self.winfo_children():
@@ -374,14 +376,14 @@ class logIn(ttk.Frame):
             messagebox.showinfo("Access denied", "Server is blocked")
 
     def drawBilling(self):
-        global recervations
+        global reservations
         for child in self.winfo_children():
             child.pack_forget()
             child.place_forget()
 
         self.billList=tk.Listbox(self, width=60)
 
-        for i in recervations:
+        for i in reservations:
             self.billList.insert(tk.END,i)
 
         self.billList.pack()
@@ -389,9 +391,23 @@ class logIn(ttk.Frame):
         #TODO
         #HACER BOTON
         #Agarrar UserId
+        self.acceptReservation=ttk.Button(self, text="Accept", command=self.acceptReservations)
+        self.acceptReservation.pack()
 
+        self.eraseReservation=ttk.Button(self, text="Errase reservations", command=self.eraseReservations)
+        self.eraseReservation.pack()
         self.backButton=ttk.Button(self,text="Back", command=self.chooseRecervation)
         self.backButton.pack(side=tk.BOTTOM)
+    def acceptReservations(self):
+        print("meta aqui la ostia")
+    def eraseReservations(self):
+        global reservations
+        global userID
+        reservations=[]
+        self.chooseRecervation()
+        messagebox.showinfo("","All reservations have been removed")
+        print(reservations)
+        print(userID)
 
     def updateCitiesOnSelectionFixed(self, event):
 
@@ -504,7 +520,7 @@ class logIn(ttk.Frame):
         print(self.searchKey)
 
     def continueToBilling(self):
-        global recervations
+        global reservations
         seatsToBuy=self.amountOfSeats.get()
         canRecerve=False
         print(seatsToBuy)
@@ -525,8 +541,8 @@ class logIn(ttk.Frame):
         if canRecerve:
             self.searchKey[2]+=[int(seatsToBuy)]
             self.searchKey[2]+=[int(seatsToBuy)*int(self.searchKey[2][8])]
-            recervations.append(self.searchKey[2])
-            print(recervations)
+            reservations.append(self.searchKey[2])
+            print(reservations)
             for child in self.winfo_children():
                 child.place_forget()
                 child.pack_forget()
@@ -937,7 +953,7 @@ class MainApp(ttk.Frame):
         self.notebook = ttk.Notebook(self,height=600,width=500)
 
         #Se agregan las paginas
-        self.map=map(self.notebook)
+        self.map=Map(self.notebook)
         self.notebook.add(self.map,text="Map", padding=10)
 
         self.reservation_page=logIn(self.notebook)
