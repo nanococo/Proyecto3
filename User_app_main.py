@@ -213,7 +213,7 @@ class newWindow:
         pass
 
 #
-reservations=[]
+recervations=[]
 #
 
 class logIn(ttk.Frame):
@@ -271,16 +271,24 @@ class logIn(ttk.Frame):
         self.userID.delete(0, tk.END)
 
     def chooseRecervation(self):
+        for child in self.winfo_children():
+            child.pack_forget()
+            child.place_forget()
+
 
         self.fixedRouteRecervation=ttk.Button(self, text="Fixed route recervation", command=self.drawFixedRecervation)
-        self.fixedRouteRecervation.place(x=170,y=100)
+        self.fixedRouteRecervation.pack(pady=40)
 
         self.customRecervation = ttk.Button(self, text="Custom route recervation", command=self.drawCustomRecervation)
-        self.customRecervation.place(x=161,y=250)
+        self.customRecervation.pack(pady=40)
+
+        self.viewBill=ttk.Button(self, text="View bill", command=self.drawBilling)
+        self.viewBill.pack(pady=40)
 
     def drawFixedRecervation(self):
         for child in self.winfo_children():
             child.place_forget()
+            child.pack_forget()
 
         self.searchKey=[]
 
@@ -309,6 +317,7 @@ class logIn(ttk.Frame):
     def drawCustomRecervation(self):
         for child in self.winfo_children():
             child.place_forget()
+            child.pack_forget()
 
         self.searchKey=[]
 
@@ -349,6 +358,20 @@ class logIn(ttk.Frame):
         self.backButton = ttk.Button(self, text="Back", command=self.backToLogIn)
         self.backButton.place(x=80, y=350)
 
+    def drawBilling(self):
+        for child in self.winfo_children():
+            child.pack_forget()
+            child.place_forget()
+
+        self.billList=tk.Listbox(self, width=60)
+
+        for i in recervations:
+            self.billList.insert(tk.END,i)
+
+        self.billList.pack()
+
+        self.backButton=ttk.Button(self,text="Back", command=self.chooseRecervation)
+        self.backButton.pack(side=tk.BOTTOM)
 
     def updateCitiesOnSelectionFixed(self, event):
 
@@ -479,13 +502,20 @@ class logIn(ttk.Frame):
         elif seatsToBuy!=0:
             canRecerve=True
         if canRecerve:
-            reservations.append(self.searchKey[2])
-            print(reservations)
+            self.searchKey[2]+=[int(seatsToBuy)]
+            self.searchKey[2]+=[int(seatsToBuy)*int(self.searchKey[2][8])]
+            recervations.append(self.searchKey[2])
+            print(recervations)
+            for child in self.winfo_children():
+                child.place_forget()
+                child.pack_forget()
+            self.chooseRecervation()
+            messagebox.showinfo("", "Recervation added")
 
     def backToCountCitSelect(self):
         for child in self.winfo_children():
             child.place_forget()
-        if len(self.searchKey)==3:
+        if len(self.searchKey)==3 or len(self.searchKey)==2:
             self.drawFixedRecervation()
         elif len(self.searchKey)==5:
             self.drawCustomRecervation()
