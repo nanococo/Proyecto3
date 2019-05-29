@@ -291,15 +291,7 @@ class Consult(tk.Frame):
                 index = 0
                 for connection in connections:
                     self.connectionListbox.insert(index, connection)
-    def updateCitiesOnSelection(self, event):
-        global adminID
-        self.searchKey = [self.countryList.get().split(" ")[0]]
-        print(self.searchKey[0])
-        codeList = ["04", adminID, self.searchKey[0]]
-        s.send(pickle.dumps(codeList))
-        cities = pickle.loads(s.recv(8192))
-        self.cityList["values"] = cities
-        print(self.searchKey)
+
     def selectCity(self, event):
 
         if len(self.searchKey) == 1:
@@ -658,7 +650,7 @@ class Insert(tk.Frame):
 
         self.countryList = ttk.Combobox(self, state="readonly")
         self.countryList["values"] = countries
-        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection2)
         self.countryList.place(x=169, y=50)
         self.countryListLabel = ttk.Label(self, text="Select a departure country")
         self.countryListLabel.place(x=170, y=30)
@@ -733,34 +725,18 @@ class Insert(tk.Frame):
                 messagebox.showinfo("Done","The connection was succesfully added.")
 
 
-    def updateCitiesOnSelection(self, event):
-        global adminID
-        self.searchKey = [self.countryList.get().split(" ")[0]]
-        print(self.searchKey[0])
-        codeList = ["04", adminID, self.searchKey[0]]
-        s.send(pickle.dumps(codeList))
-        cities = pickle.loads(s.recv(8192))
-        self.cityList["values"] = cities
-        print(self.searchKey)
-
-    def selectCity(self, event):
-
-        if len(self.searchKey) == 1:
-            self.searchKey += [self.cityList.get().split(" ")[0]]
-        else:
-            self.searchKey[1] = self.cityList.get().split(" ")[0]
-        print(self.searchKey)
-
-
     def updateArrivalCitiesOnSelection(self, event):
         global adminID
         self.searchKey = [self.arrival_countryList.get().split(" ")[0]]
         print(self.searchKey[0])
+        print("HERE")
+        print(adminID)
         codeList = ["04", adminID, self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         cities = pickle.loads(s.recv(8192))
         self.arrival_cityList["values"] = cities
         print(self.searchKey)
+
     def selectArrivalCity(self, event):
 
         if len(self.searchKey) == 1:
@@ -801,7 +777,7 @@ class Insert(tk.Frame):
 
         self.countryList = ttk.Combobox(self, state="readonly")
         self.countryList["values"] = countries
-        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection2)
         self.countryList.place(x=169, y=110)
         self.countryListLabel = ttk.Label(self, text="Select an arrival country")
         self.countryListLabel.place(x=169, y=90)
@@ -911,7 +887,7 @@ class Insert(tk.Frame):
 
         self.countryList = ttk.Combobox(self, state="readonly")
         self.countryList["values"] = countries
-        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection2)
         self.countryList.place(x=169, y=290)
         self.countryListLabel = ttk.Label(self, text="Select a departure country")
         self.countryListLabel.place(x=169, y=270)
@@ -1006,21 +982,24 @@ class Insert(tk.Frame):
     def clear(self):
         for child in self.winfo_children():
             child.place_forget()
+            
     def isIncomplete(self, list):
         incomplete = False
         for i in list:
             if i == "":
                 incomplete = True
         return incomplete
-    def updateCitiesOnSelection(self, event):
 
+    def updateCitiesOnSelection2(self, event):
+        global adminID
         self.searchKey = [self.countryList.get().split(" ")[0]]
         print(self.searchKey[0])
-        codeList = ["04", self.searchKey[0]]
+        codeList = ["04", adminID, self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         cities = pickle.loads(s.recv(8192))
         self.cityList["values"] = cities
         print(self.searchKey)
+
     def selectCity(self, event):
 
         if len(self.searchKey) == 1:
