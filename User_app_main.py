@@ -210,6 +210,9 @@ class newWindow:
     def displayCityData(self, city):
         pass
 
+#
+reservations=[]
+#
 
 class logIn(ttk.Frame):
     def __init__(self, *args,**kwargs):
@@ -450,28 +453,39 @@ class logIn(ttk.Frame):
 
     def getListBox(self, event):
         if len(self.searchKey)==2:
-            self.searchKey+=[self.routesListBox.get(self.routesListBox.curselection())]
+            self.searchKey+=[list(self.routesListBox.get(self.routesListBox.curselection()))]
         else:
-            self.searchKey[2]=self.routesListBox.get(self.routesListBox.curselection())
+            self.searchKey[2]=list(self.routesListBox.get(self.routesListBox.curselection()))
         print(self.searchKey)
 
     def continueToBilling(self):
-        seatsToBuyself=self.amountOfSeats.get()
-        #Metale un elif para que segun la ruta seleccionada el mae no pueda avanzar si metio un numero mas alto que el total de asientos de la ruta
+        seatsToBuy=self.amountOfSeats.get()
+        canRecerve=False
+        print(seatsToBuy)
+        print(self.searchKey[2][7])
+        try:
+            if int(seatsToBuy) > int(self.searchKey[2][7]):
+                messagebox.showinfo("","Invalid amount of seats")
+                canRecerve=False
+        except:
+            messagebox.showinfo("","Invalid amount of seats")
+            seatsToBuy=0
+            canRecerve=False
         if len(self.searchKey)==2:
             messagebox.showinfo("","Please select a route")
-        else:
-            print(seatsToBuyself)
-        # else:
-        #     for child in self.winfo_children():
-        #         child.place_forget()
+            canRecerve=False
+        elif seatsToBuy!=0:
+            canRecerve=True
+        if canRecerve:
+            reservations.append(self.searchKey[2])
+            print(reservations)
 
     def backToCountCitSelect(self):
         for child in self.winfo_children():
             child.place_forget()
-        if len(self.searchKey)==2:
+        if len(self.searchKey)==3:
             self.drawFixedRecervation()
-        elif len(self.searchKey)==4:
+        elif len(self.searchKey)==5:
             self.drawCustomRecervation()
 
     def validate(self, action, index, value_if_allowed,prior_value, text, validation_type, trigger_type, widget_name):
