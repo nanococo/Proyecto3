@@ -63,8 +63,6 @@ class AdminMainMenu(ttk.Frame):
         label = tk.Label(self, text='Main menu')
         label.config(font=('Calibri', 13))
         label.place(x=0, y=0)
-        #self.bind("<Destroy>", self.handle_close)
-
 
         #Notebook
         self.notebook = ttk.Notebook(self,height=550,width=500)
@@ -77,14 +75,6 @@ class AdminMainMenu(ttk.Frame):
         self.notebook.add(self.history, text="History", padding=10)
         self.pack()
         #
-    # def handle_close(self, event):
-    #     global adminID
-    #     if event.widget == self:
-    #         print("Closing")
-    #         # METHOD TO UNLOCK SERVER
-    #         # codeList = ["46", "", adminID]
-    #         # s.send(pickle.dumps(codeList))
-    #     self.quit()
 
 
 class Consult(tk.Frame):
@@ -737,8 +727,7 @@ class Insert(tk.Frame):
                 messagebox.showinfo("Error","The connection is already present")
             else:
                 messagebox.showinfo("Done","The connection was succesfully added.")
-<<<<<<< HEAD
-=======
+
 
     def updateCitiesOnSelection(self, event):
         global adminID
@@ -758,7 +747,7 @@ class Insert(tk.Frame):
             self.searchKey[1] = self.cityList.get().split(" ")[0]
         print(self.searchKey)
 
->>>>>>> aec06a2cb5023ade09f994bd6919e995f36d1bfe
+
     def updateArrivalCitiesOnSelection(self, event):
         global adminID
         self.searchKey = [self.arrival_countryList.get().split(" ")[0]]
@@ -779,13 +768,14 @@ class Insert(tk.Frame):
 
     #Insert route
     def draw_insertRoute(self, controller):
+        global adminID
         self.clear()
 
         self.label = tk.Label(self, text='')
         self.label.config(font=('Calibri', 10))
         self.label.place(x=143, y=120)
 
-        codeList = ["43"]
+        codeList = ["43", adminID]
         s.send(pickle.dumps(codeList))
         self.trains = pickle.loads(s.recv(8192))
         self.short_trains = self.sliceTrains(self.trains)
@@ -801,7 +791,7 @@ class Insert(tk.Frame):
 
         self.buttonBackToInsert(controller)
 
-        codeList = ["03"]
+        codeList = ["03", adminID]
         s.send(pickle.dumps(codeList))
         countries = pickle.loads(s.recv(8192))
 
@@ -827,7 +817,7 @@ class Insert(tk.Frame):
                                command=lambda: self.createNewRoute())
         self.ROUTE_DONE.place(x=200, y=300)
     def createNewRoute(self):
-
+        global adminID
         train = self.trainCode.get()
 
         if train == "":
@@ -853,7 +843,7 @@ class Insert(tk.Frame):
                 messagebox.showinfo("ERROR", train[2]+" already departs from the selected city, please select another one.")
 
             else:
-                codeList = ["17", newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity,
+                codeList = ["17", adminID, newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity,
                             newRouteArrivalCountry, newRouteArrivalCity, newRoutePrice]
                 s.send(pickle.dumps(codeList))
 
@@ -880,6 +870,8 @@ class Insert(tk.Frame):
 
     #Insert train
     def draw_insertTrain(self, controller):
+        global adminID
+
         self.clear()
 
         self.typeLabel = ttk.Label(self, text="Select a train type")
@@ -904,7 +896,7 @@ class Insert(tk.Frame):
         self.newTrainName = ttk.Entry(self)
         self.newTrainName.place(x=175, y=170)
 
-        codeList = ["03"]
+        codeList = ["03", adminID]
         s.send(pickle.dumps(codeList))
         countries = pickle.loads(s.recv(8192))
 
@@ -932,6 +924,7 @@ class Insert(tk.Frame):
                                command=lambda: self.createNewTrain())
         self.TRAIN_DONE.place(x=200, y=400)
     def createNewTrain(self):
+        global adminID
 
         newTrainType = self.type.get()
         newTrainCode = self.newTrainCode.get()
@@ -950,7 +943,7 @@ class Insert(tk.Frame):
             newTrainDepCountryCode = self.countryList.get().split(" ")[0]
             newTrainsDepCityCode = self.cityList.get().split(" ")[0]
 
-            codeList = ["18", newTrainType, newTrainCode, newTrainName, newTrainSeats, newTrainDepCountryCode,
+            codeList = ["18", adminID, newTrainType, newTrainCode, newTrainName, newTrainSeats, newTrainDepCountryCode,
                         newTrainsDepCityCode]
             print(codeList)
             s.send(pickle.dumps(codeList))
