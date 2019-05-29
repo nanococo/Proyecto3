@@ -22,7 +22,7 @@ class mainApp(tk.Tk):
 
         menuBar = tk.Menu(container)
         fileMenu = tk.Menu(menuBar, tearoff=0)
-        fileMenu.add_command(label='LogOut', command= lambda: self.show_frame(logIn))
+        fileMenu.add_command(label='LogOut', command= lambda: self.server_Logout(logIn))
         fileMenu.add_separator()
         fileMenu.add_command(label='End program', command=quit)
         menuBar.add_cascade(label='Exit', menu=fileMenu)
@@ -49,12 +49,14 @@ class mainApp(tk.Tk):
             codeList = ["46", adminID]
             s.send(pickle.dumps(codeList))
 
-
-
-    def show_frame(self, cont):
+    def server_Logout(self, cont):
         # METHOD TO UNLOCK SERVER
         codeList = ["46", adminID]
         s.send(pickle.dumps(codeList))
+        self.show_frame(cont)
+
+
+    def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
 
