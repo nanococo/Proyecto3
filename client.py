@@ -173,7 +173,7 @@ def customRoutes(s):
         arrCountry = input("Arrival Country: ")
         arrCity = input("Arrival City: ")
 
-        codeList = ["41", depCountry, depCity, arrCountry, arrCity]
+        codeList = ["41", "", depCountry, depCity, arrCountry, arrCity]
         s.send(pickle.dumps(codeList))
         routes = pickle.loads(s.recv(8192))
 
@@ -1070,19 +1070,19 @@ def main():
                         userId = input("ID: ")
 
                         if userId != "0":
-                            codeList = ["00", userId]
+                            codeList = ["00","", userId]
                             s.send(pickle.dumps(codeList))
                             userValidated = pickle.loads(s.recv(8192))
 
                             if userValidated:
                                 userID = userId
-                                codeList = ["01", userId]
+                                codeList = ["01","", userId]
                                 s.send(pickle.dumps(codeList))
                                 userStatus = pickle.loads(s.recv(8192))
                                 if userStatus == "0":
 
                                     # Set userName here:
-                                    codeList = ["02", userId]
+                                    codeList = ["02", "", userId]
                                     s.send(pickle.dumps(codeList))
                                     userName = pickle.loads(s.recv(8192))
 

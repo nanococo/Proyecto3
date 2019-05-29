@@ -69,6 +69,7 @@ class SocketServer(socket.socket):
                 # ValidateUser
                 # [0] is code 00
                 # [2] is userId
+                print(dataList[2])
                 returnValue = self.validateUser(dataList[2])
                 client.send(pickle.dumps(returnValue))
 
@@ -441,6 +442,7 @@ class SocketServer(socket.socket):
         :param userId is the user id to look for."""
         for i in range(len(self.dat.users)):
             if userId in self.dat.users[i]:
+                print(self.dat.users[i])
                 return True
 
     def getUserStatus(self, userId):
