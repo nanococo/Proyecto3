@@ -287,17 +287,20 @@ class logIn(ttk.Frame):
         self.viewBill.pack(pady=40)
 
     def drawFixedRecervation(self):
-        for child in self.winfo_children():
-            child.place_forget()
-            child.pack_forget()
-
-        self.searchKey=[]
-
-        self.departureCountryList = ttk.Combobox(self, state="readonly")
         codeList = ["03", ""]
         s.send(pickle.dumps(codeList))
-        pickle.loads(s.recv(8192))
-        if pickle.loads(s.recv(8192))!="1":
+        country = pickle.loads(s.recv(8192))
+
+        if country != "1":
+
+            for child in self.winfo_children():
+                child.place_forget()
+                child.pack_forget()
+
+            self.searchKey = []
+
+            self.departureCountryList = ttk.Combobox(self, state="readonly")
+
             self.departureCountryList["values"] = pickle.loads(s.recv(8192))
             self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionFixed)
             self.departureCountryList.place(x=250, y=50)
@@ -329,9 +332,9 @@ class logIn(ttk.Frame):
         self.departureCountryList = ttk.Combobox(self, state="readonly")
         codeList = ["03", ""]
         s.send(pickle.dumps(codeList))
-        pickle.loads(s.recv(8192))
+        country = pickle.loads(s.recv(8192))
 
-        if pickle.loads(s.recv(8192))!="1":
+        if country != "1":
 
             self.departureCountryList["values"] = pickle.loads(s.recv(8192))
             self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionCustom1)
