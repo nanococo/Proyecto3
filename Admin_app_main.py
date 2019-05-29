@@ -292,6 +292,16 @@ class Consult(tk.Frame):
                 for connection in connections:
                     self.connectionListbox.insert(index, connection)
 
+    def updateCitiesOnSelection(self, event):
+        global adminID
+        self.searchKey = [self.countryList.get().split(" ")[0]]
+        print(self.searchKey[0])
+        codeList = ["04", adminID, self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        cities = pickle.loads(s.recv(8192))
+        self.cityList["values"] = cities
+        print(self.searchKey)
+
     def selectCity(self, event):
 
         if len(self.searchKey) == 1:
@@ -887,7 +897,7 @@ class Insert(tk.Frame):
 
         self.countryList = ttk.Combobox(self, state="readonly")
         self.countryList["values"] = countries
-        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection2)
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
         self.countryList.place(x=169, y=290)
         self.countryListLabel = ttk.Label(self, text="Select a departure country")
         self.countryListLabel.place(x=169, y=270)
@@ -990,7 +1000,7 @@ class Insert(tk.Frame):
                 incomplete = True
         return incomplete
 
-    def updateCitiesOnSelection2(self, event):
+    def updateCitiesOnSelection(self, event):
         global adminID
         self.searchKey = [self.countryList.get().split(" ")[0]]
         print(self.searchKey[0])
