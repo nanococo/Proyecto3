@@ -715,7 +715,7 @@ class SocketServer(socket.socket):
         :param newTrainCity is the new train city location"""
         trainPresent = False
         accepted = False
-        success = True
+        success = False
         if data.countryAndCityExistInList(newTrainCountry, newTrainCity, self.dat.countryCitiesConnections):
             accepted = True
         for i in self.dat.trainRoutes:
@@ -730,6 +730,8 @@ class SocketServer(socket.socket):
                 success = True
 
         return success
+
+
 
     def deleteCountry(self, countryToDel):
         """This query deletes a given country an all of its information. HANDLE WITH CARE
