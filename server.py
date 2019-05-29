@@ -736,7 +736,7 @@ class SocketServer(socket.socket):
     def deleteCountry(self, countryToDel):
         """This query deletes a given country an all of its information. HANDLE WITH CARE
         :param countryToDel is the country code to delete"""
-        success = True
+        success = False
         if data.countryExistsInList(countryToDel, self.dat.countryCitiesConnections):
             trainRoutesHolder = []
             countryCityConnectionsHolder = []

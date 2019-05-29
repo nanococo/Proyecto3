@@ -39,7 +39,7 @@ class mainApp(tk.Tk):
 
             frame.grid(row=0, column=0, sticky='nsew')
 
-        self.show_frame(logIn)
+        self.show_frame(AdminMainMenu)
 
     def handle_close(self, event):
         global adminID
@@ -242,7 +242,7 @@ class Consult(tk.Frame):
 
         self.countryList = ttk.Combobox(self, state="readonly")
         self.countryList["values"] = countries
-        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection2)
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
         self.countryList.place(x=153, y=50)
         self.countryListLabel = ttk.Label(self, text="Select a country")
         self.countryListLabel.place(x=183, y=30)
@@ -264,6 +264,7 @@ class Consult(tk.Frame):
         Continue.place(x=188, y=180)
 
         self.buttonBack()
+
     def fillWithConnections(self):
         global adminID
         self.connectionListbox.delete(0, tk.END)
@@ -660,7 +661,7 @@ class Insert(tk.Frame):
 
         self.countryList = ttk.Combobox(self, state="readonly")
         self.countryList["values"] = countries
-        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection2)
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
         self.countryList.place(x=169, y=50)
         self.countryListLabel = ttk.Label(self, text="Select a departure country")
         self.countryListLabel.place(x=170, y=30)
@@ -1023,9 +1024,6 @@ class Delete(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text='Delete:')
-        label.config(font=('Calibri', 11))
-        label.place(x=0,y=0)
 
         self.init_delete(controller)
 
@@ -1034,8 +1032,12 @@ class Delete(tk.Frame):
 
         self.clear()
 
+        label = tk.Label(self, text='Delete:')
+        label.config(font=('Calibri', 11))
+        label.place(x=0, y=0)
+
         buttonDeleteCountry = ttk.Button(self, text='Country',
-                                         command=lambda: controller.show_frame('PENDIENTE'))
+                                         command=lambda: self.draw_deleteCountry(controller))
         buttonDeleteCountry.place(x=10, y=40)
 
         buttonDeleteCity = ttk.Button(self, text='City',
@@ -1060,7 +1062,87 @@ class Delete(tk.Frame):
 
         self.buttonBackToMenu(controller)
 
+    def draw_deleteCountry(self, controller):
 
+        self.clear()
+
+        codeList = ["03", adminID]
+        s.send(pickle.dumps(codeList))
+        countries = pickle.loads(s.recv(8192))
+
+        self.deleteCountryLabel = ttk.Label(self, text="Select a country to delete")
+        self.deleteCountryLabel.place(x=168, y=20)
+
+        self.deleteCountry = ttk.Combobox(self, state="readonly")
+        self.deleteCountry["values"] = countries
+        self.deleteCountry.bind("<<ComboboxSelected>>")
+        self.deleteCountry.place(x=166, y=50)
+
+        Continue = ttk.Button(self, text='Continue',
+                              command=lambda: self.confirmation(controller))
+        Continue.place(x=200, y=80)
+
+        self.label = tk.Label(self, text='')
+        self.label.config(font=('Calibri', 10))
+        self.label.place(x=153, y=120)
+
+        self.cityListbox = tk.Listbox(self)
+        self.cityListbox.place(x=178, y=150)
+
+        self.buttonBackToInsert(controller)
+
+    def confirmation(self, controller):
+        global adminID
+
+        self.cityListbox.delete(0, tk.END)
+
+        self.searchKey = self.deleteCountry.get().split(' ')[0]
+        codeList = ["04", adminID, self.searchKey]
+        s.send(pickle.dumps(codeList))
+        cities = pickle.loads(s.recv(8192))
+
+        self.label.configure(text='Delete ' + self.deleteCountry.get() + '? It contains:')
+        self.label.config(font=('Calibri', 10))
+        self.label.place(x=150, y=120)
+
+        index = 0
+        for city in cities:
+            self.cityListbox.insert(index, city[0] + ' ' + city[1])
+
+        self.yes = ttk.Button(self, text="YES",
+                              command = lambda: self.confirmationCommand("YES", controller))
+        self.yes.place(x=150,y=350)
+
+
+        self.no = ttk.Button(self, text="NO",
+                             command=lambda: self.confirmationCommand("NO", controller))
+        self.no.place(x=250, y=350)
+
+    def confirmationCommand(self, confirmation, controller):
+
+        if confirmation == "YES":
+            countryToDel = self.deleteCountry.get()
+            if countryToDel == " ":
+                messagebox.showinfo("ERROR", "Please select a country")
+            else:
+                countryToDelCode = self.deleteCountry.get().split(" ")[0]
+                codeList = ["19", adminID, countryToDelCode]
+                s.send(pickle.dumps(codeList))
+                success = pickle.loads(s.recv(8192))
+
+                if success:
+                    messagebox.showinfo("DONE", "The country was succesfully deleted")
+                else:
+                    messagebox.showinfo("ERROR", "Could not delete country.")
+
+        self.draw_deleteCountry(controller)
+
+
+
+    def buttonBackToInsert(self, controller):
+        buttonBACK = ttk.Button(self, text='BACK',
+                                command=lambda: self.init_delete(controller))
+        buttonBACK.place(x=200, y=550)
     def buttonBackToMenu(self, controller):
         buttonBACK = ttk.Button(self, text='BACK',
                                 command=lambda: controller.show_frame(AdminMainMenu))
