@@ -12,7 +12,7 @@ class mainApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        #tk.Tk.iconbitmap(self,default='C:/Users\jguty\OneDrive\Pictures/icono.ico')
+        tk.Tk.iconbitmap(self,default='icono.ico')
         self.bind("<Destroy>", self.handle_close)
 
         container = tk.Frame(self)
