@@ -6,11 +6,14 @@ from PIL import Image,ImageTk
 from tkinter import Tk, Canvas
 import socket, os, pickle
 
+adminID = ""
+
 class mainApp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         #tk.Tk.iconbitmap(self,default='C:/Users\jguty\OneDrive\Pictures/icono.ico')
+        self.bind("<Destroy>", self.handle_close)
 
         container = tk.Frame(self)
         container.pack(side='top', fill='both',  expand = True)
@@ -36,7 +39,17 @@ class mainApp(tk.Tk):
 
             frame.grid(row=0, column=0, sticky='nsew')
 
-        self.show_frame(AdminMainMenu)
+        self.show_frame(logIn)
+
+    def handle_close(self, event):
+        global adminID
+        if event.widget == self:
+            print("Closing")
+            # METHOD TO UNLOCK SERVER
+            codeList = ["46", adminID]
+            s.send(pickle.dumps(codeList))
+        self.quit()
+
 
     def show_frame(self, cont):
 
@@ -50,6 +63,7 @@ class AdminMainMenu(ttk.Frame):
         label = tk.Label(self, text='Main menu')
         label.config(font=('Calibri', 13))
         label.place(x=0, y=0)
+        #self.bind("<Destroy>", self.handle_close)
 
 
         #Notebook
@@ -63,6 +77,14 @@ class AdminMainMenu(ttk.Frame):
         self.notebook.add(self.history, text="History", padding=10)
         self.pack()
         #
+    # def handle_close(self, event):
+    #     global adminID
+    #     if event.widget == self:
+    #         print("Closing")
+    #         # METHOD TO UNLOCK SERVER
+    #         # codeList = ["46", "", adminID]
+    #         # s.send(pickle.dumps(codeList))
+    #     self.quit()
 
 
 class Consult(tk.Frame):
@@ -74,10 +96,10 @@ class Consult(tk.Frame):
 
     #Check prices
     def draw_checkPrices(self):
-
+        global adminID
         self.clear()
 
-        codeList = ["43"]
+        codeList = ["43", adminID]
         s.send(pickle.dumps(codeList))
         trains = pickle.loads(s.recv(8192))
 
@@ -102,7 +124,7 @@ class Consult(tk.Frame):
 
         self.buttonBack()
     def fillWithPrices(self):
-
+        global adminID
         self.pricesListbox.delete(0, tk.END)
 
         code = self.trainCode.get().split(' ')[0]
@@ -111,7 +133,7 @@ class Consult(tk.Frame):
             messagebox.showinfo('ERROR', 'Please type a train code')
         else:
 
-            codeList = ["07", code]
+            codeList = ["07", adminID, code]
             s.send(pickle.dumps(codeList))
             prices = pickle.loads(s.recv(8192))
 
@@ -135,10 +157,10 @@ class Consult(tk.Frame):
 
     #Check countries
     def draw_checkCountries(self):
-
+        global adminID
         self.clear()
 
-        codeList = ["03"]
+        codeList = ["03", adminID]
         s.send(pickle.dumps(codeList))
         countries = pickle.loads(s.recv(8192))
 
@@ -158,10 +180,10 @@ class Consult(tk.Frame):
 
     #Check cities
     def draw_checkCities(self):
-
+        global adminID
         self.clear()
 
-        codeList = ["03"]
+        codeList = ["03", adminID]
         s.send(pickle.dumps(codeList))
         countries = pickle.loads(s.recv(8192))
 
@@ -188,11 +210,11 @@ class Consult(tk.Frame):
 
         self.buttonBack()
     def fillWithCities(self):
-
+        global adminID
         self.cityListbox.delete(0, tk.END)
 
         self.searchKey = self.availableCountries.get().split(' ')[0]
-        codeList = ["04", self.searchKey]
+        codeList = ["04", adminID, self.searchKey]
         s.send(pickle.dumps(codeList))
         cities = pickle.loads(s.recv(8192))
 
@@ -207,12 +229,12 @@ class Consult(tk.Frame):
 
     #Check connections
     def draw_checkConnections(self):
-
+        global adminID
         self.clear()
 
         self.searchKey = []
 
-        codeList = ["03"]
+        codeList = ["03", adminID]
         s.send(pickle.dumps(codeList))
         countries = pickle.loads(s.recv(8192))
 
@@ -241,7 +263,7 @@ class Consult(tk.Frame):
 
         self.buttonBack()
     def fillWithConnections(self):
-
+        global adminID
         self.connectionListbox.delete(0, tk.END)
 
         countryCode = self.countryList.get().split(' ')[0]
@@ -253,7 +275,7 @@ class Consult(tk.Frame):
             messagebox.showinfo('ERROR', 'Please select a city')
         else:
 
-            codeList = ["05", countryCode, cityCode]
+            codeList = ["05", adminID, countryCode, cityCode]
             s.send(pickle.dumps(codeList))
             connections = pickle.loads(s.recv(8192))
 
@@ -268,10 +290,10 @@ class Consult(tk.Frame):
                 for connection in connections:
                     self.connectionListbox.insert(index, connection)
     def updateCitiesOnSelection(self, event):
-
+        global adminID
         self.searchKey = [self.countryList.get().split(" ")[0]]
         print(self.searchKey[0])
-        codeList = ["04", self.searchKey[0]]
+        codeList = ["04", adminID, self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         cities = pickle.loads(s.recv(8192))
         self.cityList["values"] = cities
@@ -287,10 +309,10 @@ class Consult(tk.Frame):
 
     #Check routes
     def draw_checkRoutes(self):
-
+        global adminID
         self.clear()
 
-        codeList = ["44"]
+        codeList = ["44", adminID]
         s.send(pickle.dumps(codeList))
         cities = pickle.loads(s.recv(8192))
 
@@ -315,7 +337,7 @@ class Consult(tk.Frame):
 
         self.buttonBack()
     def fillWithRoutes(self):
-
+        global adminID
         self.routesListbox.delete(0, tk.END)
 
         city = self.cityCode.get()
@@ -325,7 +347,7 @@ class Consult(tk.Frame):
 
         else:
             code = self.cityCode.get().split()[0]
-            codeList = ["09", code]
+            codeList = ["09", adminID, code]
             s.send(pickle.dumps(codeList))
             routes = pickle.loads(s.recv(8192))
 
@@ -373,7 +395,7 @@ class Consult(tk.Frame):
 
         self.buttonBack()
     def fillWithTrains(self):
-
+        global adminID
         self.trainsListbox.delete(0, tk.END)
 
         type = self.type.get()
@@ -381,7 +403,7 @@ class Consult(tk.Frame):
             messagebox.showinfo('ERROR','Please select a train type')
 
         else:
-            codeList = ["06", type]
+            codeList = ["06", adminID, type]
             s.send(pickle.dumps(codeList))
             trains = pickle.loads(s.recv(8192))
 
@@ -540,7 +562,7 @@ class Insert(tk.Frame):
         self.buttonBackToInsert(controller)
 
     def createNewCountry(self):
-
+        global adminID
         newCountryCode = self.code.get()
         newCountryName = self.name.get()
 
@@ -550,7 +572,7 @@ class Insert(tk.Frame):
             messagebox.showinfo('ERROR','Please fill all the gaps.')
         else:
 
-            codeList = ["14", newCountryCode, newCountryName]
+            codeList = ["14", adminID, newCountryCode, newCountryName]
             s.send(pickle.dumps(codeList))
             success = pickle.loads(s.recv(8192))
 
@@ -562,10 +584,9 @@ class Insert(tk.Frame):
 
     #Insert city
     def draw_insertCity(self, controller):
+        global adminID
 
-
-
-        codeList = ["03"]
+        codeList = ["03", adminID]
         s.send(pickle.dumps(codeList))
         countries = pickle.loads(s.recv(8192))
 
@@ -597,7 +618,7 @@ class Insert(tk.Frame):
 
 
     def createNewCity(self):
-
+        global adminID
         newCityCode = self.code.get()
         newCityName = self.name.get()
         countryCodeForCity = self.availableCountries.get().split(' ')[0]
@@ -612,7 +633,7 @@ class Insert(tk.Frame):
             print(newCityCode)
             print(newCityName)
             print(countryCodeForCity)
-            codeList = ["15", countryCodeForCity, newCityCode, newCityName]
+            codeList = ["15", adminID, countryCodeForCity, newCityCode, newCityName]
             s.send(pickle.dumps(codeList))
             success = pickle.loads(s.recv(8192))
 
@@ -626,10 +647,10 @@ class Insert(tk.Frame):
 
     #Insert connection
     def draw_insertConnection(self, controller):
-
+        global adminID
         self.clear()
 
-        codeList = ["03"]
+        codeList = ["03", adminID]
         s.send(pickle.dumps(codeList))
         countries = pickle.loads(s.recv(8192))
 
@@ -676,7 +697,7 @@ class Insert(tk.Frame):
         self.buttonBackToInsert(controller)
 
     def createNewConnection(self):
-
+        global adminID
         newDepCountry = self.countryList.get()
         newDepCity = self.cityList.get()
         newArrCountry = self.arrival_countryList.get()
@@ -705,7 +726,7 @@ class Insert(tk.Frame):
             newArrCountryCode = self.arrival_countryList.get().split(" ")[0]
             newArrCityCode = self.arrival_cityList.get().split(" ")[0]
 
-            codeList = ["16", newDepCountryCode, newDepCityCode, newConnCode, newArrCountryCode, newArrCityCode, newConnDuration]
+            codeList = ["16", adminID, newDepCountryCode, newDepCityCode, newConnCode, newArrCountryCode, newArrCityCode, newConnDuration]
             s.send(pickle.dumps(codeList))
             success = pickle.loads(s.recv(8192))
 
@@ -715,10 +736,10 @@ class Insert(tk.Frame):
                 messagebox.showinfo("Done","The connection was succesfully added.")
 
     def updateCitiesOnSelection(self, event):
-
+        global adminID
         self.searchKey = [self.countryList.get().split(" ")[0]]
         print(self.searchKey[0])
-        codeList = ["04", self.searchKey[0]]
+        codeList = ["04", adminID, self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         cities = pickle.loads(s.recv(8192))
         self.cityList["values"] = cities
@@ -733,10 +754,10 @@ class Insert(tk.Frame):
         print(self.searchKey)
 
     def updateArrivalCitiesOnSelection(self, event):
-
+        global adminID
         self.searchKey = [self.arrival_countryList.get().split(" ")[0]]
         print(self.searchKey[0])
-        codeList = ["04", self.searchKey[0]]
+        codeList = ["04", adminID, self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         cities = pickle.loads(s.recv(8192))
         self.arrival_cityList["values"] = cities
@@ -978,34 +999,37 @@ class logIn(tk.Frame):
         # controller.show_frame(AdminMainMenu)
 
     def getLoginInfo(self, controller):
+        global adminID
         password=self.password.get()
 
-        codeList = ["12", password]
+        codeList = ["12", "", password]
         s.send(pickle.dumps(codeList))
         adminValidate = pickle.loads(s.recv(8192))
 
+        if adminValidate != "1":
+            if adminValidate:
+                # ADDS TO GLOBAL VARIABLE adminID the admin id
+                adminID = password
+
+                # Lock server here:
+                codeList = ["45", "", adminID]
+                s.send(pickle.dumps(codeList))
+
+                self.draw_mainMenu(controller)
+                print("success")
+
+                # Set logged flag (ESTO DEBE SER UNA VARIABLE GLOBAL)
+                logged = True
 
 
-        if adminValidate:
+            else:
 
-            # AQUI DEJA CARGAR NUEVA VENTANA
-            # Set userName here:
-            codeList = ["02", password]
-            s.send(pickle.dumps(codeList))
-            userName = pickle.loads(s.recv(8192))
+                messagebox.showinfo("Access denied", "Wrong User Name or password")
 
-            self.draw_mainMenu(controller)
-            print("success")
-
-            # Set logged flag (ESTO DEBE SER UNA VARIABLE GLOBAL)
-            logged = True
-
-
-        else:
-
-            messagebox.showinfo("Access denied", "Wrong User Name or password")
 
             loginError = True
+        else:
+            messagebox.showinfo("Access denied", "Server is blocked")
 
         # #global adminFormatList
         # login_success=False
@@ -1038,8 +1062,9 @@ if __name__ == '__main__':
     s.connect((host, port))
 
 
+
     app = mainApp()
     app.title('UTS Europe - Admin Module')
     app.geometry('500x600')
-    app.resizable(0,0)
+    app.resizable(0, 0)
     app.mainloop()

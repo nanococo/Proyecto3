@@ -13,7 +13,7 @@ class SocketServer(socket.socket):
     # This list will be shared by Billing and Reservation Methods. Thus is outside as a global var
     reservations = []
     serverLock = False
-    currentAdminID = ""
+
 
 
     def __init__(self, dat):
@@ -23,6 +23,7 @@ class SocketServer(socket.socket):
         self.bind(('0.0.0.0', 5000))
         self.listen(5)
         self.dat = dat
+        self.currentAdminID = ""
 
 
     def run(self):
@@ -62,357 +63,372 @@ class SocketServer(socket.socket):
 
     def MANAGEMENTMETHOD(self, dataList, client):
         """This method will map each request code to the designated method for the server to execute"""
-        if dataList[0] == "00":
-            #ValidateUser
-            #[0] is code 00
-            #[1] is userId
-            returnValue = self.validateUser(dataList[1])
+        if dataList[1]==self.currentAdminID:
+
+            if dataList[0] == "00":
+                # ValidateUser
+                # [0] is code 00
+                # [2] is userId
+                returnValue = self.validateUser(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "01":
+                # GetUserStatus
+                # [0] is code 01
+                # [2] is userId
+                returnValue = self.getUserStatus(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "02":
+                # GetUserName
+                # [0] is code 01
+                # [2] is userId
+                returnValue = self.getUserName(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "03":
+                # GetAllCountries
+                # [0] is code 03
+                returnValue = self.getAllCountries()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "04":
+                # GetAllCountries
+                # [0] is code 04
+                # [2] is op
+                returnValue = self.getCitiesByCountry(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "05":
+                # getConnectionsByCityAndCountry
+                # [0] is code 05
+                # [2] is country
+                # [3] is city
+                returnValue = self.getConnectionsByCityAndCountry(dataList[2], dataList[3])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "06":
+                # getTrainByTrainType
+                # [0] is code 06
+                # [2] is train type code
+                returnValue = self.getTrainByTrainType(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "07":
+                # getPricesByTrainCode
+                # [0] is code 07
+                # [2] is train code
+                returnValue = self.getPricesByTrainCode(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "08":
+                # getPricesByTrainCode
+                # [0] is code 08
+                # [2] is train code
+                returnValue = self.getSeatsByTrainCode(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "09":
+                # getRoutesByCity
+                # [0] is code 09
+                # [2] is city code
+                returnValue = self.getRoutesByCity(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "10":
+                # getPricesByTrainCode
+                # [0] is code 10
+                # [2] is country code
+                # [3] is city code
+                returnValue = self.getRouteForReservations(dataList[2], dataList[3])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "11":
+                # recordData
+                # [0] is code 11
+                # [2] is reservationList
+                # [3] is userName
+                returnValue = self.recordData(dataList[2], dataList[3])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "12":
+                # validateAdmin
+                # [0] is code 12
+                # [2] is adminCode
+                returnValue = self.validateAdmin(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "13":
+                # validateAdmin
+                # [0] is code 13
+                # [2] is adminCode
+                returnValue = self.getAdminName(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "14":
+                # validateAdmin
+                # [0] is code 14
+                # [2] is countryCode
+                # [3] is countryName
+                returnValue = self.insertCountry(dataList[2], dataList[3])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "15":
+                # validateAdmin
+                # [0] is code 15
+                # [2] is countryCode
+                # [3] is cityCode
+                # [4] is cityName
+                returnValue = self.insertCity(dataList[2], dataList[3], dataList[4])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "16":
+                # validateAdmin
+                # [0] is code 16
+                # [2] is depCountryCode
+                # [3] is depCityCode
+                # [4] is connCode
+                # [5] is arrCountryCode
+                # [6] is arrCityCode
+                # [7] is connDuration
+                returnValue = self.insertConnections(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "17":
+                # validateAdmin
+                # [0] is code 17
+                # [2] is the trainType
+                # [3] is the trainCode
+                # [4] is depCountryCode
+                # [5] is depCityCode
+                # [6] is arrCountryCode
+                # [7] is arrCityCode
+                # [8] is the duration
+                returnValue = self.insertRoute(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7], dataList[8])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "18":
+                # validateAdmin
+                # [0] is code 18
+                # [2] is the newTrainType
+                # [3] is the newTrainCode
+                # [4] is newTrainName
+                # [5] is newTrainSeats
+                # [6] is newTrainCountry
+                # [7] is newTrainCity
+                returnValue = self.insertTrain(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "19":
+                # validateAdmin
+                # [0] is code 19
+                # [2] is countryToDel
+                returnValue = self.deleteCountry(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "20":
+                # validateAdmin
+                # [0] is code 20
+                # [2] is countryToDel
+                returnValue = self.deleteCity(dataList[2], dataList[3])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "21":
+                # validateAdmin
+                # [0] is code 21
+                # [2] is delConnDepCountry
+                # [3] delConnDepCity
+                # [4] delConnCode
+                # [5] delConnArrCountry
+                # [6] delConnArrCity
+                returnValue = self.deleteConnection(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "22":
+                # validateAdmin
+                # [0] is code 22
+                # [2] newRouteTrainType
+                # [3] newRouteTrainCode
+                # [4] newRouteDepartCountry
+                # [5] newRouteDepartCity
+                # [6] newRouteArrivalCountry
+                # [7] newRouteArrivalCity
+                returnValue = self.deleteRoute(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "23":
+                # validateAdmin
+                # [0] is code 23
+                # [2] is newTrainType
+                # [3] newTrainCode
+                returnValue = self.deleteTrain(dataList[2], dataList[3])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "24":
+                # validateAdmin
+                # [0] is code 24
+                # [2] newRouteTrainType
+                # [3] newRouteTrainCode
+                # [4] newRouteDepartCountry
+                # [5] newRouteDepartCity
+                # [6] newRouteArrivalCountry
+                # [7] newRouteArrivalCity
+                # [8] newRoutePrice
+                returnValue = self.updatePrice(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7], dataList[8])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "25":
+                # validateAdmin
+                # [0] is code 25
+                # [2] newConnDepCountry
+                # [3] newConnDepCity
+                # [4] newConnCode
+                # [5] newConnDuration
+                returnValue = self.updateTime(dataList[2], dataList[3], dataList[4], dataList[5])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "26":
+                # validateAdmin
+                # [0] is code 26
+                # [2] newTrainType
+                # [3] newTrainCode
+                # [4] newTrainSeats
+                returnValue = self.updateSeats(dataList[2], dataList[3], dataList[4])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "27":
+                # validateAdmin
+                # [0] is code 27
+                # [2] oldRouteTrainType
+                # [3] oldRouteTrainCode
+                # [4] oldRouteDepartCountry
+                # [5] oldRouteDepartCity
+                # [6] oldRouteArrivalCountry
+                # [7] oldRouteArrivalCity
+                # [8] newRouteArrivalCountry
+                # [9] newRouteArrivalCity
+                returnValue = self.updateRoute(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7], dataList[8], dataList[9])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "28":
+                # validateAdmin
+                # [0] is code 28
+                # [2] trainType
+                # [3] trainCode
+                # [4] newTrainName
+                # [5] newTrainCapacity
+                # [6] newTrainCountry
+                # [7] newTrainCity
+                returnValue = self.updateTrain(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "29":
+                # validateAdmin
+                # [0] is code 29
+                # [2] trainType
+                # [3] trainCode
+                returnValue = self.updateMigratoryStatus(dataList[2], dataList[3])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "30":
+                # validateAdmin
+                # [0] is code 30
+                returnValue = self.lastInserts()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "31":
+                # validateAdmin
+                # [0] is code 31
+                returnValue = self.lastDeletes()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "32":
+                # validateAdmin
+                # [0] is code 32
+                returnValue = self.dat.getMostUsedRoute()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "33":
+                # validateAdmin
+                # [0] is code 33
+                returnValue = self.dat.getLeastUsedRoute()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "34":
+                # validateAdmin
+                # [0] is code 34
+                returnValue = self.dat.getMostVisitedCountry()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "35":
+                # validateAdmin
+                # [0] is code 35
+                returnValue = self.dat.getMostVisitedCity()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "36":
+                # validateAdmin
+                # [0] is code 36
+                returnValue = self.dat.getHighestUsageUser()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "37":
+                # validateAdmin
+                # [0] is code 37
+                returnValue = self.dat.getLeastUsageUser()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "38":
+                # validateAdmin
+                # [0] is code 38
+                # [2] is userID
+                returnValue = self.dat.getUserPurchases(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "39":
+                # validateAdmin
+                # [0] is code 39
+                returnValue = self.dat.getHighestUsageTrain()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "40":
+                # validateAdmin
+                # [0] is code 40
+                returnValue = self.dat.getLowestUsageTrain()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "41":
+                # validateAdmin
+                # [0] is code 41
+                returnValue = self.getCustomRoutes(dataList[2], dataList[3], dataList[4], dataList[5])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "42":
+                # getCountryByCode
+                # [2] is countryCode
+                returnValue = self.getCountryByCode(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "43":
+                # getAllTrains
+                returnValue = self.getAllTrains()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "44":
+                # getAllCities
+                returnValue = self.getAllCities()
+                client.send(pickle.dumps(returnValue))
+            elif dataList[0] == "45":
+                # LOCK_SERVER_ADMIN
+                self.lockServerForAdmin(dataList[2])
+            elif dataList[0] == "46":
+                # UNLOCK_SERVER_ADMIN
+                self.unlockServerForAdmin()
+        else:
+            returnValue = "1"
             client.send(pickle.dumps(returnValue))
 
-        elif dataList[0] == "01":
-            #GetUserStatus
-            #[0] is code 01
-            #[1] is userId
-            returnValue = self.getUserStatus(dataList[1])
-            client.send(pickle.dumps(returnValue))
 
-        elif dataList[0] == "02":
-            #GetUserName
-            # [0] is code 01
-            # [1] is userId
-            returnValue = self.getUserName(dataList[1])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "03":
-            #GetAllCountries
-            # [0] is code 03
-            returnValue = self.getAllCountries()
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "04":
-            # GetAllCountries
-            # [0] is code 04
-            # [1] is op
-            returnValue = self.getCitiesByCountry(dataList[1])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "05":
-            # getConnectionsByCityAndCountry
-            # [0] is code 05
-            # [1] is country
-            # [2] is city
-            returnValue = self.getConnectionsByCityAndCountry(dataList[1], dataList[2])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "06":
-            # getTrainByTrainType
-            # [0] is code 06
-            # [1] is train type code
-            returnValue = self.getTrainByTrainType(dataList[1])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "07":
-            # getPricesByTrainCode
-            # [0] is code 07
-            # [1] is train code
-            returnValue = self.getPricesByTrainCode(dataList[1])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "08":
-            # getPricesByTrainCode
-            # [0] is code 08
-            # [1] is train code
-            returnValue = self.getSeatsByTrainCode(dataList[1])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "09":
-            # getRoutesByCity
-            # [0] is code 09
-            # [1] is city code
-            returnValue = self.getRoutesByCity(dataList[1])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "10":
-            # getPricesByTrainCode
-            # [0] is code 10
-            # [1] is country code
-            # [2] is city code
-            returnValue = self.getRouteForReservations(dataList[1], dataList[2])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "11":
-            # recordData
-            # [0] is code 11
-            # [1] is reservationList
-            # [2] is userName
-            returnValue = self.recordData(dataList[1], dataList[2])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "12":
-            # validateAdmin
-            # [0] is code 12
-            # [1] is adminCode
-            returnValue = self.validateAdmin(dataList[1])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "13":
-            # validateAdmin
-            # [0] is code 13
-            # [1] is adminCode
-            returnValue = self.getAdminName(dataList[1])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "14":
-            # validateAdmin
-            # [0] is code 14
-            # [1] is countryCode
-            # [2] is countryName
-            returnValue = self.insertCountry(dataList[1], dataList[2])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "15":
-            # validateAdmin
-            # [0] is code 15
-            # [1] is countryCode
-            # [2] is cityCode
-            # [3] is cityName
-            returnValue = self.insertCity(dataList[1], dataList[2], dataList[3])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "16":
-            # validateAdmin
-            # [0] is code 16
-            # [1] is depCountryCode
-            # [2] is depCityCode
-            # [3] is connCode
-            # [4] is arrCountryCode
-            # [5] is arrCityCode
-            # [6] is connDuration
-            returnValue = self.insertConnections(dataList[1], dataList[2], dataList[3], dataList[4], dataList[5], dataList[6])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "17":
-            # validateAdmin
-            # [0] is code 17
-            # [1] is the trainType
-            # [2] is the trainCode
-            # [3] is depCountryCode
-            # [4] is depCityCode
-            # [5] is arrCountryCode
-            # [6] is arrCityCode
-            # [7] is the duration
-            returnValue = self.insertRoute(dataList[1], dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "18":
-            # validateAdmin
-            # [0] is code 18
-            # [1] is the newTrainType
-            # [2] is the newTrainCode
-            # [3] is newTrainName
-            # [4] is newTrainSeats
-            # [5] is newTrainCountry
-            # [6] is newTrainCity
-            returnValue = self.insertTrain(dataList[1], dataList[2], dataList[3], dataList[4], dataList[5], dataList[6])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "19":
-            # validateAdmin
-            # [0] is code 19
-            # [1] is countryToDel
-            returnValue = self.deleteCountry(dataList[1])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "20":
-            # validateAdmin
-            # [0] is code 20
-            # [1] is countryToDel
-            returnValue = self.deleteCity(dataList[1], dataList[2])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "21":
-            # validateAdmin
-            # [0] is code 21
-            # [1] is delConnDepCountry
-            # [2] delConnDepCity
-            # [3] delConnCode
-            # [4] delConnArrCountry
-            # [5] delConnArrCity
-            returnValue = self.deleteConnection(dataList[1], dataList[2], dataList[3], dataList[4], dataList[5])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "22":
-            # validateAdmin
-            # [0] is code 22
-            # [1] newRouteTrainType
-            # [2] newRouteTrainCode
-            # [3] newRouteDepartCountry
-            # [4] newRouteDepartCity
-            # [5] newRouteArrivalCountry
-            # [6] newRouteArrivalCity
-            returnValue = self.deleteRoute(dataList[1], dataList[2], dataList[3], dataList[4], dataList[5], dataList[6])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "23":
-            # validateAdmin
-            # [0] is code 23
-            # [1] is newTrainType
-            # [2] newTrainCode
-            returnValue = self.deleteTrain(dataList[1], dataList[2])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "24":
-            # validateAdmin
-            # [0] is code 24
-            # [1] newRouteTrainType
-            # [2] newRouteTrainCode
-            # [3] newRouteDepartCountry
-            # [4] newRouteDepartCity
-            # [5] newRouteArrivalCountry
-            # [6] newRouteArrivalCity
-            # [7] newRoutePrice
-            returnValue = self.updatePrice(dataList[1], dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "25":
-            # validateAdmin
-            # [0] is code 25
-            # [1] newConnDepCountry
-            # [2] newConnDepCity
-            # [3] newConnCode
-            # [4] newConnDuration
-            returnValue = self.updateTime(dataList[1], dataList[2], dataList[3], dataList[4])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "26":
-            # validateAdmin
-            # [0] is code 26
-            # [1] newTrainType
-            # [2] newTrainCode
-            # [3] newTrainSeats
-            returnValue = self.updateSeats(dataList[1], dataList[2], dataList[3])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "27":
-            # validateAdmin
-            # [0] is code 27
-            # [1] oldRouteTrainType
-            # [2] oldRouteTrainCode
-            # [3] oldRouteDepartCountry
-            # [4] oldRouteDepartCity
-            # [5] oldRouteArrivalCountry
-            # [6] oldRouteArrivalCity
-            # [7] newRouteArrivalCountry
-            # [8] newRouteArrivalCity
-            returnValue = self.updateRoute(dataList[1], dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7], dataList[8])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "28":
-            # validateAdmin
-            # [0] is code 28
-            # [1] trainType
-            # [2] trainCode
-            # [3] newTrainName
-            # [4] newTrainCapacity
-            # [5] newTrainCountry
-            # [6] newTrainCity
-            returnValue = self.updateTrain(dataList[1], dataList[2], dataList[3], dataList[4], dataList[5], dataList[6])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "29":
-            # validateAdmin
-            # [0] is code 29
-            # [1] trainType
-            # [2] trainCode
-            returnValue = self.updateMigratoryStatus(dataList[1], dataList[2])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "30":
-            # validateAdmin
-            # [0] is code 30
-            returnValue = self.lastInserts()
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "31":
-            # validateAdmin
-            # [0] is code 31
-            returnValue = self.lastDeletes()
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "32":
-            # validateAdmin
-            # [0] is code 32
-            returnValue = self.dat.getMostUsedRoute()
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "33":
-            # validateAdmin
-            # [0] is code 33
-            returnValue = self.dat.getLeastUsedRoute()
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "34":
-            # validateAdmin
-            # [0] is code 34
-            returnValue = self.dat.getMostVisitedCountry()
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "35":
-            # validateAdmin
-            # [0] is code 35
-            returnValue = self.dat.getMostVisitedCity()
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "36":
-            # validateAdmin
-            # [0] is code 36
-            returnValue = self.dat.getHighestUsageUser()
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "37":
-            # validateAdmin
-            # [0] is code 37
-            returnValue = self.dat.getLeastUsageUser()
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "38":
-            # validateAdmin
-            # [0] is code 38
-            returnValue = self.dat.getUserPurchases(dataList[1])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "39":
-            # validateAdmin
-            # [0] is code 39
-            returnValue = self.dat.getHighestUsageTrain()
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "40":
-            # validateAdmin
-            # [0] is code 40
-            returnValue = self.dat.getLowestUsageTrain()
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "41":
-            # validateAdmin
-            # [0] is code 41
-            returnValue = self.getCustomRoutes(dataList[1], dataList[2], dataList[3], dataList[4])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "42":
-            # getCountryByCode
-            returnValue = self.getCountryByCode(dataList[1])
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "43":
-            # getAllTrains
-            returnValue = self.getAllTrains()
-            client.send(pickle.dumps(returnValue))
-
-        elif dataList[0] == "44":
-            # getAllCities
-            returnValue = self.getAllCities()
-            client.send(pickle.dumps(returnValue))
 
 
 
@@ -1095,6 +1111,23 @@ class SocketServer(socket.socket):
             for j in i[2]:
                 result.append(j[:2])
         return result
+
+    def lockServerForAdmin(self, adminId):
+        """Sets the current admin admin code to the specified admin"""
+        print("here in method")
+        print(adminId)
+        print(self.currentAdminID)
+        self.currentAdminID = adminId
+        print(self.currentAdminID)
+        print("Locked")
+
+    def unlockServerForAdmin(self):
+
+        print(self.currentAdminID)
+        self.currentAdminID = ""
+        print(self.currentAdminID)
+        print("Unlocked")
+
 
     def broadcast(self, message):
         #Sending message to all clients
