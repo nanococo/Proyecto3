@@ -213,7 +213,7 @@ class newWindow:
         pass
 
 #
-reservations=[]
+recervations=[]
 #
 
 class logIn(ttk.Frame):
@@ -365,7 +365,7 @@ class logIn(ttk.Frame):
 
         self.billList=tk.Listbox(self, width=60)
 
-        for i in reservations:
+        for i in recervations:
             self.billList.insert(tk.END,i)
 
         self.billList.pack()
@@ -504,8 +504,8 @@ class logIn(ttk.Frame):
         if canRecerve:
             self.searchKey[2]+=[int(seatsToBuy)]
             self.searchKey[2]+=[int(seatsToBuy)*int(self.searchKey[2][8])]
-            reservations.append(self.searchKey[2])
-            print(reservations)
+            recervations.append(self.searchKey[2])
+            print(recervations)
             for child in self.winfo_children():
                 child.place_forget()
                 child.pack_forget()
