@@ -4,6 +4,10 @@ from tkinter import messagebox
 from PIL import Image,ImageTk
 import socket, os, pickle
 
+#
+recervations=[]
+#
+
 class map(ttk.Frame):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
@@ -212,9 +216,7 @@ class newWindow:
     def displayCityData(self, city):
         pass
 
-#
-recervations=[]
-#
+
 
 class logIn(ttk.Frame):
     def __init__(self, *args,**kwargs):
@@ -373,6 +375,7 @@ class logIn(ttk.Frame):
             messagebox.showinfo("Access denied", "Server is blocked")
 
     def drawBilling(self):
+        global recervations
         for child in self.winfo_children():
             child.pack_forget()
             child.place_forget()
@@ -498,6 +501,7 @@ class logIn(ttk.Frame):
         print(self.searchKey)
 
     def continueToBilling(self):
+        global recervations
         seatsToBuy=self.amountOfSeats.get()
         canRecerve=False
         print(seatsToBuy)

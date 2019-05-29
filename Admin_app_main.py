@@ -242,7 +242,7 @@ class Consult(tk.Frame):
 
         self.countryList = ttk.Combobox(self, state="readonly")
         self.countryList["values"] = countries
-        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection2)
         self.countryList.place(x=153, y=50)
         self.countryListLabel = ttk.Label(self, text="Select a country")
         self.countryListLabel.place(x=183, y=30)
