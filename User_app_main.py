@@ -193,7 +193,7 @@ class newWindow:
         elif country == "05":
             imageURL = "newDataFiles/Assets/Eritrea.png"
 
-        codeList = ["42", country]
+        codeList = ["42", "", country]
         s.send(pickle.dumps(codeList))
         countryName = pickle.loads(s.recv(8192))
         amount = "Country: "+countryName
@@ -231,41 +231,42 @@ class logIn(ttk.Frame):
     def getLoginInfo(self):
         userId=self.userID.get()
 
-        codeList = ["00", userId]
+        codeList = ["00", "", userId]
         s.send(pickle.dumps(codeList))
         userValidated = pickle.loads(s.recv(8192))
 
-        if userValidated:
+        if userValidated != "1":
+            if userValidated:
 
-            codeList = ["01", userId]
-            s.send(pickle.dumps(codeList))
-            userStatus = pickle.loads(s.recv(8192))
-
-            if userStatus == "0":
-                # AQUI DEJA CARGAR NUEVA VENTANA
-                # Set userName here:
-                codeList = ["02", userId]
+                codeList = ["01", "", userId]
                 s.send(pickle.dumps(codeList))
-                userName = pickle.loads(s.recv(8192))
-                for child in self.winfo_children():
-                    child.place_forget()
-                self.chooseRecervation()
-                print("Success")
+                userStatus = pickle.loads(s.recv(8192))
 
-                # Set logged flag (ESTO DEBE SER UNA VARIABLE GLOBAL)
-                logged = True
+                if userStatus == "0":
+                    # AQUI DEJA CARGAR NUEVA VENTANA
+                    # Set userName here:
+                    codeList = ["02", "", userId]
+                    s.send(pickle.dumps(codeList))
+                    userName = pickle.loads(s.recv(8192))
+                    for child in self.winfo_children():
+                        child.place_forget()
+                    self.chooseRecervation()
+                    print("Success")
 
+
+
+                else:
+
+                    messagebox.showinfo("Access denied", "User with migration issues")
+
+                    loginError = False
+                    blocked = True
             else:
 
-                messagebox.showinfo("Access denied","User with migration issues")
+                messagebox.showinfo("Access denied", "Wrong User Name or password")
 
-                loginError = False
-                blocked = True
         else:
-
-            messagebox.showinfo("Access denied", "Wrong User Name or password")
-
-            loginError = True
+            messagebox.showinfo("Access denied", "Server is blocked")
 
 
         self.userID.delete(0, tk.END)
@@ -293,7 +294,7 @@ class logIn(ttk.Frame):
         self.searchKey=[]
 
         self.departureCountryList = ttk.Combobox(self, state="readonly")
-        codeList = ["03"]
+        codeList = ["03", ""]
         s.send(pickle.dumps(codeList))
         self.departureCountryList["values"] = pickle.loads(s.recv(8192))
         self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionFixed)
@@ -322,7 +323,7 @@ class logIn(ttk.Frame):
         self.searchKey=[]
 
         self.departureCountryList = ttk.Combobox(self, state="readonly")
-        codeList = ["03"]
+        codeList = ["03", ""]
         s.send(pickle.dumps(codeList))
         self.departureCountryList["values"] = pickle.loads(s.recv(8192))
         self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionCustom1)
@@ -337,7 +338,7 @@ class logIn(ttk.Frame):
         self.departureCityListLabel.place(x=100, y = 100)
 
         self.arrivalCountryList = ttk.Combobox(self, state="readonly")
-        codeList = ["03"]
+        codeList = ["03", ""]
         s.send(pickle.dumps(codeList))
         self.arrivalCountryList["values"] = pickle.loads(s.recv(8192))
 
@@ -380,7 +381,7 @@ class logIn(ttk.Frame):
 
 
         print(self.searchKey[0])
-        codeList = ["04", self.searchKey[0]]
+        codeList = ["04", "", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         self.departureCityList["values"] = pickle.loads(s.recv(8192))
         print(self.searchKey)
@@ -397,7 +398,7 @@ class logIn(ttk.Frame):
         self.searchKey=[self.departureCountryList.get().split(" ")[0]]
 
         print(self.searchKey[0])
-        codeList = ["04", self.searchKey[0]]
+        codeList = ["04", "", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         self.departureCityList["values"] = pickle.loads(s.recv(8192))
         print(self.searchKey)
@@ -416,7 +417,7 @@ class logIn(ttk.Frame):
             self.searchKey[2]= self.arrivalCountryList.get().split(" ")[0]
 
         print(self.searchKey[0])
-        codeList = ["04", self.searchKey[2]]
+        codeList = ["04", "", self.searchKey[2]]
         s.send(pickle.dumps(codeList))
         self.arrivalCityList["values"] = pickle.loads(s.recv(8192))
         print(self.searchKey)
@@ -445,7 +446,7 @@ class logIn(ttk.Frame):
             self.routesListBox = tk.Listbox(self, width=69, height=20, selectmode=tk.SINGLE)
 
             if len(self.searchKey)==2:
-                codeList = ["10", self.searchKey[0], self.searchKey[1]]
+                codeList = ["10", "", self.searchKey[0], self.searchKey[1]]
                 s.send(pickle.dumps(codeList))
                 tempList = pickle.loads(s.recv(8192))
 
@@ -454,7 +455,7 @@ class logIn(ttk.Frame):
 
 
             elif len(self.searchKey)==4:
-                codeList = ["41", self.searchKey[0], self.searchKey[1], self.searchKey[2], self.searchKey[3]]
+                codeList = ["41", "", self.searchKey[0], self.searchKey[1], self.searchKey[2], self.searchKey[3]]
                 s.send(pickle.dumps(codeList))
                 routes = pickle.loads(s.recv(8192))
 
@@ -594,7 +595,7 @@ class Queries(ttk.Frame):
 
         self.countryList=tk.Listbox(self, width=50)
 
-        codeList = ["03"]
+        codeList = ["03", ""]
         s.send(pickle.dumps(codeList))
         countryListServer = pickle.loads(s.recv(8192))
 
@@ -613,7 +614,7 @@ class Queries(ttk.Frame):
         self.searchKey=[]
 
         self.selectCountry=ttk.Combobox(self)
-        codeList = ["03"]
+        codeList = ["03", ""]
         s.send(pickle.dumps(codeList))
         self.selectCountry["values"] = pickle.loads(s.recv(8192))
         self.selectCountry.bind("<<ComboboxSelected>>", self.cities1_get)
@@ -635,7 +636,7 @@ class Queries(ttk.Frame):
             child.pack_forget()
 
         self.cityList = tk.Listbox(self, width=50)
-        codeList = ["04", self.searchKey[0]]
+        codeList = ["04", "", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         cityListServer = pickle.loads(s.recv(8192))
 
@@ -656,7 +657,7 @@ class Queries(ttk.Frame):
         self.searchKey=[]
 
         self.departureCountryList = ttk.Combobox(self, state="readonly")
-        codeList = ["03"]
+        codeList = ["03", ""]
         s.send(pickle.dumps(codeList))
         self.departureCountryList["values"] = pickle.loads(s.recv(8192))
         self.departureCountryList.bind("<<ComboboxSelected>>", self.conections_update)
@@ -683,7 +684,7 @@ class Queries(ttk.Frame):
 
 
         print(self.searchKey[0])
-        codeList = ["04", self.searchKey[0]]
+        codeList = ["04", "", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         self.departureCityList["values"] = pickle.loads(s.recv(8192))
         print(self.searchKey)
@@ -701,7 +702,7 @@ class Queries(ttk.Frame):
 
         self.conectionsList = tk.Listbox(self, width=50)
 
-        codeList = ["05", self.searchKey[0], self.searchKey[1]]
+        codeList = ["05", "", self.searchKey[0], self.searchKey[1]]
         s.send(pickle.dumps(codeList))
         connectionListServer = pickle.loads(s.recv(8192))
 
@@ -739,7 +740,7 @@ class Queries(ttk.Frame):
 
         self.trainList = tk.Listbox(self, width=50)
 
-        codeList = ["06", self.searchKey]
+        codeList = ["06", "", self.searchKey]
         s.send(pickle.dumps(codeList))
         trainListServer = pickle.loads(s.recv(8192))
 
@@ -770,7 +771,7 @@ class Queries(ttk.Frame):
         self.back=ttk.Button(self, text="Back", command=self.init)
         self.back.pack(side=tk.BOTTOM)
     def prices2(self):
-        codeList = ["07", self.trainCode.get()]
+        codeList = ["07", "", self.trainCode.get()]
         s.send(pickle.dumps(codeList))
         pricesServer = pickle.loads(s.recv(8192))
         if pricesServer==[]:
@@ -812,7 +813,7 @@ class Queries(ttk.Frame):
         self.back = ttk.Button(self, text="Back", command=self.init)
         self.back.pack(side=tk.BOTTOM)
     def seats2(self):
-        codeList = ["08", self.trainCode.get()]
+        codeList = ["08", "", self.trainCode.get()]
         s.send(pickle.dumps(codeList))
         seatsServer = pickle.loads(s.recv(8192))
 
@@ -846,7 +847,7 @@ class Queries(ttk.Frame):
         self.searchKey=[]
 
         self.departureCountryList = ttk.Combobox(self, state="readonly")
-        codeList = ["03"]
+        codeList = ["03", ""]
         s.send(pickle.dumps(codeList))
         self.departureCountryList["values"] = pickle.loads(s.recv(8192))
         self.departureCountryList.bind("<<ComboboxSelected>>", self.routesUpdate)
@@ -871,7 +872,7 @@ class Queries(ttk.Frame):
         self.searchKey = [self.departureCountryList.get().split(" ")[0]]
 
         print(self.searchKey[0])
-        codeList = ["04", self.searchKey[0]]
+        codeList = ["04", "", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         self.departureCityList["values"] = pickle.loads(s.recv(8192))
         print(self.searchKey)
@@ -893,7 +894,7 @@ class Queries(ttk.Frame):
 
             self.routeList = tk.Listbox(self, width=50)
 
-            codeList = ["09", self.searchKey[1]]
+            codeList = ["09", "", self.searchKey[1]]
             s.send(pickle.dumps(codeList))
             routesServer = pickle.loads(s.recv(8192))
 
