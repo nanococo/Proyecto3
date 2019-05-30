@@ -395,7 +395,6 @@ class logIn(ttk.Frame):
             child.place_forget()
 
         self.billList=tk.Listbox(self, width=60)
-
         for i in reservations:
             self.billList.insert(tk.END,i)
 
@@ -1002,13 +1001,15 @@ class Queries(ttk.Frame):
         else:
             messagebox.showinfo("Access denied", "Server is blocked")
     def routesUpdate(self, event):
+        self.searchKey = [self.departureCountryList.get().split(" ")[0]]
+
         codeList = ["04", "", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         cities = pickle.loads(s.recv(8192))
 
         if cities!="1":
 
-            self.searchKey = [self.departureCountryList.get().split(" ")[0]]
+
             print(self.searchKey[0])
             self.departureCityList["values"] = cities
             print(self.searchKey)
