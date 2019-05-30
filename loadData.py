@@ -82,7 +82,7 @@ def loadConnections(countryCityList):
     final = []
     for i in range(len(splitList)):
         #Change to seven to load all
-        if len(splitList[i]) == 7:
+        if len(splitList[i]) == 6:
             if countryAndCityExistInList(splitList[i][0], splitList[i][1], countryForConn) and countryAndCityExistInList(splitList[i][3], splitList[i][4], countryForConn):
                 if splitList[i][2] not in keysList:
                     keysList.append(splitList[i][2])
@@ -540,6 +540,8 @@ class loadData:
         # Initialize Reports
         self.initialize(self.trainRoutes, self.countryCitiesConnections, self.users)
 
+        # print(self.routes)
+        # print(self.trainRoutes)
         print(self.countries)
         print(self.cities)
         print(self.countryCitiesConnections)
