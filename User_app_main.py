@@ -1658,8 +1658,8 @@ if __name__ == '__main__':
     main_window.resizable(0,0)
     app = MainApp(main_window)
 
-    # codeList = ["06", "", "01"]
-    # s.send(pickle.dumps(codeList))
-    # confirmation = pickle.loads(s.recv(8192))
+    codeList = ["24", "", "1", "1000"]
+    s.send(pickle.dumps(codeList))
+    confirmation = pickle.loads(s.recv(8192))
 
     app.mainloop()
