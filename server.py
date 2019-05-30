@@ -69,6 +69,7 @@ class SocketServer(socket.socket):
                 # ValidateUser
                 # [0] is code 00
                 # [2] is userId
+                print(dataList[2])
                 returnValue = self.validateUser(dataList[2])
                 client.send(pickle.dumps(returnValue))
 
@@ -441,6 +442,7 @@ class SocketServer(socket.socket):
         :param userId is the user id to look for."""
         for i in range(len(self.dat.users)):
             if userId in self.dat.users[i]:
+                print(self.dat.users[i])
                 return True
 
     def getUserStatus(self, userId):
@@ -765,8 +767,8 @@ class SocketServer(socket.socket):
                         if not countryToDel in k:
                             countryCityConnectionsHolder[i][2][j][2] += [k]
 
-            data.countryCitiesConnections = countryCityConnectionsHolder
-            data.trainRoutes = trainRoutesHolder
+            self.dat.countryCitiesConnections = countryCityConnectionsHolder
+            self.dat.trainRoutes = trainRoutesHolder
 
             # Deletes in reports
             reportsCountryInsert = self.dat.deleteCountryReports(countryToDel)
@@ -808,7 +810,7 @@ class SocketServer(socket.socket):
                             if not cityToDelete in countryCityConnectionsHolder2[i][2][j][2][k]:
                                 self.dat.countryCitiesConnections[i][2][j][2].append(countryCityConnectionsHolder2[i][2][j][2][k])
 
-            data.trainRoutes = trainRoutesHolder
+            self.dat.trainRoutes = trainRoutesHolder
 
             # Delete on reports
             cityReportsDel = self.dat.deleteCityReports(countryCode, cityToDelete)
@@ -886,7 +888,7 @@ class SocketServer(socket.socket):
             if not (i[0] == newTrainType and i[1] == newTrainCode):
                 trainRoutesHolder.append(i)
 
-        data.trainRoutes = trainRoutesHolder
+        self.dat.trainRoutes = trainRoutesHolder
         if self.dat.trainRoutes == trainRoutesHolder:
             pass
         else:
