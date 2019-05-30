@@ -774,8 +774,6 @@ class SocketServer(socket.socket):
 
         return success
 
-
-
     def deleteCountry(self, countryToDel):
         """This query deletes a given country an all of its information. HANDLE WITH CARE
         :param countryToDel is the country code to delete"""

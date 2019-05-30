@@ -147,11 +147,10 @@ class Consult(tk.Frame):
                 index = 0
                 for route in prices:
                     self.pricesListbox.insert(index, route)
-
     def sliceTrains(self, list):
         newList = []
         for i in list:
-            newList += [i[1]+' '+i[2]]
+            newList += [i[1] + ' ' + i[2]]
         return newList
 
     #
@@ -1299,8 +1298,9 @@ class Delete(tk.Frame):
 
             if success:
                 messagebox.showinfo("DONE","The connection was succesfully deleted.")
+
             else:
-                messagebox.showinfo("ERROR","Cannot delete connection")
+                messagebox.showinfo("ERROR","Could delete connection")
 
 
         self.draw_deleteConnection(controller)
@@ -1323,17 +1323,107 @@ class Delete(tk.Frame):
 
     #Delete Train
     def draw_deleteTrain(self, controller):
-
+        global adminID
         self.clear()
 
+        codeList = ["43", adminID]
+        s.send(pickle.dumps(codeList))
+        trains = pickle.loads(s.recv(8192))
+        trains = self.sliceTrains(trains)
+
+        self.trainCodeLabel = ttk.Label(self, text="Please select a train to delete")
+        self.trainCodeLabel.place(x=146, y=20)
+
+        self.trainCode = ttk.Combobox(self, state="readonly")
+        self.trainCode["values"] = trains
+        self.trainCode.bind("<<ComboboxSelected>>")
+        self.trainCode.place(x=153, y=50)
+
+        self.label = tk.Label(self, text='')
+        self.label.config(font=('Calibri', 10))
+        self.label.place(x=150, y=120)
+
+        Continue = ttk.Button(self, text='Continue',
+                              command=lambda: self.confirmationTrain(controller))
+        Continue.place(x=188, y=80)
+
+        self.pricesListbox = tk.Listbox(self, width=75)
+        self.pricesListbox.place(x=10, y=150)
+
         self.buttonBackToDelete(controller)
+    def confirmationTrain(self, controller):
+        global adminID
+
+        self.pricesListbox.delete(0, tk.END)
+
+        code = self.trainCode.get().split(' ')[1]
+
+        if code == '':
+            messagebox.showinfo('ERROR', 'Please select a train code')
+        else:
+
+            codeList = ["07", adminID, code]
+            s.send(pickle.dumps(codeList))
+            routes = pickle.loads(s.recv(8192))
+            print(routes)
+
+            if not routes:
+
+                self.label.configure(text='Delete: ' + self.trainCode.get().split(' ')[2] + '? It contains no routes')
+                self.label.config(font=('Calibri', 10))
+                self.label.place(x=113, y=120)
+
+            else:
+
+                self.label.configure(text='Delete: ' + self.trainCode.get().split(' ')[2] + '? It contains:')
+                self.label.config(font=('Calibri', 10))
+                self.label.place(x=137, y=120)
+
+                index = 0
+                for route in routes:
+                    self.pricesListbox.insert(index, route)
+
+            self.yes = ttk.Button(self, text="YES",
+                                  command=lambda: self.confirmationCommandTrain("YES", controller))
+            self.yes.place(x=150, y=440)
+
+            self.no = ttk.Button(self, text="NO",
+                                 command=lambda: self.confirmationCommandTrain("NO", controller))
+            self.no.place(x=250, y=440)
+
+    def confirmationCommandTrain(self, confirmation, controller):
+
+        train = self.trainCode.get().split(" ")
+        print(train)
+
+        if confirmation == "YES":
+
+            trainType = train[0]
+            trainCode = train[1]
+
+            codeList = ["23", adminID, trainType, trainCode]
+            s.send(pickle.dumps(codeList))
+            success = pickle.loads(s.recv(8192))
+
+            if success:
+                messagebox.showinfo("DONE", "The train was succesfully deleted.")
+
+            else:
+                messagebox.showinfo("ERROR", "Could not delete train.")
+
+        self.draw_deleteTrain(controller)
+
+
+    def sliceTrains(self, list):
+        newList = []
+        for i in list:
+            newList += [i[0]+" "+i[1]+" "+i[2]]
+        return newList
     #
 
     #Delete Route
-    def draw_deleteRoute(self, controller):
-
+    def draw_deleteRoutes(self, controller):
         self.clear()
-
         self.buttonBackToDelete(controller)
     #
 
