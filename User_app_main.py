@@ -339,7 +339,7 @@ class logIn(ttk.Frame):
 
         if country != "1":
 
-            self.departureCountryList["values"] = pickle.loads(s.recv(8192))
+            self.departureCountryList["values"] = country
             self.departureCountryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelectionCustom1)
             self.departureCountryList.place(x=250, y=50)
             self.departureCountryListLabel=ttk.Label(self, text="Departure Country")
@@ -418,8 +418,12 @@ class logIn(ttk.Frame):
         print(self.searchKey[0])
         codeList = ["04", "", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
-        self.departureCityList["values"] = pickle.loads(s.recv(8192))
-        print(self.searchKey)
+        cities= pickle.loads(s.recv(8192))
+        if cities!="1":
+            self.departureCityList["values"] = cities
+            print(self.searchKey)
+        else:
+            messagebox.showinfo("Access denied", "Server is blocked")
     def selectCityFixed(self, event):
 
         if len(self.searchKey)==1:
@@ -435,8 +439,12 @@ class logIn(ttk.Frame):
         print(self.searchKey[0])
         codeList = ["04", "", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
-        self.departureCityList["values"] = pickle.loads(s.recv(8192))
-        print(self.searchKey)
+        cities = pickle.loads(s.recv(8192))
+        if cities!="1":
+            self.departureCityList["values"] = cities
+            print(self.searchKey)
+        else:
+            messagebox.showinfo("Access denied", "Server is blocked")
     def selectCityCustom1(self, event):
 
         if len(self.searchKey)==1:
@@ -454,8 +462,12 @@ class logIn(ttk.Frame):
         print(self.searchKey[0])
         codeList = ["04", "", self.searchKey[2]]
         s.send(pickle.dumps(codeList))
-        self.arrivalCityList["values"] = pickle.loads(s.recv(8192))
-        print(self.searchKey)
+        cities = pickle.loads(s.recv(8192))
+        if cities!="1":
+            self.arrivalCityList["values"] = cities
+            print(self.searchKey)
+        else:
+            messagebox.showinfo("Access denied", "Server is blocked")
     def selectCityCustom2(self, event):
 
         if len(self.searchKey)==3:
@@ -471,29 +483,30 @@ class logIn(ttk.Frame):
         self.chooseRecervation()
 
     def routeList(self):
+        #Fixed
+        codeList = ["10", "", self.searchKey[0], self.searchKey[1]]
+        s.send(pickle.dumps(codeList))
+        tempList = pickle.loads(s.recv(8192))
+        #Custom
+        codeList = ["41", "", self.searchKey[0], self.searchKey[1], self.searchKey[2], self.searchKey[3]]
+        s.send(pickle.dumps(codeList))
+        routes = pickle.loads(s.recv(8192))
+
         if self.searchKey==[]:
             messagebox.showinfo("","Please select a contry and a city")
+        elif tempList =="1" or routes=="1":
+            messagebox.showinfo("Access denied", "Server is blocked")
+
         elif len(self.searchKey)==2 or len(self.searchKey)==4:
             for child in self.winfo_children():
                 child.place_forget()
 
-
             self.routesListBox = tk.Listbox(self, width=69, height=20, selectmode=tk.SINGLE)
 
             if len(self.searchKey)==2:
-                codeList = ["10", "", self.searchKey[0], self.searchKey[1]]
-                s.send(pickle.dumps(codeList))
-                tempList = pickle.loads(s.recv(8192))
-
                 for i in tempList:
                     self.routesListBox.insert(tk.END,i)
-
-
             elif len(self.searchKey)==4:
-                codeList = ["41", "", self.searchKey[0], self.searchKey[1], self.searchKey[2], self.searchKey[3]]
-                s.send(pickle.dumps(codeList))
-                routes = pickle.loads(s.recv(8192))
-
                 for i in routes:
                     self.routesListBox.insert(tk.END,i)
                 
@@ -624,67 +637,78 @@ class Queries(ttk.Frame):
         self.checkRoutes.pack(pady=10)
 
     def countries(self):
-        for child in self.winfo_children():
-            child.pack_forget()
-
-
-
-        self.countryList=tk.Listbox(self, width=50)
-
         codeList = ["03", ""]
         s.send(pickle.dumps(codeList))
         countryListServer = pickle.loads(s.recv(8192))
+        if countryListServer!="1":
 
-        for i in countryListServer:
-            self.countryList.insert(tk.END,i)
+            for child in self.winfo_children():
+                child.pack_forget()
 
-        self.countryList.pack()
+            self.countryList=tk.Listbox(self, width=50)
 
-        self.back=ttk.Button(self, text="back", command= self.init)
-        self.back.pack()
+            for i in countryListServer:
+                self.countryList.insert(tk.END,i)
+
+            self.countryList.pack()
+
+            self.back=ttk.Button(self, text="back", command= self.init)
+            self.back.pack()
+        else:
+            messagebox.showinfo("Access denied", "Server is blocked")
 
     def cities1(self):
-        for child in self.winfo_children():
-            child.pack_forget()
-
-        self.searchKey=[]
-
-        self.selectCountry=ttk.Combobox(self)
         codeList = ["03", ""]
         s.send(pickle.dumps(codeList))
-        self.selectCountry["values"] = pickle.loads(s.recv(8192))
-        self.selectCountry.bind("<<ComboboxSelected>>", self.cities1_get)
-        self.selectCountry.pack()
+        countriesServerList = pickle.loads(s.recv(8192))
+
+        if countriesServerList!="1":
+            for child in self.winfo_children():
+                child.pack_forget()
+
+            self.searchKey=[]
+
+            self.selectCountry=ttk.Combobox(self)
+
+            self.selectCountry["values"] = countriesServerList
+            self.selectCountry.bind("<<ComboboxSelected>>", self.cities1_get)
+            self.selectCountry.pack()
 
 
 
-        self.continueToCities=ttk.Button(self, text="Continue", command=self.cities2)
-        self.continueToCities.pack()
+            self.continueToCities=ttk.Button(self, text="Continue", command=self.cities2)
+            self.continueToCities.pack()
 
-        self.back = ttk.Button(self, text="back", command=self.init)
-        self.back.pack()
+            self.back = ttk.Button(self, text="back", command=self.init)
+            self.back.pack()
+        else:
+            messagebox.showinfo("Access denied","Server is blocked")
     def cities1_get(self, event):
         self.searchKey=[self.selectCountry.get().split(" ")[0]]
         print(self.searchKey)
     def cities2(self):
-        for child in self.winfo_children():
-            child.place_forget()
-            child.pack_forget()
-
-        self.cityList = tk.Listbox(self, width=50)
         codeList = ["04", "", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
         cityListServer = pickle.loads(s.recv(8192))
+        
+        if cityListServer!="1":
+            for child in self.winfo_children():
+                child.place_forget()
+                child.pack_forget()
 
-        for i in cityListServer:
-            self.cityList.insert(tk.END,i)
-            print(i)
+            self.cityList = tk.Listbox(self, width=50)
 
-        self.cityList.pack()
 
-        self.back = ttk.Button(self, text="back", command=self.cities1)
-        self.back.pack()
+            for i in cityListServer:
+                self.cityList.insert(tk.END,i)
+                print(i)
 
+            self.cityList.pack()
+
+            self.back = ttk.Button(self, text="back", command=self.cities1)
+            self.back.pack()
+        else:
+            messagebox.showinfo("Access denied", "Server is blocked")
     def conections1(self):
         for child in self.winfo_children():
             child.place_forget()
