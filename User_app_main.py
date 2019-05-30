@@ -1029,7 +1029,7 @@ class Queries(ttk.Frame):
             child.pack_forget()
 
         self.trainType=ttk.Combobox(self)
-        self.trainType["values"]=['1','2','3','4']
+        self.trainType["values"]=['01','02','03','04']
         self.trainType.bind("<<ComboboxSelected>>", self.trains_get)
         self.trainType.pack()
 
@@ -1044,8 +1044,10 @@ class Queries(ttk.Frame):
         print(self.searchKey)
     def trains2(self):
         codeList = ["06", "", self.searchKey]
+        print(self.searchKey)
         s.send(pickle.dumps(codeList))
         trainListServer = pickle.loads(s.recv(8192))
+        print(trainListServer)
         if trainListServer!="1":
             for child in self.winfo_children():
                 child.place_forget()
