@@ -802,24 +802,28 @@ class Queries(ttk.Frame):
         self.searchKey=self.trainType.get()
         print(self.searchKey)
     def trains2(self):
-        for child in self.winfo_children():
-            child.place_forget()
-            child.pack_forget()
-
-        self.trainList = tk.Listbox(self, width=50)
-
         codeList = ["06", "", self.searchKey]
         s.send(pickle.dumps(codeList))
         trainListServer = pickle.loads(s.recv(8192))
+        if trainListServer!="1":
+            for child in self.winfo_children():
+                child.place_forget()
+                child.pack_forget()
 
-        for i in trainListServer:
-            self.trainList.insert(tk.END, i)
-            print(i)
+            self.trainList = tk.Listbox(self, width=50)
 
-        self.trainList.pack()
 
-        self.back = ttk.Button(self, text="back", command=self.trains1)
-        self.back.pack()
+
+            for i in trainListServer:
+                self.trainList.insert(tk.END, i)
+                print(i)
+
+            self.trainList.pack()
+
+            self.back = ttk.Button(self, text="back", command=self.trains1)
+            self.back.pack()
+        else:
+            messagebox.showinfo("Access denied","Server is blocked")
 
     def prices1(self):
         for child in self.winfo_children():
@@ -844,6 +848,8 @@ class Queries(ttk.Frame):
         pricesServer = pickle.loads(s.recv(8192))
         if pricesServer==[]:
             messagebox.showinfo("","Incorrect train code")
+        elif pricesServer=="1":
+            messagebox.showinfo("Access denied", "Server is blocked")
         else:
             self.searchKey = [self.trainCode.get()]
             print(self.searchKey)
@@ -887,6 +893,8 @@ class Queries(ttk.Frame):
 
         if seatsServer == []:
             messagebox.showinfo("", "Incorrect train code")
+        elif seatsServer=="1":
+            messagebox.showinfo("Access denied", "Server is blocked")
         else:
             self.searchKey = [self.trainCode.get()]
             print(self.searchKey)
@@ -908,42 +916,54 @@ class Queries(ttk.Frame):
 
 
     def routes1(self):
-        for child in self.winfo_children():
-            child.place_forget()
-            child.pack_forget()
-
-        self.searchKey=[]
-
-        self.departureCountryList = ttk.Combobox(self, state="readonly")
         codeList = ["03", ""]
         s.send(pickle.dumps(codeList))
-        self.departureCountryList["values"] = pickle.loads(s.recv(8192))
-        self.departureCountryList.bind("<<ComboboxSelected>>", self.routesUpdate)
-        self.departureCountryList.place(x=250, y=50)
-        self.departureCountryListLabel=ttk.Label(self, text="Countries")
-        self.departureCountryListLabel.place(x=100, y=50)
+        countries=pickle.loads(s.recv(8192))
 
-        self.departureCityList = ttk.Combobox(self, state="readonly")
-        self.departureCityList.bind("<<ComboboxSelected>>", self.routesAdd)
-        self.departureCityList.place(x=250, y=100)
-        self.departureCityListLabel=ttk.Label(self, text="Cities")
-        self.departureCityListLabel.place(x=100, y = 100)
+        if countries!="1":
+
+            for child in self.winfo_children():
+                child.place_forget()
+                child.pack_forget()
+
+            self.searchKey=[]
+
+            self.departureCountryList = ttk.Combobox(self, state="readonly")
+
+            self.departureCountryList["values"] =countries
+            self.departureCountryList.bind("<<ComboboxSelected>>", self.routesUpdate)
+            self.departureCountryList.place(x=250, y=50)
+            self.departureCountryListLabel=ttk.Label(self, text="Countries")
+            self.departureCountryListLabel.place(x=100, y=50)
+
+            self.departureCityList = ttk.Combobox(self, state="readonly")
+            self.departureCityList.bind("<<ComboboxSelected>>", self.routesAdd)
+            self.departureCityList.place(x=250, y=100)
+            self.departureCityListLabel=ttk.Label(self, text="Cities")
+            self.departureCityListLabel.place(x=100, y = 100)
 
 
-        self.routeRecervation=ttk.Button(self, text="Continue", command=self.routes2)
-        self.routeRecervation.place(x=300, y =200)
+            self.routeRecervation=ttk.Button(self, text="Continue", command=self.routes2)
+            self.routeRecervation.place(x=300, y =200)
 
-        self.backButton=ttk.Button(self, text="Back", command= self.init)
-        self.backButton.place(x=80,y=200)
+            self.backButton=ttk.Button(self, text="Back", command= self.init)
+            self.backButton.place(x=80,y=200)
+        else:
+            messagebox.showinfo("Access denied", "Server is blocked")
     def routesUpdate(self, event):
-
-        self.searchKey = [self.departureCountryList.get().split(" ")[0]]
-
-        print(self.searchKey[0])
         codeList = ["04", "", self.searchKey[0]]
         s.send(pickle.dumps(codeList))
-        self.departureCityList["values"] = pickle.loads(s.recv(8192))
-        print(self.searchKey)
+        cities = pickle.loads(s.recv(8192))
+
+        if cities!="1":
+
+            self.searchKey = [self.departureCountryList.get().split(" ")[0]]
+            print(self.searchKey[0])
+            self.departureCityList["values"] = cities
+            print(self.searchKey)
+
+        else:
+            messagebox.showinfo("Access denied", "Server is blocked")
     def routesAdd(self, event):
 
         if len(self.searchKey) == 1:
@@ -952,8 +972,14 @@ class Queries(ttk.Frame):
             self.searchKey[1] = self.departureCityList.get().split(" ")[0]
         print(self.searchKey)
     def routes2(self):
+        codeList = ["09", "", self.searchKey[1]]
+        s.send(pickle.dumps(codeList))
+        routesServer = pickle.loads(s.recv(8192))
+
         if self.searchKey==[]:
             messagebox.showinfo("","Please select a country and a city")
+        elif routesServer=="1":
+            messagebox.showinfo("Access denied", "Server is blocked")
         else:
             print(self.searchKey)
             for child in self.winfo_children():
@@ -962,9 +988,7 @@ class Queries(ttk.Frame):
 
             self.routeList = tk.Listbox(self, width=50)
 
-            codeList = ["09", "", self.searchKey[1]]
-            s.send(pickle.dumps(codeList))
-            routesServer = pickle.loads(s.recv(8192))
+
 
             for i in routesServer:
                 self.routeList.insert(tk.END,i)
