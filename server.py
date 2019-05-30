@@ -930,9 +930,16 @@ class SocketServer(socket.socket):
                                 if l== i[3:]:
                                     j[6] = i[3:]
 
+
+
         if self.dat.trainRoutes != tempTrainRoutes:
             self.dat.trainRoutes = tempTrainRoutes
             self.dat.lastDeletedRoute = [routeCode]
+            temp2 = []
+            for i in self.dat.routesWithCode:
+                if i[2] != routeCode:
+                    temp2.append(i)
+            self.dat.routesWithCode = temp2
             success = True
         return success
 
