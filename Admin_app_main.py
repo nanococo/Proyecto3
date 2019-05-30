@@ -1437,6 +1437,8 @@ class Delete(tk.Frame):
 
         self.clear()
 
+        
+
         self.buttonBackToDelete(controller)
     #
 
