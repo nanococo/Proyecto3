@@ -1157,37 +1157,63 @@ class Modify(ttk.Frame):
 
     def __init__(self, parent, controller):
         ttk.Frame.__init__(self, parent)
+
+        self.init_modify(controller)
+
+    def init_modify(self,controller):
         label = tk.Label(self, text='Modify:')
         label.config(font=('Calibri', 11))
         label.place(x=0, y=0)
 
         buttonModifyPrice = ttk.Button(self, text='Prices',
-                                  command=lambda: controller.show_frame('PENDIENTE'))
+                                       command=lambda: self.modifyPrice(controller))
         buttonModifyPrice.place(x=10, y=40)
 
         buttonModifyTime = ttk.Button(self, text='Times',
-                                  command=lambda: controller.show_frame('PENDIENTE'))
+                                      command=lambda: controller.show_frame('PENDIENTE'))
         buttonModifyTime.place(x=10, y=80)
 
         buttonModifySeats = ttk.Button(self, text='Seats',
-                                  command=lambda: controller.show_frame('PENDIENTE'))
+                                       command=lambda: controller.show_frame('PENDIENTE'))
         buttonModifySeats.place(x=10, y=120)
 
         buttonModifyRoute = ttk.Button(self, text='Route',
-                                  command=lambda: controller.show_frame('PENDIENTE'))
+                                       command=lambda: controller.show_frame('PENDIENTE'))
         buttonModifyRoute.place(x=130, y=40)
 
         buttonModifyTrain = ttk.Button(self, text='Train',
-                                  command=lambda: controller.show_frame('PENDIENTE'))
+                                       command=lambda: controller.show_frame('PENDIENTE'))
         buttonModifyTrain.place(x=130, y=80)
 
         buttonModifyMigratoryStatus = ttk.Button(self, text='Migratory Status',
-                                  command=lambda: controller.show_frame('PENDIENTE'))
+                                                 command=lambda: controller.show_frame('PENDIENTE'))
         buttonModifyMigratoryStatus.place(x=130, y=120)
 
         button = ttk.Button(self, text='BACK',
                             command=lambda: controller.show_frame(AdminMainMenu))
         button.pack(side='bottom')
+
+    def clear(self):
+        for child in self.winfo_children():
+            child.pack_forget()
+            child.place_forget()
+
+    def modifyPrice(self,controller):
+        self.clear()
+
+        self.trainType=ttk.Combobox(self)
+        self.trainType["values"]=["01","02","03","04"]
+        self.trainType.bind("<<ComboboxSelected>>", self.modifyUpdateTrains)
+        self.trainType.pack()
+
+        self.trainList=ttk.Combobox(self)
+
+
+    def modifyUpdateTrains(self, event):
+
+
+
+
 #########
 
 class History(ttk.Frame):

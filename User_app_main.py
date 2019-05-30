@@ -395,7 +395,6 @@ class logIn(ttk.Frame):
             child.place_forget()
 
         self.billList=tk.Listbox(self, width=60)
-
         for i in reservations:
             self.billList.insert(tk.END,i)
 
