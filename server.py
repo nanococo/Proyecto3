@@ -522,12 +522,12 @@ class SocketServer(socket.socket):
                 for k in range(len(self.dat.countryCitiesConnections[i][2][j][2])):
                     if self.dat.countryCitiesConnections[i][0] == country:
                         if self.dat.countryCitiesConnections[i][2][j][0] == city:
-                            returnList.append( [str(
-                                self.dat.countryCitiesConnections[i][2][j][2][k][0]),"From", str(
-                                self.dat.countryCitiesConnections[i][0]),str(
-                                self.dat.countryCitiesConnections[i][2][j][0]), "to", str(
-                                self.dat.countryCitiesConnections[i][2][j][2][k][1]), str(
-                                self.dat.countryCitiesConnections[i][2][j][2][k][2]),"Duration",str(
+                            returnList.append( [
+                                self.dat.countryCitiesConnections[i][2][j][2][k][0],"From",
+                                self.dat.countryCitiesConnections[i][0],
+                                self.dat.countryCitiesConnections[i][2][j][0], "to",
+                                self.dat.countryCitiesConnections[i][2][j][2][k][1],
+                                self.dat.countryCitiesConnections[i][2][j][2][k][2],"Duration",str(
                                 self.dat.countryCitiesConnections[i][2][j][2][k][3])+"h"])
                             count += 1
 

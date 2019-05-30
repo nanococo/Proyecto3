@@ -55,7 +55,6 @@ class mainApp(tk.Tk):
         s.send(pickle.dumps(codeList))
         self.show_frame(cont)
 
-
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
@@ -267,7 +266,6 @@ class Consult(tk.Frame):
         Continue.place(x=188, y=180)
 
         self.buttonBack()
-
     def fillWithConnections(self):
         global adminID
         self.connectionListbox.delete(0, tk.END)
@@ -296,7 +294,6 @@ class Consult(tk.Frame):
                 for connection in connections:
                     self.connectionListbox.insert(index, connection)
                     print(connection[0])
-
     def updateCitiesOnSelection(self, event):
         global adminID
         self.searchKey = [self.countryList.get().split(" ")[0]]
@@ -306,7 +303,6 @@ class Consult(tk.Frame):
         cities = pickle.loads(s.recv(8192))
         self.cityList["values"] = cities
         print(self.searchKey)
-
     def selectCity(self, event):
 
         if len(self.searchKey) == 1:
@@ -372,7 +368,6 @@ class Consult(tk.Frame):
                 index = 0
                 for route in routes:
                     self.routesListbox.insert(index, route)
-
     #
 
     #Check trains
@@ -510,7 +505,6 @@ class Insert(tk.Frame):
         label.place(x=0,y=0)
 
         self.init_insert(controller)
-
     def init_insert(self, controller):
 
         self.clear()
@@ -697,7 +691,6 @@ class Insert(tk.Frame):
         self.CONN_DONE.place(x=200, y=400)
 
         self.buttonBackToInsert(controller)
-
     def createNewConnection(self):
         global adminID
         newDepCountry = self.countryList.get()
@@ -745,7 +738,6 @@ class Insert(tk.Frame):
         cities = pickle.loads(s.recv(8192))
         self.arrival_cityList["values"] = cities
         print(self.searchKey)
-
     def selectArrivalCity(self, event):
 
         if len(self.searchKey) == 1:
@@ -786,7 +778,7 @@ class Insert(tk.Frame):
 
         self.countryList = ttk.Combobox(self, state="readonly")
         self.countryList["values"] = countries
-        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection2)
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
         self.countryList.place(x=169, y=110)
         self.countryListLabel = ttk.Label(self, text="Select an arrival country")
         self.countryListLabel.place(x=169, y=90)
@@ -962,7 +954,6 @@ class Insert(tk.Frame):
         enter.place(x=200, y=240)
 
         self.buttonBackToInsert(controller)
-
     def createNewType(self):
 
         code = self.code.get()
@@ -981,8 +972,6 @@ class Insert(tk.Frame):
                 messagebox.showinfo("ERROR", "The type is already present.")
     #
 
-
-
     def buttonBackToMenu(self, controller):
         buttonBACK = ttk.Button(self, text='BACK',
                                 command=lambda: controller.show_frame(AdminMainMenu))
@@ -994,14 +983,12 @@ class Insert(tk.Frame):
     def clear(self):
         for child in self.winfo_children():
             child.place_forget()
-            
     def isIncomplete(self, list):
         incomplete = False
         for i in list:
             if i == "":
                 incomplete = True
         return incomplete
-
     def updateCitiesOnSelection(self, event):
         global adminID
         self.searchKey = [self.countryList.get().split(" ")[0]]
@@ -1011,7 +998,6 @@ class Insert(tk.Frame):
         cities = pickle.loads(s.recv(8192))
         self.cityList["values"] = cities
         print(self.searchKey)
-
     def selectCity(self, event):
 
         if len(self.searchKey) == 1:
@@ -1050,15 +1036,15 @@ class Delete(tk.Frame):
         buttonDeleteConnection.place(x=10, y=120)
 
         buttonDeleteTrain = ttk.Button(self, text='Train',
-                                       command=lambda: controller.show_frame('PENDIENTE'))
+                                       command=lambda: self.draw_deleteTrain(controller))
         buttonDeleteTrain.place(x=130, y=40)
 
         buttonDeleteRoute = ttk.Button(self, text='Route',
-                                       command=lambda: controller.show_frame('PENDIENTE'))
+                                       command=lambda: self.draw_deleteRoute(controller))
         buttonDeleteRoute.place(x=130, y=80)
 
         buttonDeleteAtraction = ttk.Button(self, text='Atraction',
-                                           command=lambda: controller.show_frame('PENDIENTE'))
+                                           command=lambda: self.draw_deleteAtraction(controller))
         buttonDeleteAtraction.place(x=130, y=120)
 
         self.buttonBackToMenu(controller)
@@ -1173,7 +1159,9 @@ class Delete(tk.Frame):
 
         self.buttonBackToDelete(controller)
     def confirmationCity(self, controller):
+
         global adminID
+
         self.connectionListbox.delete(0, tk.END)
 
         countryCode = self.countryToDelete.get().split(' ')[0]
@@ -1254,18 +1242,68 @@ class Delete(tk.Frame):
         self.cityToDeleteLabel = ttk.Label(self, text="Select the city of the connection")
         self.cityToDeleteLabel.place(x=151, y=110)
 
-        self.connectionToDelete = ttk.Combobox(self, state="readonly")
+        self.connectionToDelete = ttk.Combobox(self, state="readonly", width=40)
         self.connectionToDelete.bind("<<ComboboxSelected>>", self.selectCity)
-        self.connectionToDelete.place(x=167, y=210)
+        self.connectionToDelete.place(x=105, y=210)
         self.connectionToDeleteLabel = ttk.Label(self, text="Select a connection")
         self.connectionToDeleteLabel.place(x=183, y=190)
 
+        self.label = tk.Label(self, text='')
+        self.label.config(font=('Calibri', 10))
+
         ENTER = ttk.Button(self, text='ENTER',
-                           command=lambda: self.confirmationCity(controller))
-        ENTER.place(x=200, y=300)
+                           command=lambda: self.confirmationConnection(controller))
+        ENTER.place(x=200, y=250)
 
         self.buttonBackToDelete(controller)
+    def confirmationConnection(self, controller):
 
+        global adminID
+
+        self.countryCode = self.countryToDelete.get().split(' ')[0]
+        self.cityCode = self.cityToDelete.get().split(' ')[0]
+        self.connection = self.connectionToDelete.get().split(' ')
+        print(self.connection)
+
+        if self.countryCode == '':
+            messagebox.showinfo('ERROR', 'Please select a country')
+        elif self.cityCode == '':
+            messagebox.showinfo('ERROR', 'Please select a city')
+        elif self.connection == '':
+            messagebox.showinfo('ERROR', 'Please select a connection')
+        else:
+            self.label = ttk.Label(self,text="Are you sure you want to delete '"+self.connectionToDelete.get()+"'?")
+            self.label.config(font=('Calibri', 10))
+            self.label.place(x=45, y=300)
+
+            self.yes = ttk.Button(self, text="YES",
+                                  command=lambda: self.confirmationCommandConnection("YES", controller))
+            self.yes.place(x=150, y=440)
+
+            self.no = ttk.Button(self, text="NO",
+                                 command=lambda: self.confirmationCommandConnection("NO", controller))
+            self.no.place(x=250, y=440)
+    def confirmationCommandConnection(self, confirmation, controller):
+
+        if confirmation == "YES":
+
+            connDepCountry = self.countryCode
+            connDepCity = self.cityCode
+            connCode = self.connection[0]
+            connArrCountry = self.connection[5]
+            connArrCity = self.connection[6]
+
+            codeList = ["21", adminID, connDepCountry, connDepCity, connCode, connArrCountry, connArrCity]
+            s.send(pickle.dumps(codeList))
+            success = pickle.loads(s.recv(8192))
+
+            if success:
+                messagebox.showinfo("DONE","The connection was succesfully deleted.")
+            else:
+                messagebox.showinfo("ERROR","Cannot delete connection")
+
+
+        self.draw_deleteConnection(controller)
     def updateConnectionsOnSelection(self, event):
 
         global adminID
@@ -1281,12 +1319,30 @@ class Delete(tk.Frame):
         s.send(pickle.dumps(codeList))
         connections = pickle.loads(s.recv(8192))
         self.connectionToDelete["values"] = connections
+    #
 
+    #Delete Train
+    def draw_deleteTrain(self, controller):
 
+        self.clear()
 
+        self.buttonBackToDelete(controller)
+    #
 
+    #Delete Route
+    def draw_deleteRoute(self, controller):
 
+        self.clear()
 
+        self.buttonBackToDelete(controller)
+    #
+
+    #Delete Atraction
+    def draw_deleteAtraction(self, controller):
+
+        self.clear()
+
+        self.buttonBackToDelete(controller)
     #
 
     def updateCitiesOnSelection(self, event):
