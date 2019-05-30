@@ -1205,6 +1205,7 @@ class SocketServer(socket.socket):
         result = []
         for i in self.dat.trainTypes:
             i.append(result)
+        print(result)
         return result
 
 

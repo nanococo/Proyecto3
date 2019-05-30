@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e0eb49f2-0f39-4f8b-862d-e71b6bfdc6d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
-    </list>
+    <list default="true" id="e0eb49f2-0f39-4f8b-862d-e71b6bfdc6d9" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +26,7 @@
         <entry file="file://$PROJECT_DIR$/Admin_app_main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="258">
-              <caret line="1129" lean-forward="true" selection-start-line="1129" selection-end-line="1129" />
+              <caret line="1132" lean-forward="true" selection-start-line="1132" selection-end-line="1132" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -39,7 +37,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
+            <state relative-caret-position="2619">
               <caret line="453" column="34" selection-start-line="453" selection-start-column="34" selection-end-line="453" selection-end-column="34" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
@@ -213,7 +211,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.User_app_main">
+  <component name="RunManager" selected="Python.Admin_app_main">
     <configuration name="Admin_App_Beta1" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Proyecto_3" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -321,9 +319,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.User_app_main" />
-        <item itemvalue="Python.server" />
         <item itemvalue="Python.Admin_app_main" />
+        <item itemvalue="Python.server" />
+        <item itemvalue="Python.User_app_main" />
         <item itemvalue="Python.client" />
         <item itemvalue="Python.Admin_App_Beta1" />
       </list>
@@ -408,7 +406,7 @@
     <entry file="file://$PROJECT_DIR$/Admin_app_main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
-          <caret line="1129" lean-forward="true" selection-start-line="1129" selection-end-line="1129" />
+          <caret line="1132" lean-forward="true" selection-start-line="1132" selection-end-line="1132" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
@@ -472,7 +470,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
+        <state relative-caret-position="2619">
           <caret line="453" column="34" selection-start-line="453" selection-start-column="34" selection-end-line="453" selection-end-column="34" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
