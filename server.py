@@ -450,13 +450,15 @@ class SocketServer(socket.socket):
                 returnValue = self.insertTrainType(dataList[2])
                 client.send(pickle.dumps(returnValue))
 
+            elif dataList[0] == "51":
+                # getCountryByCode
+                # [2] is trainType
+                returnValue = self.getTrainTypes(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
         else:
             returnValue = "1"
             client.send(pickle.dumps(returnValue))
-
-
-
-
 
 
 
@@ -1046,6 +1048,7 @@ class SocketServer(socket.socket):
 
 
     def getCustomRoutes(self, depCountry, depCity, arrCountry, arrCity):
+        """Returns custom routes for user selections"""
         OdepCountry = depCountry
         OdepCity = depCity
         OarrCountry = arrCountry
@@ -1197,6 +1200,13 @@ class SocketServer(socket.socket):
             self.dat.trainTypes.append(trainType)
 
         return success
+
+    def getTrainType(self):
+        """Returns all train types"""
+        result = []
+        for i in self.dat.trainTypes:
+            i.append(result)
+        return result
 
 
     def broadcast(self, message):
