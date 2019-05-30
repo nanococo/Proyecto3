@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e0eb49f2-0f39-4f8b-862d-e71b6bfdc6d9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/User_app_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/User_app_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataFiles/Atracciones.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dataFiles/Atracciones.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/loadData.py" beforeDir="false" afterPath="$PROJECT_DIR$/loadData.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
     </list>
@@ -14,16 +15,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/User_app_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="1639" column="36" selection-start-line="1639" selection-start-column="36" selection-end-line="1639" selection-end-column="36" />
+            <state relative-caret-position="295">
+              <caret line="1671" column="18" lean-forward="true" selection-start-line="1671" selection-start-column="18" selection-end-line="1671" selection-end-column="18" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#7012#9524#0" />
                 <element signature="e#9200#11716#0" />
-                <element signature="e#12114#14632#0" />
                 <element signature="e#14655#16419#0" />
                 <element signature="e#11940#12220#0" />
                 <element signature="e#16778#18171#0" />
@@ -36,7 +36,9 @@
                 <element signature="e#26792#28180#0" />
                 <element signature="e#28222#28870#0" />
                 <element signature="e#29077#30100#0" />
-                <element signature="e#22685#26672#0" />
+                <element signature="e#30133#30780#0" />
+                <element signature="e#30818#33700#0" />
+                <element signature="e#33743#37743#0" />
               </folding>
             </state>
           </provider>
@@ -54,7 +56,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Admin_app_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
+            <state relative-caret-position="290">
               <caret line="355" column="25" selection-start-line="355" selection-start-column="25" selection-end-line="355" selection-end-column="25" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
@@ -63,11 +65,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="959" column="50" selection-start-line="959" selection-start-column="50" selection-end-line="959" selection-end-column="50" />
+            <state relative-caret-position="226">
+              <caret line="931" column="48" lean-forward="true" selection-start-line="931" selection-start-column="48" selection-end-line="931" selection-end-column="48" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -79,7 +81,7 @@
         <entry file="file://$PROJECT_DIR$/dataFiles/Rutas.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="224">
-              <caret line="14" column="8" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="8" />
+              <caret line="14" column="28" lean-forward="true" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -101,8 +103,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/loadData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="544" column="8" selection-start-line="544" selection-start-column="8" selection-end-line="544" selection-end-column="8" />
+            <state relative-caret-position="-6713">
+              <caret line="118" column="39" lean-forward="true" selection-start-line="118" selection-start-column="39" selection-end-line="118" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -119,8 +121,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataFiles/Atracciones.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="48">
+              <caret line="3" column="33" lean-forward="true" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -129,10 +131,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>codeList</find>
-      <find>logout</find>
-      <find>logi</find>
-      <find>login</find>
       <find>logo</find>
       <find>insertTra</find>
       <find>updateC</find>
@@ -157,8 +155,12 @@
       <find>loadRo</find>
       <find>E763F</find>
       <find>connections</find>
-      <find>loadr</find>
       <find>updateP</find>
+      <find>getCi</find>
+      <find>getCitiesBy</find>
+      <find>loadr</find>
+      <find>loadR</find>
+      <find>deleteRo</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -174,6 +176,7 @@
         <option value="$PROJECT_DIR$/Admin_App_Beta1.py" />
         <option value="$PROJECT_DIR$/client.py" />
         <option value="$PROJECT_DIR$/Admin_app_main.py" />
+        <option value="$PROJECT_DIR$/dataFiles/Atracciones.txt" />
         <option value="$PROJECT_DIR$/loadData.py" />
         <option value="$PROJECT_DIR$/User_app_main.py" />
         <option value="$PROJECT_DIR$/server.py" />
@@ -451,30 +454,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Atracciones.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Admin_app_main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="355" column="25" selection-start-line="355" selection-start-column="25" selection-end-line="355" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Conexiones.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dataFiles/Trenes.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
@@ -485,29 +464,62 @@
     <entry file="file://$PROJECT_DIR$/dataFiles/RutasO.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/dataFiles/Atracciones.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="3" column="33" lean-forward="true" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataFiles/Conexiones.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dataFiles/Rutas.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
-          <caret line="14" column="8" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="8" />
+          <caret line="14" column="28" lean-forward="true" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Admin_app_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="355" column="25" selection-start-line="355" selection-start-column="25" selection-end-line="355" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/loadData.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="544" column="8" selection-start-line="544" selection-start-column="8" selection-end-line="544" selection-end-column="8" />
+        <state relative-caret-position="-6713">
+          <caret line="118" column="39" lean-forward="true" selection-start-line="118" selection-start-column="39" selection-end-line="118" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="931" column="48" lean-forward="true" selection-start-line="931" selection-start-column="48" selection-end-line="931" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/User_app_main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="1639" column="36" selection-start-line="1639" selection-start-column="36" selection-end-line="1639" selection-end-column="36" />
+        <state relative-caret-position="295">
+          <caret line="1671" column="18" lean-forward="true" selection-start-line="1671" selection-start-column="18" selection-end-line="1671" selection-end-column="18" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#7012#9524#0" />
             <element signature="e#9200#11716#0" />
-            <element signature="e#12114#14632#0" />
             <element signature="e#14655#16419#0" />
             <element signature="e#11940#12220#0" />
             <element signature="e#16778#18171#0" />
@@ -520,17 +532,9 @@
             <element signature="e#26792#28180#0" />
             <element signature="e#28222#28870#0" />
             <element signature="e#29077#30100#0" />
-            <element signature="e#22685#26672#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="959" column="50" selection-start-line="959" selection-start-column="50" selection-end-line="959" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#30133#30780#0" />
+            <element signature="e#30818#33700#0" />
+            <element signature="e#33743#37743#0" />
           </folding>
         </state>
       </provider>

@@ -249,13 +249,8 @@ class SocketServer(socket.socket):
             elif dataList[0] == "22":
                 # validateAdmin
                 # [0] is code 22
-                # [2] newRouteTrainType
-                # [3] newRouteTrainCode
-                # [4] newRouteDepartCountry
-                # [5] newRouteDepartCity
-                # [6] newRouteArrivalCountry
-                # [7] newRouteArrivalCity
-                returnValue = self.deleteRoute(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7])
+                # [2] routeCode
+                returnValue = self.deleteRoute(dataList[2])
                 client.send(pickle.dumps(returnValue))
 
             elif dataList[0] == "23":
@@ -453,7 +448,14 @@ class SocketServer(socket.socket):
 
             elif dataList[0] == "52":
                 # getCountryByCode
+                # [2] is attractionCode
                 returnValue = self.deleteAttraction(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "53":
+                # getCountryByCode
+                # [2] is countryCode
+                returnValue = self.getCityNameByCityCode(dataList[2])
                 client.send(pickle.dumps(returnValue))
 
         else:
@@ -889,26 +891,48 @@ class SocketServer(socket.socket):
 
         return success
 
-    def deleteRoute(self, newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity, newRouteArrivalCountry, newRouteArrivalCity):
-        """This deletes routes. Handle with care"""
-        trainRoutesHolder = copy.deepcopy(self.dat.trainRoutes)
-        success = True
-        # Empty Routes
-        if data.countryAndCityExistInList(newRouteDepartCountry, newRouteDepartCity, self.dat.countryCitiesConnections):
-            for i in self.dat.trainRoutes:
-                i[6] = []
+    # def deleteRoute(self, newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity, newRouteArrivalCountry, newRouteArrivalCity):
+    #     """This deletes routes. Handle with care"""
+    #     trainRoutesHolder = copy.deepcopy(self.dat.trainRoutes)
+    #     success = True
+    #     # Empty Routes
+    #     if data.countryAndCityExistInList(newRouteDepartCountry, newRouteDepartCity, self.dat.countryCitiesConnections):
+    #         for i in self.dat.trainRoutes:
+    #             i[6] = []
+    #
+    #         for i in range(len(trainRoutesHolder)):
+    #             for j in range(len(trainRoutesHolder[i][6])):
+    #                 if not (trainRoutesHolder[i][0] == newRouteTrainType and trainRoutesHolder[i][1] == newRouteTrainCode and trainRoutesHolder[i][6][j][0] == newRouteDepartCountry and trainRoutesHolder[i][6][j][1] == newRouteDepartCity and trainRoutesHolder[i][6][j][
+    #                     2] == newRouteArrivalCountry and
+    #                         trainRoutesHolder[i][6][j][3] == newRouteArrivalCity):
+    #                     self.dat.trainRoutes[i][6].append(trainRoutesHolder[i][6][j])
+    #
+    #     if trainRoutesHolder == self.dat.trainRoutes:
+    #         pass
+    #     else:
+    #         self.dat.lastDeletedRoute = [newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity, newRouteArrivalCountry, newRouteArrivalCity]
+    #         success = True
+    #     return success
 
-            for i in range(len(trainRoutesHolder)):
-                for j in range(len(trainRoutesHolder[i][6])):
-                    if not (trainRoutesHolder[i][0] == newRouteTrainType and trainRoutesHolder[i][1] == newRouteTrainCode and trainRoutesHolder[i][6][j][0] == newRouteDepartCountry and trainRoutesHolder[i][6][j][1] == newRouteDepartCity and trainRoutesHolder[i][6][j][
-                        2] == newRouteArrivalCountry and
-                            trainRoutesHolder[i][6][j][3] == newRouteArrivalCity):
-                        self.dat.trainRoutes[i][6].append(trainRoutesHolder[i][6][j])
+    def deleteRoute(self, routeCode):
+        """Updates the prices of a route"""
+        success = False
+        tempTrainRoutes = []
+        for i in self.dat.trainRoutes:
+            tempTrainRoutes.append(i[:6]+[[]])
 
-        if trainRoutesHolder == self.dat.trainRoutes:
-            pass
-        else:
-            self.dat.lastDeletedRoute = [newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity, newRouteArrivalCountry, newRouteArrivalCity]
+        for i in self.dat.routesWithCode:
+            for k in self.dat.trainRoutes:
+                for j in tempTrainRoutes:
+                    if i[2] != routeCode:
+                        if i[0] == j[0] and i[1] == j[1]:
+                            for l in k[6]:
+                                if l== i[3:]:
+                                    j[6] = i[3:]
+
+        if self.dat.trainRoutes != tempTrainRoutes:
+            self.dat.trainRoutes = tempTrainRoutes
+            self.dat.lastDeletedRoute = [routeCode]
             success = True
         return success
 
@@ -1029,7 +1053,6 @@ class SocketServer(socket.socket):
             # Modify from trains reports list
             for i in self.dat.trainsByUsage:
                 if i[0][0] == trainType and i[0][1] == trainCode:
-                    print("here")
                     i[0][2] = newTrainName
 
             success = True
@@ -1147,7 +1170,6 @@ class SocketServer(socket.socket):
         :param countryCode is the code of the country to search for"""
         result = ""
         for i in self.dat.countryCitiesConnections:
-            print(i[0])
             if i[0]==countryCode:
                 result = i[1]
                 break
@@ -1245,6 +1267,16 @@ class SocketServer(socket.socket):
             self.dat.attractions = newList
 
         return sucess
+
+    def getCityNameByCityCode(self, cityCode):
+        """Returns a city name base on code
+        :param cityCode"""
+
+        for i in self.dat.countryCitiesConnections:
+            if i[2]:
+                for j in i[2]:
+                    if j[0]==cityCode:
+                        return j[1]
 
 
 

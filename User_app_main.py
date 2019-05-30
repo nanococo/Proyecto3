@@ -760,29 +760,36 @@ class newWindow:
 
 
     def createCityWindow(self, cityCode, countryCode):
-
         self.cityWindow = cityWindow(cityCode,countryCode)
 
 
 class cityWindow:
 
-    def __init__(self,countryCode,cityCode):
-        self.createList(countryCode,cityCode)
+    def __init__(self,cityCode, countryCode):
+        self.createList(cityCode, countryCode)
 
-    def createList(self,countryCode,cityCode):
+    def createList(self,cityCode, countryCode):
         self.sideWindow=tk.Toplevel()
         self.sideWindow.title("Attractions")
 
-        self.placeLabel=tk.Label(self.sideWindow,text="Country: "+"META AQUI EL PAIS"+" - "+"City: "+"META AQUI LA CIUDAD")
+        codeList = ["42", "", countryCode]
+        s.send(pickle.dumps(codeList))
+        countryName = pickle.loads(s.recv(8192))
+
+        codeList = ["53", "", cityCode]
+        s.send(pickle.dumps(codeList))
+        cityName = pickle.loads(s.recv(8192))
+
+        self.placeLabel=tk.Label(self.sideWindow,text="Country: "+countryName+" - "+"City: "+cityName)
         self.placeLabel.pack()
 
         self.attractionsList=tk.Listbox(self.sideWindow, selectmode=tk.SINGLE, width = 40)
 
-        """
-        Meta aqui las llamadas al servidor
-        """
+        codeList = ["48", "", cityCode]
+        s.send(pickle.dumps(codeList))
+        attractions = pickle.loads(s.recv(8192))
 
-        for i in "Llamadas al servidor":
+        for i in attractions:
             self.attractionsList.insert(tk.END,i)
 
         self.attractionsList.pack(pady=20)
@@ -1658,7 +1665,7 @@ if __name__ == '__main__':
     main_window.resizable(0,0)
     app = MainApp(main_window)
 
-    codeList = ["24", "", "1", "1000"]
+    codeList = ["22", "", "1"]
     s.send(pickle.dumps(codeList))
     confirmation = pickle.loads(s.recv(8192))
 
