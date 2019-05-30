@@ -1043,7 +1043,7 @@ class Delete(tk.Frame):
         buttonDeleteRoute.place(x=130, y=80)
 
         buttonDeleteAtraction = ttk.Button(self, text='Atraction',
-                                           command=lambda: self.draw_deleteAtraction(controller))
+                                           command=lambda: self.draw_deleteAttraction(controller))
         buttonDeleteAtraction.place(x=130, y=120)
 
         self.buttonBackToMenu(controller)
@@ -1433,11 +1433,14 @@ class Delete(tk.Frame):
     #
 
     #Delete Atraction
-    def draw_deleteAtraction(self, controller):
+    def draw_deleteAttraction(self, controller):
 
         self.clear()
 
-
+        codeList = ["54", adminID]
+        s.send(pickle.dumps(codeList))
+        attractions = pickle.loads(s.recv(8192))
+        print(attractions)
 
         self.buttonBackToDelete(controller)
     #
