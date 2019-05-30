@@ -3,7 +3,7 @@ import copy
 
 def loadCountries():
     # Loads countries file and add country to a list
-    countriesFile = open("dataFiles/PaisesO.txt", 'r', encoding='utf-8')
+    countriesFile = open("dataFiles/Paises.txt", 'r')
     splitList = [line.replace("\n", "").split(";", ) for line in countriesFile.readlines() if line.strip()]
     keysList = []
     final = []
@@ -22,7 +22,7 @@ def loadCountries():
 
 def loadCities():
     # Loads cities file and add cities to a list
-    countriesFile = open("dataFiles/CiudadesO.txt", 'r', encoding='utf-8')
+    countriesFile = open("dataFiles/Ciudades.txt", 'r')
     splitList = [line.replace("\n", "").strip().split(";", ) for line in countriesFile.readlines() if line.strip()]
     keysList = []
     final = []
@@ -76,7 +76,7 @@ def loadConnections(countryCityList):
     # Loads connections file and add connections to a list
     countryForConn = copy.deepcopy(countryCityList)
 
-    countriesFile = open("dataFiles/ConexionesO.txt", 'r', encoding='utf-8')
+    countriesFile = open("dataFiles/Conexiones.txt", 'r')
     splitList = [line.replace("\n", "").strip().split(";", ) for line in countriesFile.readlines() if line.strip()]
     keysList = []
     final = []
@@ -526,4 +526,6 @@ class loadData:
         # Initialize Reports
         self.initialize(self.trainRoutes, self.countryCitiesConnections, self.users)
 
-        print(self.trainRoutes)
+        print(self.countries)
+        print(self.cities)
+        print(self.countryCitiesConnections)
