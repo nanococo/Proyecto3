@@ -378,11 +378,12 @@ class Consult(tk.Frame):
         self.typeLabel = ttk.Label(self, text="Select a train type.")
         self.typeLabel.place(x=173, y=20)
 
+        codeList = ["50", adminID]
+        s.send(pickle.dumps(codeList))
+        types = pickle.loads(s.recv(8192))
+
         self.type = ttk.Combobox(self, state="readonly")
-        self.type["values"] = ['01',
-                               '02',
-                               '03',
-                               '04', ]
+        self.type["values"] = types
 
         self.type.bind("<<ComboboxSelected>>")
         self.type.place(x=153, y=50)
