@@ -269,14 +269,9 @@ class SocketServer(socket.socket):
             elif dataList[0] == "24":
                 # validateAdmin
                 # [0] is code 24
-                # [2] newRouteTrainType
-                # [3] newRouteTrainCode
-                # [4] newRouteDepartCountry
-                # [5] newRouteDepartCity
-                # [6] newRouteArrivalCountry
-                # [7] newRouteArrivalCity
-                # [8] newRoutePrice
-                returnValue = self.updatePrice(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7], dataList[8])
+                # [2] routeCode
+                # [3] newPrice
+                returnValue = self.updatePrice(dataList[2], dataList[3])
                 client.send(pickle.dumps(returnValue))
 
             elif dataList[0] == "25":
@@ -939,16 +934,31 @@ class SocketServer(socket.socket):
             success = True
         return success
 
-    def updatePrice(self, newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity, newRouteArrivalCountry, newRouteArrivalCity, newRoutePrice):
-        """Updates the prices of a route"""
-        found = False
-        for i in self.dat.trainRoutes:
-            for k in i[6]:
-                if i[0] == newRouteTrainType and i[1] == newRouteTrainCode and k[0] == newRouteDepartCountry and k[1] == newRouteDepartCity and k[2] == newRouteArrivalCountry and k[3] == newRouteArrivalCity:
-                    k[4] = newRoutePrice
-                    found = True
+    # def updatePrice(self, newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity, newRouteArrivalCountry, newRouteArrivalCity, newRoutePrice):
+    #     """Updates the prices of a route"""
+    #     found = False
+    #     for i in self.dat.trainRoutes:
+    #         for k in i[6]:
+    #             if i[0] == newRouteTrainType and i[1] == newRouteTrainCode and k[0] == newRouteDepartCountry and k[1] == newRouteDepartCity and k[2] == newRouteArrivalCountry and k[3] == newRouteArrivalCity:
+    #                 k[4] = newRoutePrice
+    #                 found = True
+    #
+    #     return found
 
-        return found
+    def updatePrice(self, routeCode, newRoutePrice):
+        """Updates the prices of a route"""
+        success = False
+        for i in self.dat.routesWithCode:
+            if i[2]==routeCode:
+                for j in self.dat.trainRoutes:
+                    if i[0] == j[0] and i[1]== j[1]:
+                        if j[6]:
+                            for k in j[6]:
+                                if k == i[3:]:
+                                    k[4]=newRoutePrice
+                                    i[7]=newRoutePrice
+                                    success = True
+        return success
 
     def updateTime(self, newConnDepCountry, newConnDepCity, newConnCode, newConnDuration):
         found = False
