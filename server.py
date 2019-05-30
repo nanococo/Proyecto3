@@ -459,6 +459,10 @@ class SocketServer(socket.socket):
                 returnValue = self.getCityNameByCityCode(dataList[2])
                 client.send(pickle.dumps(returnValue))
 
+            elif dataList[0] == "54":
+                returnValue = self.getAllAttractions()
+                client.send(pickle.dumps(returnValue))
+
         else:
             returnValue = "1"
             client.send(pickle.dumps(returnValue))
@@ -1279,6 +1283,9 @@ class SocketServer(socket.socket):
                     if j[0]==cityCode:
                         return j[1]
 
+    def getAllAttractions(self):
+        """" Returns a list with all atractions """
+        return self.dat.attractions
 
 
     def broadcast(self, message):
@@ -1321,3 +1328,4 @@ def main(dat):
 dt = data.loadData()
 if __name__ == "__main__":
     main(dt)
+
