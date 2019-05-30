@@ -230,7 +230,8 @@ class SocketServer(socket.socket):
             elif dataList[0] == "20":
                 # validateAdmin
                 # [0] is code 20
-                # [2] is countryToDel
+                # [2] is countryCode
+                # [3] is cityCode
                 returnValue = self.deleteCity(dataList[2], dataList[3])
                 client.send(pickle.dumps(returnValue))
 
@@ -455,6 +456,11 @@ class SocketServer(socket.socket):
                 returnValue = self.getTrainTypes()
                 client.send(pickle.dumps(returnValue))
 
+            elif dataList[0] == "52":
+                # getCountryByCode
+                returnValue = self.deleteAttraction(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
         else:
             returnValue = "1"
             client.send(pickle.dumps(returnValue))
@@ -603,7 +609,7 @@ class SocketServer(socket.socket):
             self.dat.addCountryCount(i[5])
             self.dat.addRoutesCount(i[0], i[1], i[3], i[4], i[5], i[6])
             self.dat.addTrainCount(i[0], i[1])
-            self.dat.reduceSeatsBy(i[9], i[0], i[1])
+            self.dat.reduceSeatsBy(i[9], i[0], i[1], i[5])
             success = True
         return success
 
@@ -1206,6 +1212,21 @@ class SocketServer(socket.socket):
         for i in self.dat.trainTypes:
             result.append(i)
         return result
+
+    def deleteAttraction(self, attractionCode):
+        """WARNING. THIS METHOD DELETES ATTRACTION. HANDLE WITH CARE"""
+        newList = []
+        sucess = False
+        for i in self.dat.attractions:
+            if i[2]!=attractionCode:
+                newList.append(i)
+
+        if len(newList)!=len(self.dat.attractions):
+            sucess = True
+            self.dat.attractions = newList
+
+        return sucess
+
 
 
     def broadcast(self, message):

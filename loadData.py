@@ -450,12 +450,20 @@ class loadData:
                 returnList.append("Train type: " + i[0][0] + ". Train Code: " + i[0][1] + ". Name: " + i[0][2] + ". Uses: " + str(i[1]))
         return returnList
 
-    def reduceSeatsBy(self, num, trainType, trainCode):
+    def reduceSeatsBy(self, num, trainType, trainCode, arrivalCity):
+        # for i in self.trainRoutes:
+        #     if i[0] == trainType and i[1] == trainCode:
+        #         seats = int(i[3])
+        #         seats -= num
+        #         i[3] = str(seats)
+
         for i in self.trainRoutes:
-            if i[0] == trainType and i[1] == trainCode:
-                seats = int(i[3])
-                seats -= num
-                i[3] = str(seats)
+            for j in i[6]:
+                if i[0]==trainType and i[1]==trainCode and j[3]==arrivalCity:
+                    seats = int(i[3])
+                    seats -= num
+                    j[4] = str(seats)
+
 
     def __init__(self):
         self.trainTypes = ['01', '02', '03', '04']
@@ -515,4 +523,4 @@ class loadData:
         # Initialize Reports
         self.initialize(self.trainRoutes, self.countryCitiesConnections, self.users)
 
-        print(self.attractions)
+        print(self.trainRoutes)
