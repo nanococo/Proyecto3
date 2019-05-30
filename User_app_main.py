@@ -595,7 +595,7 @@ class logIn(ttk.Frame):
         print(seatsToBuy)
         print(self.searchKey[2][7])
         try:
-            if int(seatsToBuy) > int(self.searchKey[2][7]):
+            if int(seatsToBuy) > int(self.searchKey[2][7]) or seatsToBuy=="0":
                 messagebox.showinfo("","Invalid amount of seats")
                 canRecerve=False
         except:
@@ -605,7 +605,7 @@ class logIn(ttk.Frame):
         if len(self.searchKey)==2:
             messagebox.showinfo("","Please select a route")
             canRecerve=False
-        elif seatsToBuy!=0:
+        elif int(seatsToBuy) > 0 and int(seatsToBuy) < int(self.searchKey[2][7]) :
             canRecerve=True
         if canRecerve:
             self.searchKey[2]+=[int(seatsToBuy)]
