@@ -921,16 +921,20 @@ class SocketServer(socket.socket):
 
     def deleteTrain(self, newTrainType, newTrainCode):
         """This method deletes trains. Handle with care"""
+        print(newTrainCode)
+        print(newTrainType)
         trainRoutesHolder = []
         success = False
+
         for i in self.dat.trainRoutes:
             if not (i[0] == newTrainType and i[1] == newTrainCode):
                 trainRoutesHolder.append(i)
 
-        self.dat.trainRoutes = trainRoutesHolder
+
         if self.dat.trainRoutes == trainRoutesHolder:
             pass
         else:
+            self.dat.trainRoutes = trainRoutesHolder
             self.dat.lastDeletedTrain = [newTrainType, newTrainCode]
             listForReportsTrain = self.dat.deleteTrainForReports(newTrainType, newTrainCode)
             self.dat.trainsByUsage = listForReportsTrain
