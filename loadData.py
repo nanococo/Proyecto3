@@ -81,7 +81,8 @@ def loadConnections(countryCityList):
     keysList = []
     final = []
     for i in range(len(splitList)):
-        if len(splitList[i]) == 6:
+        #Change to seven to load all
+        if len(splitList[i]) == 7:
             if countryAndCityExistInList(splitList[i][0], splitList[i][1], countryForConn) and countryAndCityExistInList(splitList[i][3], splitList[i][4], countryForConn):
                 if splitList[i][2] not in keysList:
                     keysList.append(splitList[i][2])
@@ -92,14 +93,26 @@ def loadConnections(countryCityList):
 
 def loadRoutes():
     # Loads routes file and add routes to a list
-    countriesFile = open("dataFiles/Rutas.txt", 'r', encoding='utf-8')
+    countriesFile = open("dataFiles/Rutas.txt", 'r')
     splitList = [line.replace("\n", "").strip().split(";", ) for line in countriesFile.readlines() if line.strip()]
     final = []
     for i in splitList:
-        if len(i) == 7:
-            if i not in final and i[6].isdigit():
-                final.append(i)
+        if len(i) == 8:
+            if i not in final and i[7].isdigit():
+                final.append(i[:2]+i[3:])
+                #print(i[:2]+i[3:])
 
+    return final
+
+def loadRoutesFull():
+    # Loads routes file and add routes to a list
+    countriesFile = open("dataFiles/Rutas.txt", 'r')
+    splitList = [line.replace("\n", "").strip().split(";", ) for line in countriesFile.readlines() if line.strip()]
+    final = []
+    for i in splitList:
+        if len(i) == 8:
+            if i not in final and i[7].isdigit():
+                final.append(i)
     return final
 
 
@@ -475,6 +488,7 @@ class loadData:
         self.cities = loadCities()
 
         self.routes = loadRoutes()
+        self.routesWithCode = loadRoutesFull()
         self.users = loadUsers()
         self.admin = loadAdmins()
 
