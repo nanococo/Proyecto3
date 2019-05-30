@@ -452,8 +452,7 @@ class SocketServer(socket.socket):
 
             elif dataList[0] == "51":
                 # getCountryByCode
-                # [2] is trainType
-                returnValue = self.getTrainTypes(dataList[2])
+                returnValue = self.getTrainTypes()
                 client.send(pickle.dumps(returnValue))
 
         else:
@@ -1203,7 +1202,7 @@ class SocketServer(socket.socket):
 
         return success
 
-    def getTrainType(self):
+    def getTrainTypes(self):
         """Returns all train types"""
         result = []
         for i in self.dat.trainTypes:
