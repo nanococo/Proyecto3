@@ -378,7 +378,7 @@ class Consult(tk.Frame):
         self.typeLabel = ttk.Label(self, text="Select a train type.")
         self.typeLabel.place(x=173, y=20)
 
-        codeList = ["50", adminID]
+        codeList = ["51", adminID]
         s.send(pickle.dumps(codeList))
         types = pickle.loads(s.recv(8192))
 
