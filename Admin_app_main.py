@@ -866,14 +866,15 @@ class Insert(tk.Frame):
 
         self.clear()
 
+        codeList = ["51", adminID]
+        s.send(pickle.dumps(codeList))
+        types = pickle.loads(s.recv(8192))
+
         self.typeLabel = ttk.Label(self, text="Select a train type")
         self.typeLabel.place(x=189, y=30)
 
         self.type = ttk.Combobox(self, state="readonly")
-        self.type["values"] = ['01',
-                               '02',
-                               '03',
-                               '04', ]
+        self.type["values"] = types
 
         self.type.bind("<<ComboboxSelected>>")
         self.type.place(x=169, y=50)
