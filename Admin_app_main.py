@@ -372,17 +372,17 @@ class Consult(tk.Frame):
 
     #Check trains
     def draw_checkTrains(self):
-
+        global adminID
         self.clear()
 
         self.typeLabel = ttk.Label(self, text="Select a train type.")
         self.typeLabel.place(x=173, y=20)
+        codeList = ["51", adminID]
+        s.send(pickle.dumps(codeList))
+        types = pickle.loads(s.recv(8192))
 
         self.type = ttk.Combobox(self, state="readonly")
-        self.type["values"] = ['01',
-                               '02',
-                               '03',
-                               '04', ]
+        self.type["values"] = types
 
         self.type.bind("<<ComboboxSelected>>")
         self.type.place(x=153, y=50)
@@ -538,9 +538,9 @@ class Insert(tk.Frame):
                                        command=lambda: self.draw_insertTrain(controller))
         buttonInsertTrain.place(x=130, y=40)
 
-        # buttonInsertTrainType = ttk.Button(self, text='Train type',
-        #                                    command=lambda: self.draw_insertTrainType(controller))
-        # buttonInsertTrainType.place(x=10, y=160)
+        buttonInsertTrainType = ttk.Button(self, text='Train type',
+                                           command=lambda: self.draw_insertTrainType(controller))
+        buttonInsertTrainType.place(x=10, y=160)
 
         buttonInsertRoute = ttk.Button(self, text='Route',
                                        command=lambda: self.draw_insertRoute(controller))
@@ -865,14 +865,15 @@ class Insert(tk.Frame):
 
         self.clear()
 
+        codeList = ["51", adminID]
+        s.send(pickle.dumps(codeList))
+        types = pickle.loads(s.recv(8192))
+
         self.typeLabel = ttk.Label(self, text="Select a train type")
         self.typeLabel.place(x=189, y=30)
 
         self.type = ttk.Combobox(self, state="readonly")
-        self.type["values"] = ['01',
-                               '02',
-                               '03',
-                               '04', ]
+        self.type["values"] = types
 
         self.type.bind("<<ComboboxSelected>>")
         self.type.place(x=169, y=50)
@@ -948,39 +949,39 @@ class Insert(tk.Frame):
 
     #
 
-    """def draw_insertTrainType(self, controller):
+    #Insert train type
+    def draw_insertTrainType(self, controller):
 
-        for child in self.winfo_children():
-            child.place_forget()
+        self.clear()
 
-        fill = tk.Label(self, text='Please fill the gaps.')
-        fill.config(font=('Calibri', 13))
-        fill.place(x=0, y=0)
-
-        self.code = tk.Entry(self)
+        self.code = ttk.Entry(self)
         self.code.place(x=180, y=105)
         self.countryCodeLabel = ttk.Label(self, text="Type code")
-        self.countryCodeLabel.place(x=100, y=105)
+        self.countryCodeLabel.place(x=210, y=85)
 
-        self.name = tk.Entry(self)
-        self.name.place(x=180, y=160)
-        self.countryNameLabel = ttk.Label(self, text="Type name")
-        self.countryNameLabel.place(x=100, y=160)
-
-        enter = ttk.Button(self, text='Enter',
-                           command=lambda: self.createNewCountry(controller))
+        enter = ttk.Button(self, text='DONE',
+                           command=lambda: self.createNewType())
         enter.place(x=200, y=240)
-    def createNewType(self, controller):
+
+        self.buttonBackToInsert(controller)
+
+    def createNewType(self):
 
         code = self.code.get()
-        name = self.name.get()
 
-        if code == '' or name == '':
-            messagebox.showinfo('ERROR', 'Please fill all the gaps.')
+        if code == '':
+            messagebox.showinfo('ERROR', 'Please type  a train type.')
         else:
-            newType = [code, name, []]
-            messagebox.showinfo("Done", "The train type " + name + '(' + code + ")  was succesfully inserted.")
-            self.back_insert(controller)"""
+            newType = code
+            codeList = ["50", adminID, newType]
+            s.send(pickle.dumps(codeList))
+            success = pickle.loads(s.recv(8192))
+
+            if success:
+                messagebox.showinfo("Done", "The train type was succesfully inserted.")
+            else:
+                messagebox.showinfo("ERROR", "The type is already present.")
+    #
 
     def buttonBackToMenu(self, controller):
         buttonBACK = ttk.Button(self, text='BACK',
@@ -1056,9 +1057,9 @@ class Delete(tk.Frame):
                                        command=lambda: controller.show_frame('PENDIENTE'))
         buttonDeleteRoute.place(x=130, y=80)
 
-        # buttonDeleteAtraction = ttk.Button(self, text='Atraction',
-        #                                    command=lambda: controller.show_frame('PENDIENTE'))
-        # buttonDeleteAtraction.place(x=130, y=120)
+        buttonDeleteAtraction = ttk.Button(self, text='Atraction',
+                                           command=lambda: controller.show_frame('PENDIENTE'))
+        buttonDeleteAtraction.place(x=130, y=120)
 
         self.buttonBackToMenu(controller)
 
