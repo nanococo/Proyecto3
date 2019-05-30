@@ -538,8 +538,10 @@ class SocketServer(socket.socket):
         :param train is the train type code"""
         returnList = []
         for i in self.dat.trainRoutes:
+            print(i[0], train, i)
             if i[0]==train:
                 returnList.append(i)
+        print(returnList)
         return returnList
 
     def getPricesByTrainCode(self, train):
