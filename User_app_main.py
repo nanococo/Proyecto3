@@ -420,6 +420,8 @@ class logIn(ttk.Frame):
         confirmation = pickle.loads(s.recv(8192))
         if confirmation:
             reservations = []
+            self.chooseRecervation()
+            messagebox.showinfo("","Done")
     def eraseReservations(self):
         global reservations
         global userID
