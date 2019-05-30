@@ -460,6 +460,7 @@ class SocketServer(socket.socket):
                 # getCountryByCode
                 returnValue = self.deleteAttraction(dataList[2])
                 client.send(pickle.dumps(returnValue))
+        
 
         else:
             returnValue = "1"
