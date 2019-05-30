@@ -354,6 +354,32 @@ class newWindow:
             self.map.pack()
         elif country == "134":
             imageURL = "newDataFiles/Assets/resized/netherlands.png"
+
+            self.img = Image.open(imageURL)
+            self.display = ImageTk.PhotoImage(self.img)
+            self.map = tk.Label(self._sideWindow, image=self.display, bd=5, relief="ridge")
+            self.map.pack()
+
+            # ROTERDAM
+            self.pin = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin = ImageTk.PhotoImage(self.pin)
+            self.pinButton = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("466", country))
+            self.pinButton.config(image=self.displayPin)
+            self.pinButton.place(x=160, y=150)
+
+            # LA HAYA
+            self.pin2 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin2 = ImageTk.PhotoImage(self.pin2)
+            self.pinButton2 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("963", country))
+            self.pinButton2.config(image=self.displayPin2)
+            self.pinButton2.place(x=300, y=120)
+
+            # AMSTERDAM
+            self.pin3 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin3 = ImageTk.PhotoImage(self.pin3)
+            self.pinButton3 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("470", country))
+            self.pinButton3.config(image=self.displayPin3)
+            self.pinButton3.place(x=210, y=75)
         elif country == "24":
             imageURL = "newDataFiles/Assets/resized/turkey.gif"
         elif country == "32":
