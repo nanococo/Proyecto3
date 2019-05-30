@@ -1365,17 +1365,38 @@ class Modify(ttk.Frame):
 
     def modifyPrice(self,controller):
         self.clear()
+        
+        self.searchKey=[]
 
-        self.trainType=ttk.Combobox(self)
-        self.trainType["values"]=["01","02","03","04"]
-        self.trainType.bind("<<ComboboxSelected>>", self.modifyUpdateTrains)
-        self.trainType.pack()
+        self.trainList=ttk.Combobox(self, state="readonly")
+        codeList = ["43", ""]
+        s.send(pickle.dumps(codeList))
+        trainListServer = pickle.loads(s.recv(8192))
+        trainListServer = self.sliceTrains(trainListServer)
+        self.trainList["values"] = trainListServer
+        self.trainList.bind("<<ComboboxSelected>>", self.routeList)
+        self.trainList.pack(pady=40)
 
-        self.trainList=ttk.Combobox(self)
+
+        self.routelist=tk.Listbox(self, width =20)
+        self.routelist.pack(pady=10)
+
+    def routeList(self, event):
+        self.routelist.delete(0,tk.END)
+        codeList = ["07", "", self.trainList.get().split(" ")[0]]
+        s.send(pickle.dumps(codeList))
+        pricesServer = pickle.loads(s.recv(8192))
+
+        for i in pricesServer:
+            self.routelist.insert(tk.END,i)
 
 
-    def modifyUpdateTrains(self, event):
 
+    def sliceTrains(self, list):
+        newList = []
+        for i in list:
+            newList += [i[1]+' '+i[2]]
+        return newList
 
 
 
