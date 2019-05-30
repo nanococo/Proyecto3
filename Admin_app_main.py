@@ -640,6 +640,7 @@ class Insert(tk.Frame):
                                     self.availableCountries.get())
     #
 
+    #Insert connectio
     def draw_insertConnection(self, controller):
         global adminID
         self.clear()
