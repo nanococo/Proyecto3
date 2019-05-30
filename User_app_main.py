@@ -344,7 +344,6 @@ class newWindow:
             self.pinButton4 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("89", country))
             self.pinButton4.config(image=self.displayPin4)
             self.pinButton4.place(x=250, y=170)
-
         elif country == "123":
             imageURL = "newDataFiles/Assets/resized/UK.png"
 
@@ -382,8 +381,74 @@ class newWindow:
             self.pinButton3.place(x=210, y=75)
         elif country == "24":
             imageURL = "newDataFiles/Assets/resized/turkey.gif"
+
+            self.img = Image.open(imageURL)
+            self.display = ImageTk.PhotoImage(self.img)
+            self.map = tk.Label(self._sideWindow, image=self.display, bd=5, relief="ridge")
+            self.map.pack()
+
+            # ANKARA
+            self.pin = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin = ImageTk.PhotoImage(self.pin)
+            self.pinButton = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("220", country))
+            self.pinButton.config(image=self.displayPin)
+            self.pinButton.place(x=160, y=150)
+
+            # ESTAMBUL
+            self.pin2 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin2 = ImageTk.PhotoImage(self.pin2)
+            self.pinButton2 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("451", country))
+            self.pinButton2.config(image=self.displayPin2)
+            self.pinButton2.place(x=120, y=120)
+
+            # BURSA
+            self.pin3 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin3 = ImageTk.PhotoImage(self.pin3)
+            self.pinButton3 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("852", country))
+            self.pinButton3.config(image=self.displayPin3)
+            self.pinButton3.place(x=210, y=75)
+
+            # ANTALYA
+            self.pin4 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin4 = ImageTk.PhotoImage(self.pin4)
+            self.pinButton4 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("456", country))
+            self.pinButton4.config(image=self.displayPin4)
+            self.pinButton4.place(x=300, y=120)
+
+            # ADANA
+            self.pin5 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin5 = ImageTk.PhotoImage(self.pin5)
+            self.pinButton5 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("198", country))
+            self.pinButton5.config(image=self.displayPin5)
+            self.pinButton5.place(x=250, y=120)
         elif country == "32":
             imageURL = "newDataFiles/Assets/resized/belgium.png"
+
+            self.img = Image.open(imageURL)
+            self.display = ImageTk.PhotoImage(self.img)
+            self.map = tk.Label(self._sideWindow, image=self.display, bd=5, relief="ridge")
+            self.map.pack()
+
+            # GANTE
+            self.pin = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin = ImageTk.PhotoImage(self.pin)
+            self.pinButton = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("489", country))
+            self.pinButton.config(image=self.displayPin)
+            self.pinButton.place(x=160, y=150)
+
+            # BRUJAS
+            self.pin2 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin2 = ImageTk.PhotoImage(self.pin2)
+            self.pinButton2 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("159", country))
+            self.pinButton2.config(image=self.displayPin2)
+            self.pinButton2.place(x=120, y=120)
+
+            # AMBERES
+            self.pin3 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin3 = ImageTk.PhotoImage(self.pin3)
+            self.pinButton3 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("13", country))
+            self.pinButton3.config(image=self.displayPin3)
+            self.pinButton3.place(x=210, y=75)
         elif country == "02":
             imageURL = "newDataFiles/Assets/resized/Greece.png"
         elif country == "456":
@@ -408,6 +473,76 @@ class newWindow:
             self.display = ImageTk.PhotoImage(self.img)
             self.map = tk.Label(self._sideWindow, image=self.display, bd=5, relief="ridge")
             self.map.pack()
+
+            # NAPOLES
+            self.pin = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin = ImageTk.PhotoImage(self.pin)
+            self.pinButton = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("111", country))
+            self.pinButton.config(image=self.displayPin)
+            self.pinButton.place(x=160, y=150)
+
+            # FLORENCIA
+            self.pin2 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin2 = ImageTk.PhotoImage(self.pin2)
+            self.pinButton2 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("190", country))
+            self.pinButton2.config(image=self.displayPin2)
+            self.pinButton2.place(x=120, y=120)
+
+            # GENOVA
+            self.pin3 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin3 = ImageTk.PhotoImage(self.pin3)
+            self.pinButton3 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("47", country))
+            self.pinButton3.config(image=self.displayPin3)
+            self.pinButton3.place(x=210, y=45)
+
+            # SAN MARINO
+            self.pin4 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin4 = ImageTk.PhotoImage(self.pin4)
+            self.pinButton4 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("579", country))
+            self.pinButton4.config(image=self.displayPin4)
+            self.pinButton4.place(x=170, y=75)
+
+            # VENECIA
+            self.pin5 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin5 = ImageTk.PhotoImage(self.pin5)
+            self.pinButton5 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("888", country))
+            self.pinButton5.config(image=self.displayPin5)
+            self.pinButton5.place(x=210, y=230)
+
+            # ROMA
+            self.pin6 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin6 = ImageTk.PhotoImage(self.pin6)
+            self.pinButton6 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("258", country))
+            self.pinButton6.config(image=self.displayPin6)
+            self.pinButton6.place(x=265, y=270)
+
+            # TURIN
+            self.pin7 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin7 = ImageTk.PhotoImage(self.pin7)
+            self.pinButton7 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("119", country))
+            self.pinButton7.config(image=self.displayPin7)
+            self.pinButton7.place(x=210, y=190)
+
+            # BOLONIA
+            self.pin8 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin8 = ImageTk.PhotoImage(self.pin8)
+            self.pinButton8 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("133", country))
+            self.pinButton8.config(image=self.displayPin8)
+            self.pinButton8.place(x=310, y=280)
+
+            # BARI
+            self.pin9 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin9 = ImageTk.PhotoImage(self.pin9)
+            self.pinButton9 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("795", country))
+            self.pinButton9.config(image=self.displayPin9)
+            self.pinButton9.place(x=80, y=300)
+
+            # MILAN
+            self.pin10 = Image.open("newDataFiles/Assets/pin(2).png")
+            self.displayPin10 = ImageTk.PhotoImage(self.pin10)
+            self.pinButton10 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("122", country))
+            self.pinButton10.config(image=self.displayPin10)
+            self.pinButton10.place(x=310, y=400)
 
 
     def createCityWindow(self, cityCode, countryCode):
@@ -1286,5 +1421,9 @@ if __name__ == '__main__':
     main_window.iconbitmap(default="icono.ico")
     main_window.resizable(0,0)
     app = MainApp(main_window)
+
+    # codeList = ["06", "", "01"]
+    # s.send(pickle.dumps(codeList))
+    # confirmation = pickle.loads(s.recv(8192))
 
     app.mainloop()
