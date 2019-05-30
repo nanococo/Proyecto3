@@ -1056,9 +1056,9 @@ class Delete(tk.Frame):
                                        command=lambda: controller.show_frame('PENDIENTE'))
         buttonDeleteRoute.place(x=130, y=80)
 
-        # buttonDeleteAtraction = ttk.Button(self, text='Atraction',
-        #                                    command=lambda: controller.show_frame('PENDIENTE'))
-        # buttonDeleteAtraction.place(x=130, y=120)
+        buttonDeleteAtraction = ttk.Button(self, text='Atraction',
+                                           command=lambda: controller.show_frame('PENDIENTE'))
+        buttonDeleteAtraction.place(x=130, y=120)
 
         self.buttonBackToMenu(controller)
 
