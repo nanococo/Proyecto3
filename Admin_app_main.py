@@ -959,9 +959,12 @@ class Insert(tk.Frame):
         self.countryCodeLabel.place(x=210, y=85)
 
         enter = ttk.Button(self, text='DONE',
-                           command=lambda: self.createNewType(controller))
+                           command=lambda: self.createNewType())
         enter.place(x=200, y=240)
-    def createNewType(self, controller):
+
+        self.buttonBackToInsert(controller)
+
+    def createNewType(self):
 
         code = self.code.get()
 
