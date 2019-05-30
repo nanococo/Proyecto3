@@ -425,6 +425,25 @@ class SocketServer(socket.socket):
             elif dataList[0] == "46":
                 # UNLOCK_SERVER_ADMIN
                 self.unlockServerForAdmin()
+
+            elif dataList[0] == "47":
+                # getCountryByCode
+                # [2] is countryCode
+                returnValue = self.getAttractionsByCountry(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "48":
+                # getCountryByCode
+                # [2] is cityCode
+                returnValue = self.getAttractionsByCity(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "48":
+                # getCountryByCode
+                # [2] is attractionCode
+                returnValue = self.getAttractionsByAttractionCode(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
         else:
             returnValue = "1"
             client.send(pickle.dumps(returnValue))
@@ -1126,11 +1145,39 @@ class SocketServer(socket.socket):
         print("Locked")
 
     def unlockServerForAdmin(self):
-
+        """Unlocks server for all to use"""
         print(self.currentAdminID)
         self.currentAdminID = ""
         print(self.currentAdminID)
         print("Unlocked")
+
+    def getAttractionsByCountry(self, countryCode):
+        """Returns all attractions for selected country
+        :param countryCode is the selection country code"""
+        result = []
+        for i in self.dat.attractions:
+            if i[0] == countryCode:
+                result.append(i)
+        return result
+
+    def getAttractionsByCity(self, cityCode):
+        """Returns all attractions for selected city
+        :param cityCode is the selection country code"""
+        result = []
+        for i in self.dat.attractions:
+            if i[1] == cityCode:
+                result.append(i)
+        return result
+
+    def getAttractionsByAttractionCode(self, attractionCode):
+        """Returns all attractions for selected attraction code
+        :param attractionCode is the selection country code"""
+        result = []
+        for i in self.dat.attractions:
+            if i[2] == attractionCode:
+                result.append(i)
+        return result
+
 
 
     def broadcast(self, message):

@@ -135,6 +135,20 @@ def loadAdmins():
 
     return final
 
+def loadAttractions():
+    """Loads the attractions file"""
+    countriesFile = open("dataFiles/Atracciones.txt", 'r')
+    splitList = [line.replace("\n", "").split(";", ) for line in countriesFile.readlines() if line.strip()]
+    keysList = []
+    final = []
+
+    for i in splitList:
+        if len(i)==5:
+            if i[2] not in keysList:
+                keysList.append(i[2])
+                final.append(i)
+    return final
+
 
 def mergeCountryCity(countriesList, citiesList):
     # Merges the country list with the city list
@@ -495,7 +509,10 @@ class loadData:
         self.lastDeletedTrain = []
         self.lastDeletedRoute = []
 
+        # Attractions
+        self.attractions = loadAttractions()
+
         # Initialize Reports
         self.initialize(self.trainRoutes, self.countryCitiesConnections, self.users)
 
-        # print("Connections: ", self.countryCitiesConnections)
+        print(self.attractions)
