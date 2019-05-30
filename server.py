@@ -230,7 +230,8 @@ class SocketServer(socket.socket):
             elif dataList[0] == "20":
                 # validateAdmin
                 # [0] is code 20
-                # [2] is countryToDel
+                # [2] is countryCode
+                # [3] is cityCode
                 returnValue = self.deleteCity(dataList[2], dataList[3])
                 client.send(pickle.dumps(returnValue))
 
@@ -455,6 +456,11 @@ class SocketServer(socket.socket):
                 returnValue = self.getTrainTypes()
                 client.send(pickle.dumps(returnValue))
 
+            elif dataList[0] == "52":
+                # getCountryByCode
+                returnValue = self.deleteAttraction(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
         else:
             returnValue = "1"
             client.send(pickle.dumps(returnValue))
@@ -516,14 +522,15 @@ class SocketServer(socket.socket):
                 for k in range(len(self.dat.countryCitiesConnections[i][2][j][2])):
                     if self.dat.countryCitiesConnections[i][0] == country:
                         if self.dat.countryCitiesConnections[i][2][j][0] == city:
-                            returnList.append( str(
-                                self.dat.countryCitiesConnections[i][2][j][2][k][0]) + ". From: " + str(
-                                self.dat.countryCitiesConnections[i][0]) + ", " + str(
-                                self.dat.countryCitiesConnections[i][2][j][0]) + "; to " + str(
-                                self.dat.countryCitiesConnections[i][2][j][2][k][1]) + ", " + str(
-                                self.dat.countryCitiesConnections[i][2][j][2][k][2]) + ". Duration: " + str(
-                                self.dat.countryCitiesConnections[i][2][j][2][k][3]))
+                            returnList.append( [str(
+                                self.dat.countryCitiesConnections[i][2][j][2][k][0]),"From", str(
+                                self.dat.countryCitiesConnections[i][0]),str(
+                                self.dat.countryCitiesConnections[i][2][j][0]), "to", str(
+                                self.dat.countryCitiesConnections[i][2][j][2][k][1]), str(
+                                self.dat.countryCitiesConnections[i][2][j][2][k][2]),"Duration",str(
+                                self.dat.countryCitiesConnections[i][2][j][2][k][3])+"h"])
                             count += 1
+
         return returnList
 
     def getTrainByTrainType(self, train):
@@ -535,7 +542,8 @@ class SocketServer(socket.socket):
                 train = "0" + train
             for i in range(len(self.dat.trainRoutes)):
                 if train == self.dat.trainRoutes[i][0]:
-                    returnList.append(" Code: " + self.dat.trainRoutes[i][1] + ". Name: " + self.dat.trainRoutes[i][2] + ". Capacity: " + self.dat.trainRoutes[i][3])
+                    returnList.append(["Code", self.dat.trainRoutes[i][1], "Name", self.dat.trainRoutes[i][2], "Capacity",
+                                      self.dat.trainRoutes[i][3]])
         return returnList
 
     def getPricesByTrainCode(self, train):
@@ -546,12 +554,16 @@ class SocketServer(socket.socket):
             for i in range(len(self.dat.trainRoutes)):
                 for j in range(len(self.dat.trainRoutes[i][6])):
                     if train == self.dat.trainRoutes[i][1]:
-                        returnList.append(
-                            "Cost: " + self.dat.trainRoutes[i][6][j][4] + ". Train Code: " + self.dat.trainRoutes[i][
-                                1] + ". Name: " +
-                            self.dat.trainRoutes[i][2] + ". Goes from " + self.dat.trainRoutes[i][6][j][0] + ", " +
-                            self.dat.trainRoutes[i][6][j][1] + " to " + self.dat.trainRoutes[i][6][j][2] + ", " +
-                            self.dat.trainRoutes[i][6][j][3])
+                        returnList.append(["Cost", self.dat.trainRoutes[i][6][j][4],"TrainCode",
+                                          self.dat.trainRoutes[i][1], "Name",
+                                          self.dat.trainRoutes[i][2],"From",
+                                          self.dat.trainRoutes[i][6][j][0],
+                                          self.dat.trainRoutes[i][6][j][1],
+                                          "to",self.dat.trainRoutes[i][6][j][2],
+                                          self.dat.trainRoutes[i][6][j][3]])
+
+
+
         return returnList
 
     def getSeatsByTrainCode(self, train):
@@ -561,7 +573,7 @@ class SocketServer(socket.socket):
         if train != "0":
             for i in range(len(self.dat.trainRoutes)):
                 if train == self.dat.trainRoutes[i][1]:
-                    returnList.append("Train: " + self.dat.trainRoutes[i][1] + ". Seats: " + self.dat.trainRoutes[i][3])
+                    returnList.append(["Train", self.dat.trainRoutes[i][1], "Seats", self.dat.trainRoutes[i][3]])
         return returnList
 
     def getRoutesByCity(self, city):
@@ -574,10 +586,13 @@ class SocketServer(socket.socket):
                 for j in range(len(self.dat.trainRoutes[i][6])):
                     if city == self.dat.trainRoutes[i][6][j][1]:
                         count += 1
-                        returnList.append("Train Code: " + self.dat.trainRoutes[i][
-                            1] + ". Goes from " + self.dat.trainRoutes[i][6][j][0] + ", " +
-                              self.dat.trainRoutes[i][6][j][1] + " to " + self.dat.trainRoutes[i][6][j][2] + ", " +
-                              self.dat.trainRoutes[i][6][j][3])
+                        returnList.append(["TrainCode", self.dat.trainRoutes[i][1],"From",
+                                          self.dat.trainRoutes[i][6][j][0],
+                                          self.dat.trainRoutes[i][6][j][1],
+                                          "to",self.dat.trainRoutes[i][6][j][2],
+                                          self.dat.trainRoutes[i][6][j][3]])
+
+
         return returnList
 
     def getRouteForReservations(self, selectedCountry, selectedCity):
@@ -603,7 +618,7 @@ class SocketServer(socket.socket):
             self.dat.addCountryCount(i[5])
             self.dat.addRoutesCount(i[0], i[1], i[3], i[4], i[5], i[6])
             self.dat.addTrainCount(i[0], i[1])
-            self.dat.reduceSeatsBy(i[9], i[0], i[1])
+            self.dat.reduceSeatsBy(i[9], i[0], i[1], i[6])
             success = True
         return success
 
@@ -1206,6 +1221,21 @@ class SocketServer(socket.socket):
         for i in self.dat.trainTypes:
             result.append(i)
         return result
+
+    def deleteAttraction(self, attractionCode):
+        """WARNING. THIS METHOD DELETES ATTRACTION. HANDLE WITH CARE"""
+        newList = []
+        sucess = False
+        for i in self.dat.attractions:
+            if i[2]!=attractionCode:
+                newList.append(i)
+
+        if len(newList)!=len(self.dat.attractions):
+            sucess = True
+            self.dat.attractions = newList
+
+        return sucess
+
 
 
     def broadcast(self, message):
