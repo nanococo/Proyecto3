@@ -372,12 +372,11 @@ class Consult(tk.Frame):
 
     #Check trains
     def draw_checkTrains(self):
-
+        global adminID
         self.clear()
 
         self.typeLabel = ttk.Label(self, text="Select a train type.")
         self.typeLabel.place(x=173, y=20)
-
         codeList = ["51", adminID]
         s.send(pickle.dumps(codeList))
         types = pickle.loads(s.recv(8192))

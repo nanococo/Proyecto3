@@ -1204,8 +1204,7 @@ class SocketServer(socket.socket):
         """Returns all train types"""
         result = []
         for i in self.dat.trainTypes:
-            i.append(result)
-        print(result)
+            result.append(i)
         return result
 
 
