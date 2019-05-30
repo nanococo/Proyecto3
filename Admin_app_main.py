@@ -1533,7 +1533,8 @@ class Modify(ttk.Frame):
         self.trainList.pack(pady=30)
 
 
-        self.routelist=tk.Listbox(self, width =20)
+        self.routelist=tk.Listbox(self, width =20,selectmode=tk.SINGLE)
+        self.routelist.bind("<<ListboxSelect>>", self.getrouteInfo)
         self.routelist.pack(pady=10)
 
         button = ttk.Button(self, text='BACK',command=self.init_modify)
@@ -1546,7 +1547,6 @@ class Modify(ttk.Frame):
         s.send(pickle.dumps(codeList))
         trainListServer = pickle.loads(s.recv(8192))
         trainListServer = self.sliceTrains(trainListServer)
-        print(trainListServer)
         self.trainList["values"] = trainListServer
 
 
@@ -1559,7 +1559,9 @@ class Modify(ttk.Frame):
         for i in pricesServer:
             self.routelist.insert(tk.END,i)
 
+    def getrouteInfo(self, event):
 
+        print(self.routelist.get())
 
     def sliceTrains(self, list):
         newList = []
