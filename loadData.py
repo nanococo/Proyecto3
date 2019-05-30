@@ -96,11 +96,14 @@ def loadRoutes():
     countriesFile = open("dataFiles/Rutas.txt", 'r')
     splitList = [line.replace("\n", "").strip().split(";", ) for line in countriesFile.readlines() if line.strip()]
     final = []
+    keyList = []
     for i in splitList:
         if len(i) == 8:
             if i not in final and i[7].isdigit():
-                final.append(i[:2]+i[3:])
-                #print(i[:2]+i[3:])
+                if i[2] not in keyList:
+                    final.append(i[:2] + i[3:])
+                    keyList.append(i[2])
+                    # print(i[:2]+i[3:])
 
     return final
 
@@ -109,10 +112,13 @@ def loadRoutesFull():
     countriesFile = open("dataFiles/Rutas.txt", 'r')
     splitList = [line.replace("\n", "").strip().split(";", ) for line in countriesFile.readlines() if line.strip()]
     final = []
+    keyList = []
     for i in splitList:
         if len(i) == 8:
             if i not in final and i[7].isdigit():
-                final.append(i)
+                if i[2] not in keyList:
+                    final.append(i)
+                    keyList.append(i[2])
     return final
 
 
@@ -540,6 +546,11 @@ class loadData:
         # Initialize Reports
         self.initialize(self.trainRoutes, self.countryCitiesConnections, self.users)
 
-        print(self.countries)
-        print(self.cities)
-        print(self.countryCitiesConnections)
+        print(self.routes)
+        print(self.routesWithCode)
+        print(self.trainRoutes)
+        # print(self.countries)
+        # print(self.cities)
+        # print(self.trainRoutes)
+        # for i in self.trainRoutes:
+        #     print(i[:6]+[[]])
