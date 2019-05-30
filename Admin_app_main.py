@@ -1476,6 +1476,8 @@ class Modify(ttk.Frame):
         label.config(font=('Calibri', 11))
         label.place(x=0, y=0)
 
+        self.clear()
+
         buttonModifyPrice = ttk.Button(self, text='Prices',
                                        command=lambda: self.modifyPrice(controller))
         buttonModifyPrice.place(x=10, y=40)
@@ -1514,18 +1516,32 @@ class Modify(ttk.Frame):
         
         self.searchKey=[]
 
+        self.trainType = ttk.Combobox(self, state="readonly")
+        self.trainType["values"] = ['01','02','03','04']
+        self.trainType.bind("<<ComboboxSelected>>", self.modifyUpdateTrains)
+        self.trainType.pack(pady=30)
+
         self.trainList=ttk.Combobox(self, state="readonly")
-        codeList = ["43", ""]
-        s.send(pickle.dumps(codeList))
-        trainListServer = pickle.loads(s.recv(8192))
-        trainListServer = self.sliceTrains(trainListServer)
-        self.trainList["values"] = trainListServer
         self.trainList.bind("<<ComboboxSelected>>", self.routeList)
-        self.trainList.pack(pady=40)
+        self.trainList.pack(pady=30)
 
 
         self.routelist=tk.Listbox(self, width =20)
         self.routelist.pack(pady=10)
+
+        button = ttk.Button(self, text='BACK',command=self.init_modify)
+        button.pack(side='bottom')
+
+    def modifyUpdateTrains(self,event):
+        self.searchKey=self.trainType.get()
+        print(self.searchKey)
+        codeList = ["06", "",self.searchKey]
+        s.send(pickle.dumps(codeList))
+        trainListServer = pickle.loads(s.recv(8192))
+        trainListServer = self.sliceTrains(trainListServer)
+        print(trainListServer)
+        self.trainList["values"] = trainListServer
+
 
     def routeList(self, event):
         self.routelist.delete(0,tk.END)
