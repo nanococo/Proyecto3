@@ -28,7 +28,7 @@
         <entry file="file://$PROJECT_DIR$/Admin_app_main.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="258">
-              <caret line="1132" lean-forward="true" selection-start-line="1132" selection-end-line="1132" />
+              <caret line="1129" lean-forward="true" selection-start-line="1129" selection-end-line="1129" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -39,11 +39,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="1209" column="28" lean-forward="true" selection-start-line="1209" selection-start-column="28" selection-end-line="1209" selection-end-column="28" />
+            <state relative-caret-position="315">
+              <caret line="453" column="34" selection-start-line="453" selection-start-column="34" selection-end-line="453" selection-end-column="34" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataFiles/Rutas.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="160">
+              <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -68,7 +77,11 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataFiles/Atracciones.txt">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="416">
+              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -83,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/loadData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="460" column="23" selection-start-line="460" selection-start-column="13" selection-end-line="460" selection-end-column="23" />
+            <state relative-caret-position="163">
+              <caret line="463" column="34" lean-forward="true" selection-start-line="463" selection-start-column="34" selection-end-line="463" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -395,7 +408,7 @@
     <entry file="file://$PROJECT_DIR$/Admin_app_main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
-          <caret line="1132" lean-forward="true" selection-start-line="1132" selection-end-line="1132" />
+          <caret line="1129" lean-forward="true" selection-start-line="1129" selection-end-line="1129" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
@@ -426,9 +439,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Atracciones.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/User_app_main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="672">
@@ -439,17 +449,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dataFiles/Atracciones.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataFiles/Rutas.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/loadData.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="460" column="23" selection-start-line="460" selection-start-column="13" selection-end-line="460" selection-end-column="23" />
+        <state relative-caret-position="163">
+          <caret line="463" column="34" lean-forward="true" selection-start-line="463" selection-start-column="34" selection-end-line="463" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="1209" column="28" lean-forward="true" selection-start-line="1209" selection-start-column="28" selection-end-line="1209" selection-end-column="28" />
+        <state relative-caret-position="315">
+          <caret line="453" column="34" selection-start-line="453" selection-start-column="34" selection-end-line="453" selection-end-column="34" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
