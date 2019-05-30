@@ -304,6 +304,7 @@ class loadData:
         for i in self.routesByUsage:
             if i[0][0] == trainTypeCode and i[0][1] == trainCode and i[0][3] == departCountry and i[0][4] == departCity and i[0][5] == arriveCity and i[0][6] == arriveCountry:
                 i[1] += 1
+                print("route count added")
 
     def addTrainCount(self, trainType, trainCode):
         for i in self.trainsByUsage:
@@ -456,13 +457,15 @@ class loadData:
         #         seats = int(i[3])
         #         seats -= num
         #         i[3] = str(seats)
-
+        print(trainType, trainCode, arrivalCity)
         for i in self.trainRoutes:
             for j in i[6]:
                 if i[0]==trainType and i[1]==trainCode and j[3]==arrivalCity:
+                    print("Here")
                     seats = int(i[3])
                     seats -= num
                     j[4] = str(seats)
+        print(self.trainRoutes)
 
 
     def __init__(self):

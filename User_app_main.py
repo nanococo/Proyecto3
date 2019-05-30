@@ -418,7 +418,8 @@ class logIn(ttk.Frame):
         codeList = ["11", "", reservations, userID]
         s.send(pickle.dumps(codeList))
         confirmation = pickle.loads(s.recv(8192))
-        print(confirmation)
+        if confirmation:
+            reservations = []
     def eraseReservations(self):
         global reservations
         global userID

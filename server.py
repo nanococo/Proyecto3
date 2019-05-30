@@ -609,7 +609,7 @@ class SocketServer(socket.socket):
             self.dat.addCountryCount(i[5])
             self.dat.addRoutesCount(i[0], i[1], i[3], i[4], i[5], i[6])
             self.dat.addTrainCount(i[0], i[1])
-            self.dat.reduceSeatsBy(i[9], i[0], i[1], i[5])
+            self.dat.reduceSeatsBy(i[9], i[0], i[1], i[6])
             success = True
         return success
 
