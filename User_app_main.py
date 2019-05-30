@@ -1408,7 +1408,7 @@ class Queries(ttk.Frame):
 
 
             for i in trainListServer:
-                self.trainList.insert(tk.END, i)
+                self.trainList.insert(tk.END, i[0:5])
                 print(i)
 
             self.trainList.pack()
