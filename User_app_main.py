@@ -626,7 +626,6 @@ class newWindow:
             self.pinButton = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("291", country))
             self.pinButton.config(image=self.displayPin)
             self.pinButton.place(x=110, y=250)
-
         elif country == "499":
             imageURL = "newDataFiles/Assets/resized/Germany.png"
             self.img = Image.open(imageURL)
@@ -761,13 +760,35 @@ class newWindow:
 
 
     def createCityWindow(self, cityCode, countryCode):
-        pass
+
+        self.cityWindow = cityWindow(cityCode,countryCode)
 
 
 class cityWindow:
 
-     def __init__(self):
-         pass
+    def __init__(self,countryCode,cityCode):
+        self.createList(countryCode,cityCode)
+
+    def createList(self,countryCode,cityCode):
+        self.sideWindow=tk.Toplevel()
+        self.sideWindow.title("Attractions")
+
+        self.placeLabel=tk.Label(self.sideWindow,text="Country: "+"META AQUI EL PAIS"+" - "+"City: "+"META AQUI LA CIUDAD")
+        self.placeLabel.pack()
+
+        self.attractionsList=tk.Listbox(self.sideWindow, selectmode=tk.SINGLE, width = 40)
+
+        """
+        Meta aqui las llamadas al servidor
+        """
+
+        for i in "Llamadas al servidor":
+            self.attractionsList.insert(tk.END,i)
+
+        self.attractionsList.pack(pady=20)
+
+
+
 
 
 
