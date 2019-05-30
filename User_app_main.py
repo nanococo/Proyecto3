@@ -367,17 +367,17 @@ class newWindow:
             self.pinButton.config(image=self.displayPin)
             self.pinButton.place(x=160, y=150)
 
-            # ZURICH
+            # LA HAYA
             self.pin2 = Image.open("newDataFiles/Assets/pin(2).png")
             self.displayPin2 = ImageTk.PhotoImage(self.pin2)
-            self.pinButton2 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("116", country))
+            self.pinButton2 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("963", country))
             self.pinButton2.config(image=self.displayPin2)
-            self.pinButton2.place(x=120, y=120)
+            self.pinButton2.place(x=300, y=120)
 
-            # BERNA
+            # AMSTERDAM
             self.pin3 = Image.open("newDataFiles/Assets/pin(2).png")
             self.displayPin3 = ImageTk.PhotoImage(self.pin3)
-            self.pinButton3 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("176", country))
+            self.pinButton3 = ttk.Button(self._sideWindow, command=lambda: self.createCityWindow("470", country))
             self.pinButton3.config(image=self.displayPin3)
             self.pinButton3.place(x=210, y=75)
         elif country == "24":
