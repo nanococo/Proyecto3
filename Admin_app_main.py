@@ -1537,7 +1537,7 @@ class Modify(ttk.Frame):
         self.routelist.bind("<<ListboxSelect>>", self.getrouteInfo)
         self.routelist.pack(pady=10)
 
-        button = ttk.Button(self, text='BACK',command=self.init_modify)
+        button = ttk.Button(self, text='BACK',command=lambda :self.init_modify(controller))
         button.pack(side='bottom')
 
     def modifyUpdateTrains(self,event):
