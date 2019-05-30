@@ -640,7 +640,6 @@ class Insert(tk.Frame):
                                     self.availableCountries.get())
     #
 
-    #Insert connection
     def draw_insertConnection(self, controller):
         global adminID
         self.clear()
@@ -1390,7 +1389,6 @@ class Delete(tk.Frame):
             self.no = ttk.Button(self, text="NO",
                                  command=lambda: self.confirmationCommandTrain("NO", controller))
             self.no.place(x=250, y=440)
-
     def confirmationCommandTrain(self, confirmation, controller):
 
         train = self.trainCode.get().split(" ")
@@ -1412,8 +1410,6 @@ class Delete(tk.Frame):
                 messagebox.showinfo("ERROR", "Could not delete train.")
 
         self.draw_deleteTrain(controller)
-
-
     def sliceTrains(self, list):
         newList = []
         for i in list:
@@ -1424,6 +1420,14 @@ class Delete(tk.Frame):
     #Delete Route
     def draw_deleteRoutes(self, controller):
         self.clear()
+
+        # [2] newRouteTrainType
+        # [3] newRouteTrainCode
+        # [4] newRouteDepartCountry
+        # [5] newRouteDepartCity
+        # [6] newRouteArrivalCountry
+        # [7] newRouteArrivalCity
+
         self.buttonBackToDelete(controller)
     #
 
