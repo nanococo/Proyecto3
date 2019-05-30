@@ -162,41 +162,41 @@ class newWindow:
         self._sideWindow = tk.Toplevel()
         imageURL = ""
         if country=="23":
-            imageURL = "newDataFiles/Assets/portugal.png"
+            imageURL = "newDataFiles/Assets/resized/portugal.png"
         elif country == "90":
-            imageURL = "newDataFiles/Assets/spain.png"
+            imageURL = "newDataFiles/Assets/resized/spain.png"
         elif country == "78":
-            imageURL = "newDataFiles/Assets/france.gif"
+            imageURL = "newDataFiles/Assets/resized/france.gif"
         elif country == "234":
-            imageURL = "newDataFiles/Assets/switzerland.png"
+            imageURL = "newDataFiles/Assets/resized/switzerland.png"
         elif country == "45":
-            imageURL = "newDataFiles/Assets/jordan.png"
+            imageURL = "newDataFiles/Assets/resized/jordan.png"
         elif country == "134":
-            imageURL = "newDataFiles/Assets/netherlands.png"
+            imageURL = "newDataFiles/Assets/resized/netherlands.png"
         elif country == "24":
-            imageURL = "newDataFiles/Assets/turkey.gif"
+            imageURL = "newDataFiles/Assets/resized/turkey.gif"
         elif country == "32":
-            imageURL = "newDataFiles/Assets/belgium.png"
+            imageURL = "newDataFiles/Assets/resized/belgium.png"
         elif country == "02":
-            imageURL = "newDataFiles/Assets/Greece.png"
+            imageURL = "newDataFiles/Assets/resized/Greece.png"
         elif country == "456":
-            imageURL = "newDataFiles/Assets/Czech Republic.png"
+            imageURL = "newDataFiles/Assets/resized/Czech Republic.png"
         elif country == "120":
-            imageURL = "newDataFiles/Assets/poland.png"
+            imageURL = "newDataFiles/Assets/resized/poland.png"
         elif country == "149":
-            imageURL = "newDataFiles/Assets/romania.png"
+            imageURL = "newDataFiles/Assets/resized/romania.png"
         elif country == "256":
-            imageURL = "newDataFiles/Assets/ukraine.png"
+            imageURL = "newDataFiles/Assets/resized/ukraine.png"
         elif country == "280":
-            imageURL = "newDataFiles/Assets/bulgaria.png"
+            imageURL = "newDataFiles/Assets/resized/bulgaria.png"
         elif country == "18":
-            imageURL = "newDataFiles/Assets/finland.png"
+            imageURL = "newDataFiles/Assets/resized/finland.png"
         elif country == "180":
-            imageURL = "newDataFiles/Assets/switzerland.png"
+            imageURL = "newDataFiles/Assets/resized/switzerland.png"
         elif country == "499":
-            imageURL = "newDataFiles/Assets/Germany.png"
+            imageURL = "newDataFiles/Assets/resized/Germany.png"
         elif country == "05":
-            imageURL = "newDataFiles/Assets/Eritrea.png"
+            imageURL = "newDataFiles/Assets/resized/Eritrea.png"
 
         self.img = Image.open(imageURL)
         self.display =ImageTk.PhotoImage(self.img)
@@ -330,7 +330,7 @@ class logIn(ttk.Frame):
             self.departureCityListLabel.place(x=100, y = 100)
 
 
-            self.routeRecervation=ttk.Button(self, text="Continue", command=self.routeList)
+            self.routeRecervation=ttk.Button(self, text="Continue", command=self.routeListsFixed)
             self.routeRecervation.place(x=300, y =200)
 
             self.backButton=ttk.Button(self, text="Back", command= self.backToLogIn)
@@ -380,7 +380,7 @@ class logIn(ttk.Frame):
             self.arrivalCityListLabel = ttk.Label(self, text="Arrival City")
             self.arrivalCityListLabel.place(x=100, y=250)
 
-            self.routeRecervation = ttk.Button(self, text="Continue", command=self.routeList)
+            self.routeRecervation = ttk.Button(self, text="Continue", command=self.routeListsCustom)
             self.routeRecervation.place(x=300, y=350)
 
             self.backButton = ttk.Button(self, text="Back", command=self.backToLogIn)
@@ -419,8 +419,6 @@ class logIn(ttk.Frame):
         s.send(pickle.dumps(codeList))
         confirmation = pickle.loads(s.recv(8192))
         print(confirmation)
-
-
     def eraseReservations(self):
         global reservations
         global userID
@@ -503,33 +501,29 @@ class logIn(ttk.Frame):
             child.place_forget()
         self.chooseRecervation()
 
-    def routeList(self):
+    def routeListsFixed(self):
         #Fixed
         codeList = ["10", "", self.searchKey[0], self.searchKey[1]]
         s.send(pickle.dumps(codeList))
         tempList = pickle.loads(s.recv(8192))
-        #Custom
-        codeList = ["41", "", self.searchKey[0], self.searchKey[1], self.searchKey[2], self.searchKey[3]]
-        s.send(pickle.dumps(codeList))
-        routes = pickle.loads(s.recv(8192))
+
 
         if self.searchKey==[]:
             messagebox.showinfo("","Please select a contry and a city")
-        elif tempList =="1" or routes=="1":
+            print("HERE2")
+        elif tempList =="1":
             messagebox.showinfo("Access denied", "Server is blocked")
-
-        elif len(self.searchKey)==2 or len(self.searchKey)==4:
+            print("HERE3")
+        elif len(self.searchKey)==2:
             for child in self.winfo_children():
                 child.place_forget()
 
             self.routesListBox = tk.Listbox(self, width=69, height=20, selectmode=tk.SINGLE)
 
-            if len(self.searchKey)==2:
-                for i in tempList:
-                    self.routesListBox.insert(tk.END,i)
-            elif len(self.searchKey)==4:
-                for i in routes:
-                    self.routesListBox.insert(tk.END,i)
+
+            for i in tempList:
+                self.routesListBox.insert(tk.END,i)
+
                 
 
             self.routesListBox.bind("<<ListboxSelect>>", self.getListBox )
@@ -546,11 +540,52 @@ class logIn(ttk.Frame):
             self.amountOfSeats = ttk.Entry (self, validate = 'key',validatecommand=self.vcmd)
             self.amountOfSeats.place(x=165, y=350)
 
+    def routeListsCustom(self):
+
+        codeList = ["41", "", self.searchKey[0], self.searchKey[1], self.searchKey[2], self.searchKey[3]]
+        s.send(pickle.dumps(codeList))
+        routes = pickle.loads(s.recv(8192))
+
+        if self.searchKey == []:
+            messagebox.showinfo("", "Please select a contry and a city")
+            print("HERE2")
+        elif routes == "1":
+            messagebox.showinfo("Access denied", "Server is blocked")
+            print("HERE3")
+        elif  len(self.searchKey) == 4:
+            print("HERE4")
+            for child in self.winfo_children():
+                child.place_forget()
+
+            self.routesListBox = tk.Listbox(self, width=69, height=20, selectmode=tk.SINGLE)
+
+
+
+            for i in routes:
+                self.routesListBox.insert(tk.END, i)
+
+            self.routesListBox.bind("<<ListboxSelect>>", self.getListBox)
+            self.routesListBox.place(x=19, y=20)
+
+            self.backButton = ttk.Button(self, text="Back", command=self.backToCountCitSelect)
+            self.backButton.place(x=90, y=380)
+
+            self.billingButton = ttk.Button(self, text="Continue", command=self.continueToBilling)
+            self.billingButton.place(x=290, y=380)
+
+            self.vcmd = (self.register(self.validate), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+            self.amountOfSeats = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
+            self.amountOfSeats.place(x=165, y=350)
+
     def getListBox(self, event):
-        if len(self.searchKey)==2:
+        if len(self.searchKey)==2 or len(self.searchKey)==4:
             self.searchKey+=[list(self.routesListBox.get(self.routesListBox.curselection()))]
-        else:
+
+        if len(self.searchKey)==2:
             self.searchKey[2]=list(self.routesListBox.get(self.routesListBox.curselection()))
+        elif len(self.searchKey)==4:
+            self.searchKey[4] = list(self.routesListBox.get(self.routesListBox.curselection()))
+
         print(self.searchKey)
 
     def continueToBilling(self):
@@ -588,7 +623,7 @@ class logIn(ttk.Frame):
             child.place_forget()
         if len(self.searchKey)==3 or len(self.searchKey)==2:
             self.drawFixedRecervation()
-        elif len(self.searchKey)==5:
+        elif len(self.searchKey)==5 or len(self.searchKey)==4:
             self.drawCustomRecervation()
 
     def validate(self, action, index, value_if_allowed,prior_value, text, validation_type, trigger_type, widget_name):
