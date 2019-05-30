@@ -438,10 +438,16 @@ class SocketServer(socket.socket):
                 returnValue = self.getAttractionsByCity(dataList[2])
                 client.send(pickle.dumps(returnValue))
 
-            elif dataList[0] == "48":
+            elif dataList[0] == "49":
                 # getCountryByCode
                 # [2] is attractionCode
                 returnValue = self.getAttractionsByAttractionCode(dataList[2])
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "50":
+                # getCountryByCode
+                # [2] is trainType
+                returnValue = self.insertTrainType(dataList[2])
                 client.send(pickle.dumps(returnValue))
 
         else:
@@ -1178,6 +1184,21 @@ class SocketServer(socket.socket):
                 result.append(i)
         return result
 
+    def insertTrainType(self, trainType):
+        """Insert a train type to the list
+        :param trainType is the train type to insert"""
+        success = False
+        found = False
+        for i in self.dat.trainTypes:
+            if i == trainType:
+                found = True
+                break
+
+        if not found:
+            success = True
+            self.dat.trainTypes.append(trainType)
+
+        return success
 
 
     def broadcast(self, message):
