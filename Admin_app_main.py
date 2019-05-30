@@ -959,9 +959,12 @@ class Insert(tk.Frame):
         self.countryCodeLabel.place(x=210, y=85)
 
         enter = ttk.Button(self, text='DONE',
-                           command=lambda: self.createNewType(controller))
+                           command=lambda: self.createNewType())
         enter.place(x=200, y=240)
-    def createNewType(self, controller):
+
+        self.buttonBackToInsert(controller)
+
+    def createNewType(self):
 
         code = self.code.get()
 
@@ -1053,9 +1056,9 @@ class Delete(tk.Frame):
                                        command=lambda: controller.show_frame('PENDIENTE'))
         buttonDeleteRoute.place(x=130, y=80)
 
-        # buttonDeleteAtraction = ttk.Button(self, text='Atraction',
-        #                                    command=lambda: controller.show_frame('PENDIENTE'))
-        # buttonDeleteAtraction.place(x=130, y=120)
+        buttonDeleteAtraction = ttk.Button(self, text='Atraction',
+                                           command=lambda: controller.show_frame('PENDIENTE'))
+        buttonDeleteAtraction.place(x=130, y=120)
 
         self.buttonBackToMenu(controller)
 

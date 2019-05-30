@@ -1194,8 +1194,6 @@ class SocketServer(socket.socket):
         for i in self.dat.trainTypes:
             if i == trainType:
                 found = True
-                break
-
         if not found:
             success = True
             self.dat.trainTypes.append(trainType)
