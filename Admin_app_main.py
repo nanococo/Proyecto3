@@ -1425,15 +1425,50 @@ class Delete(tk.Frame):
     #
 
     #Delete Route
-    def draw_deleteRoutes(self, controller):
+    def draw_deleteRoute(self, controller):
         self.clear()
 
-        self.routeCodeLabel = ttk.Label(self, text="Please select a train to delete")
-        self.routeCodeLabel.place(x=146, y=20)
+        self.routeCodeLabel = ttk.Label(self, text="Please enter a route code to delete")
+        self.routeCodeLabel.place(x=142, y=20)
         self.routeCode = ttk.Entry(self)
-        
+        self.routeCode.place(x=175,y=40)
+
+        Continue = ttk.Button(self, text='Continue',
+                              command=lambda: self.confirmationRoute(controller))
+        Continue.place(x=200, y=80)
 
         self.buttonBackToDelete(controller)
+    def confirmationRoute(self, controller):
+
+        if self.routeCode.get() == "":
+            messagebox.showerror("ERROR", "Please type a route code")
+        else:
+
+            self.confirmLabel = ttk.Label(self, text="Are you sure?")
+            self.confirmLabel.place(x=200,y=110)
+
+            self.yes = ttk.Button(self, text="YES",
+                                  command=lambda: self.confirmationCommandRoute("YES", controller))
+            self.yes.place(x=150, y=150)
+
+            self.no = ttk.Button(self, text="NO",
+                                 command=lambda: self.confirmationCommandRoute("NO", controller))
+            self.no.place(x=250, y=150)
+
+    def confirmationCommandRoute(self, confirmation, controller):
+
+        if confirmation == "YES":
+
+            codeList = ["22", adminID, self.routeCode.get()]
+            s.send(pickle.dumps(codeList))
+            success = pickle.loads(s.recv(8192))
+
+            if success:
+                messagebox.showinfo("DONE", "The route was succesfully deleted.")
+            else:
+                messagebox.showerror("ERROR", "The route code does not exist.")
+
+        self.draw_deleteRoute(controller)
     #
 
     #Delete Atraction
