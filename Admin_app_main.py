@@ -1574,16 +1574,15 @@ class Modify(ttk.Frame):
 
         self.init_modify(controller)
 
-    def init_modify(self,controller):
-        label = tk.Label(self, text='Modify:')
-        label.config(font=('Calibri', 11))
-        label.place(x=0, y=0)
-
         self.init_modify(controller)
 
     def init_modify(self, controller):
 
         self.clear()
+
+        label = tk.Label(self, text='Modify:')
+        label.config(font=('Calibri', 11))
+        label.place(x=0, y=0)
 
         buttonModifyPrice = ttk.Button(self, text='Prices',
                                        command=lambda: self.modifyPrice(controller))
@@ -1697,7 +1696,6 @@ class Modify(ttk.Frame):
 
         countryCode = self.countryList.get().split(' ')[0]
         cityCode = self.cityList.get().split(' ')[0]
-
         if countryCode == '':
             messagebox.showerror('ERROR', 'Please select a country')
         elif cityCode == '':
