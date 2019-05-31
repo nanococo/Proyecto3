@@ -1106,7 +1106,7 @@ class SocketServer(socket.socket):
         return returnList
 
 
-    def getCustomRoutes(self, depCountry, depCity, arrCountry, arrCity):
+    def getCustomRoutes(self, depCountry, depCity, arrCountry, arrCity, flag):
         """Returns custom routes for user selections"""
         OdepCountry = depCountry
         OdepCity = depCity
@@ -1174,8 +1174,51 @@ class SocketServer(socket.socket):
             tempFinalList.append(i[len(i)-1])
             finalList.append(tempFinalList)
 
+        if flag:
+            return self.getFastestCustom(finalList)
+        else:
+            return self.getCheapestCustom(finalList)
 
-        return finalList
+
+    def getFastestCustom(self, customRoute):
+
+        fastest = 0
+        count = 0
+        chosenRoute = []
+        for i in customRoute:
+            for j in range(len(i)):
+                if j == len(i) - 1:
+                    if count == 0:
+                        fastest = i[j]
+                        chosenRoute.append(i)
+                        count += 1
+                    if i[j] < fastest:
+                        chosenRoute = []
+
+        return chosenRoute[0]
+
+    def getCheapestCustom(self, customRoute):
+        choseRoute = []
+        price = 0
+        count = 0
+
+        for i in customRoute:
+            tempSum = 0
+            for j in range(len(i)):
+                if j != len(i)-1:
+                    tempSum+=int(i[j][6][4])
+
+            if count == 0:
+                price = tempSum
+                choseRoute = i
+                count+=1
+            if tempSum<price:
+                price = tempSum
+                choseRoute = i
+
+        return choseRoute
+
+
 
     def getCountryByCode(self, countryCode):
         """Returns a country name as standalone string

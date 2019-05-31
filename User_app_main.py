@@ -1788,7 +1788,7 @@ if __name__ == '__main__':
     main_window.resizable(0,0)
     app = MainApp(main_window)
 
-    codeList = ["22", "", "1"]
+    codeList = ["41", "", "02", "67", "24", "551"]
     s.send(pickle.dumps(codeList))
     confirmation = pickle.loads(s.recv(8192))
 

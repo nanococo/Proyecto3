@@ -553,4 +553,5 @@ class loadData:
         # print(self.countries)
         # print(self.cities)
         # print(self.trainRoutes)
-        print(self.attractions)
+        print(self.trainRoutes)
+        print(self.countryCitiesConnections)
