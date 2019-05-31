@@ -1043,6 +1043,8 @@ class logIn(ttk.Frame):
         self.pinButton20.config(image=self.displayPin20)
         self.pinButton20.place(x=200, y=220)
 
+
+
     def openSelectCity(self, countryCode):
         pass
 
@@ -1756,7 +1758,7 @@ if __name__ == '__main__':
     main_window.resizable(0,0)
     app = MainApp(main_window)
 
-    codeList = ["22", "", "1"]
+    codeList = ["41", "", "02", "67", "24", "551"]
     s.send(pickle.dumps(codeList))
     confirmation = pickle.loads(s.recv(8192))
 
