@@ -124,7 +124,7 @@ class Consult(tk.Frame):
         code = self.trainCode.get().split(' ')[0]
 
         if code == '':
-            messagebox.showinfo('ERROR', 'Please type a train code')
+            messagebox.showerror('ERROR', 'Please type a train code')
         else:
 
             codeList = ["07", adminID, code]
@@ -273,9 +273,9 @@ class Consult(tk.Frame):
         cityCode = self.cityList.get().split(' ')[0]
 
         if countryCode == '':
-            messagebox.showinfo('ERROR', 'Please select a country')
+            messagebox.showerror('ERROR', 'Please select a country')
         elif cityCode == '':
-            messagebox.showinfo('ERROR', 'Please select a city')
+            messagebox.showerror('ERROR', 'Please select a city')
         else:
 
             codeList = ["05", adminID, countryCode, cityCode]
@@ -347,7 +347,7 @@ class Consult(tk.Frame):
         city = self.cityCode.get()
 
         if not city:
-            messagebox.showinfo('ERROR', 'Please select a country')
+            messagebox.showerror('ERROR', 'Please select a country')
 
         else:
             code = self.cityCode.get().split()[0]
@@ -404,7 +404,7 @@ class Consult(tk.Frame):
 
         type = self.type.get()
         if not type:
-            messagebox.showinfo('ERROR','Please select a train type')
+            messagebox.showerror('ERROR','Please select a train type')
 
         else:
             codeList = ["06", adminID, type]
@@ -567,7 +567,7 @@ class Insert(tk.Frame):
         print(newCountryCode, newCountryName)
 
         if newCountryCode == '' or newCountryName == '':
-            messagebox.showinfo('ERROR','Please fill all the gaps.')
+            messagebox.showerror('ERROR','Please fill all the gaps.')
         else:
 
             codeList = ["14", adminID, newCountryCode, newCountryName]
@@ -575,7 +575,7 @@ class Insert(tk.Frame):
             success = pickle.loads(s.recv(8192))
 
             if not success:
-                messagebox.showinfo('ERROR','The typed code already exists')
+                messagebox.showerror('ERROR','The typed code already exists')
             else:
                 messagebox.showinfo("Done", "The country " + newCountryName + '(' + newCountryCode + ")  was succesfully inserted.")
     #
@@ -620,10 +620,10 @@ class Insert(tk.Frame):
         countryCodeForCity = self.availableCountries.get().split(' ')[0]
 
         if newCityCode == '' or newCityName == '':
-            messagebox.showinfo('ERROR','Please fill all the gaps.')
+            messagebox.showerror('ERROR','Please fill all the gaps.')
 
         elif countryCodeForCity == '':
-            messagebox.showinfo('ERROR', 'Please select a country.')
+            messagebox.showerror('ERROR', 'Please select a country.')
 
         else:
             print(newCityCode)
@@ -634,7 +634,7 @@ class Insert(tk.Frame):
             success = pickle.loads(s.recv(8192))
 
             if not success:
-                messagebox.showinfo('ERROR','The city is already present')
+                messagebox.showerror('ERROR','The city is already present')
             else:
                 messagebox.showinfo("Done", newCityName+'('+newCityCode+")  was succesfully inserted to the cities of "+
                                     self.availableCountries.get())
@@ -702,13 +702,13 @@ class Insert(tk.Frame):
 
         params = [newArrCity, newArrCountry, newConnCode, newDepCity, newDepCountry, newConnDuration]
         if self.isIncomplete(params):
-            messagebox.showinfo('ERROR','Please fill all the gaps.')
+            messagebox.showerror('ERROR','Please fill all the gaps.')
 
         elif newDepCity == newArrCity:
             messagebox.showinfo("ERROR","Cannot depart and arrive to the same place.")
 
         elif not newConnDuration.isdigit():
-            messagebox.showinfo("ERROR","The duration must be an integral number.")
+            messagebox.showerror("ERROR","The duration must be an integral number.")
 
         else:
             newDepCountryCode = self.countryList.get().split(" ")[0]
@@ -721,7 +721,7 @@ class Insert(tk.Frame):
             success = pickle.loads(s.recv(8192))
 
             if not success:
-                messagebox.showinfo("Error","The connection is already present")
+                messagebox.showerror("Error","The connection is already present")
             else:
                 messagebox.showinfo("Done","The connection was succesfully added.")
 
@@ -801,7 +801,7 @@ class Insert(tk.Frame):
         train = self.trainCode.get()
 
         if train == "":
-            messagebox.showinfo("ERROR", "Please select a train.")
+            messagebox.showerror("ERROR", "Please select a train.")
 
         else:
             train = self.getSelectedTrain()
@@ -816,11 +816,11 @@ class Insert(tk.Frame):
             params = [newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity,
                       newRouteArrivalCountry, newRouteArrivalCity, newRoutePrice]
             if self.isIncomplete(params):
-                messagebox.showinfo("ERROR","Please fill all de gaps.")
+                messagebox.showerror("ERROR","Please fill all de gaps.")
             elif not newRoutePrice.isdigit():
-                messagebox.showinfo("ERROR", "The price must be an integral number.")
+                messagebox.showerror("ERROR", "The price must be an integral number.")
             elif newRouteArrivalCity == newRouteDepartCity:
-                messagebox.showinfo("ERROR", train[2]+" already departs from the selected city, please select another one.")
+                messagebox.showerror("ERROR", train[2]+" already departs from the selected city, please select another one.")
 
             else:
                 codeList = ["17", adminID, newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity,
@@ -830,7 +830,7 @@ class Insert(tk.Frame):
                 success = pickle.loads(s.recv(8192))
 
                 if not success:
-                    messagebox.showinfo("ERROR","The entered route is already present.")
+                    messagebox.showerror("ERROR","The entered route is already present.")
                 else:
                     messagebox.showinfo("DONE", "The route was succesfully entered.")
     def sliceTrains(self, trains):
@@ -916,9 +916,9 @@ class Insert(tk.Frame):
 
         params = [newTrainType, newTrainCode, newTrainName, newTrainSeats, newTrainDepCountry, newTrainsDepCity]
         if self.isIncomplete(params):
-            messagebox.showinfo("ERROR","Pease fill all the gaps.")
+            messagebox.showerror("ERROR","Pease fill all the gaps.")
         elif not newTrainSeats.isdigit():
-            messagebox.showinfo("ERROR","The number of seats must be an integral number.")
+            messagebox.showerror("ERROR","The number of seats must be an integral number.")
         else:
 
             newTrainDepCountryCode = self.countryList.get().split(" ")[0]
@@ -958,7 +958,7 @@ class Insert(tk.Frame):
         code = self.code.get()
 
         if code == '':
-            messagebox.showinfo('ERROR', 'Please type  a train type.')
+            messagebox.showerror('ERROR', 'Please type  a train type.')
         else:
             newType = code
             codeList = ["50", adminID, newType]
@@ -968,7 +968,7 @@ class Insert(tk.Frame):
             if success:
                 messagebox.showinfo("Done", "The train type was succesfully inserted.")
             else:
-                messagebox.showinfo("ERROR", "The type is already present.")
+                messagebox.showerror("ERROR", "The type is already present.")
     #
 
     def buttonBackToMenu(self, controller):
@@ -1080,35 +1080,38 @@ class Delete(tk.Frame):
     def confirmationCountry(self, controller):
         global adminID
 
-        self.cityListbox.delete(0, tk.END)
+        if self.deleteCountry.get() == "":
+            messagebox.showerror("ERROR","Please select a country")
+        else:
+            self.cityListbox.delete(0, tk.END)
 
-        self.searchKey = self.deleteCountry.get().split(' ')[0]
-        codeList = ["04", adminID, self.searchKey]
-        s.send(pickle.dumps(codeList))
-        cities = pickle.loads(s.recv(8192))
+            self.searchKey = self.deleteCountry.get().split(' ')[0]
+            codeList = ["04", adminID, self.searchKey]
+            s.send(pickle.dumps(codeList))
+            cities = pickle.loads(s.recv(8192))
 
-        self.label.configure(text='Delete ' + self.deleteCountry.get() + '? It contains:')
-        self.label.config(font=('Calibri', 10))
-        self.label.place(x=150, y=120)
+            self.label.configure(text='Delete ' + self.deleteCountry.get() + '? It contains:')
+            self.label.config(font=('Calibri', 10))
+            self.label.place(x=150, y=120)
 
-        index = 0
-        for city in cities:
-            self.cityListbox.insert(index, city[0] + ' ' + city[1])
+            index = 0
+            for city in cities:
+                self.cityListbox.insert(index, city[0] + ' ' + city[1])
 
-        self.yes = ttk.Button(self, text="YES",
-                              command = lambda: self.confirmationCommandCountry("YES", controller))
-        self.yes.place(x=150,y=350)
+            self.yes = ttk.Button(self, text="YES",
+                                  command = lambda: self.confirmationCommandCountry("YES", controller))
+            self.yes.place(x=150,y=350)
 
 
-        self.no = ttk.Button(self, text="NO",
-                             command=lambda: self.confirmationCommandCountry("NO", controller))
-        self.no.place(x=250, y=350)
+            self.no = ttk.Button(self, text="NO",
+                                 command=lambda: self.confirmationCommandCountry("NO", controller))
+            self.no.place(x=250, y=350)
     def confirmationCommandCountry(self, confirmation, controller):
 
         if confirmation == "YES":
             countryToDel = self.deleteCountry.get()
             if countryToDel == " ":
-                messagebox.showinfo("ERROR", "Please select a country")
+                messagebox.showerror("ERROR", "Please select a country")
             else:
                 countryToDelCode = self.deleteCountry.get().split(" ")[0]
                 print(countryToDelCode)
@@ -1119,7 +1122,7 @@ class Delete(tk.Frame):
                 if success:
                     messagebox.showinfo("DONE", "The country was succesfully deleted")
                 else:
-                    messagebox.showinfo("ERROR", "Could not delete country.")
+                    messagebox.showerror("ERROR", "Could not delete country.")
 
         self.draw_deleteCountry(controller)
     #
@@ -1167,9 +1170,9 @@ class Delete(tk.Frame):
         cityCode = self.cityToDelete.get().split(' ')[0]
 
         if countryCode == '':
-            messagebox.showinfo('ERROR', 'Please select a country')
+            messagebox.showerror('ERROR', 'Please select a country')
         elif cityCode == '':
-            messagebox.showinfo('ERROR', 'Please select a city')
+            messagebox.showerror('ERROR', 'Please select a city')
         else:
 
             codeList = ["05", adminID, countryCode, cityCode]
@@ -1200,10 +1203,10 @@ class Delete(tk.Frame):
             countryToDel = self.countryToDelete.get()
             cityToDel = self.cityToDelete.get()
             if countryToDel == "":
-                messagebox.showinfo("ERROR", "Please select a country")
+                messagebox.showerror("ERROR", "Please select a country")
 
             elif cityToDel == "":
-                messagebox.showinfo("ERROR", "Please select a city")
+                messagebox.showerror("ERROR", "Please select a city")
             else:
                 countryToDelCode = self.countryToDelete.get().split(" ")[0]
                 cityToDelCode = self.cityToDelete.get().split(" ")[0]
@@ -1215,7 +1218,7 @@ class Delete(tk.Frame):
                 if success:
                     messagebox.showinfo("DONE", "The city was succesfully deleted")
                 else:
-                    messagebox.showinfo("ERROR", "Could not delete city.")
+                    messagebox.showerror("ERROR", "Could not delete city.")
 
         self.draw_deleteCity(controller)
     #
@@ -1265,11 +1268,11 @@ class Delete(tk.Frame):
         print(self.connection)
 
         if self.countryCode == '':
-            messagebox.showinfo('ERROR', 'Please select a country')
+            messagebox.showerror('ERROR', 'Please select a country')
         elif self.cityCode == '':
-            messagebox.showinfo('ERROR', 'Please select a city')
+            messagebox.showerror('ERROR', 'Please select a city')
         elif self.connection == '':
-            messagebox.showinfo('ERROR', 'Please select a connection')
+            messagebox.showerror('ERROR', 'Please select a connection')
         else:
             self.label = ttk.Label(self,text="Are you sure you want to delete '"+self.connectionToDelete.get()+"'?")
             self.label.config(font=('Calibri', 10))
@@ -1300,7 +1303,7 @@ class Delete(tk.Frame):
                 messagebox.showinfo("DONE","The connection was succesfully deleted.")
 
             else:
-                messagebox.showinfo("ERROR","Could delete connection")
+                messagebox.showerror("ERROR","Could delete connection")
 
 
         self.draw_deleteConnection(controller)
@@ -1356,11 +1359,14 @@ class Delete(tk.Frame):
 
         self.pricesListbox.delete(0, tk.END)
 
-        code = self.trainCode.get().split(' ')[1]
+        train = self.trainCode.get()
+        print(train)
 
-        if code == '':
-            messagebox.showinfo('ERROR', 'Please select a train code')
+        if train == '':
+            messagebox.showerror('ERROR', 'Please select a train code')
         else:
+
+            code = train.split(" ")[1]
 
             codeList = ["07", adminID, code]
             s.send(pickle.dumps(codeList))
@@ -1408,7 +1414,7 @@ class Delete(tk.Frame):
                 messagebox.showinfo("DONE", "The train was succesfully deleted.")
 
             else:
-                messagebox.showinfo("ERROR", "Could not delete train.")
+                messagebox.showerror("ERROR", "Could not delete train.")
 
         self.draw_deleteTrain(controller)
     def sliceTrains(self, list):
@@ -1422,12 +1428,10 @@ class Delete(tk.Frame):
     def draw_deleteRoutes(self, controller):
         self.clear()
 
-        # [2] newRouteTrainType
-        # [3] newRouteTrainCode
-        # [4] newRouteDepartCountry
-        # [5] newRouteDepartCity
-        # [6] newRouteArrivalCountry
-        # [7] newRouteArrivalCity
+        self.routeCodeLabel = ttk.Label(self, text="Please select a train to delete")
+        self.routeCodeLabel.place(x=146, y=20)
+        self.routeCode = ttk.Entry(self)
+        
 
         self.buttonBackToDelete(controller)
     #
@@ -1440,9 +1444,63 @@ class Delete(tk.Frame):
         codeList = ["54", adminID]
         s.send(pickle.dumps(codeList))
         attractions = pickle.loads(s.recv(8192))
-        print(attractions)
+        short_attractions = self.sliceAttractions(attractions)
+
+        self.attractionLabel = ttk.Label(self, text="Select an attraction to delete")
+        self.attractionLabel.place(x=160, y=20)
+        self.attraction = ttk.Combobox(self, state="readonly")
+        self.attraction["values"] = short_attractions
+        self.attraction.bind("<<ComboboxSelected>>")
+        self.attraction.place(x=163, y=50)
+
+        self.label = tk.Label(self, text='')
+        self.label.config(font=('Calibri', 10))
+        self.label.place(x=200, y=120)
+
+        Continue = ttk.Button(self, text='Continue',
+                              command=lambda: self.confirmationAttraction(controller))
+        Continue.place(x=200, y=80)
 
         self.buttonBackToDelete(controller)
+    def confirmationAttraction(self, controller):
+
+        if self.attraction.get() == "":
+            messagebox.showerror("ERROR", "Please select an attraction")
+        else:
+
+            name = self.attraction.get().split(" ")[1]
+
+            self.label.configure(text="Delete: "+name+"?")
+
+            self.yes = ttk.Button(self, text="YES",
+                                  command=lambda: self.confirmationCommandAttraction("YES", controller))
+            self.yes.place(x=150, y=200)
+
+            self.no = ttk.Button(self, text="NO",
+                                 command=lambda: self.confirmationCommandTrain("NO", controller))
+            self.no.place(x=250, y=200)
+    def confirmationCommandAttraction(self, confirmation, controller):
+
+        if confirmation == "YES":
+
+            attCode = self.attraction.get().split(" ")[0]
+
+            codeList = ["52", adminID, attCode]
+            s.send(pickle.dumps(codeList))
+            success= pickle.loads(s.recv(8192))
+
+
+            if success:
+                messagebox.showinfo("DONE", "The attraction was succesfully deleted")
+            else:
+                messagebox.showerror("ERROR", "Could not delete attraction")
+
+        self.draw_deleteAttraction(controller)
+    def sliceAttractions(self, list):
+        newList = []
+        for item in list:
+            newList += [item[2:4]]
+        return newList
     #
 
     def updateCitiesOnSelection(self, event):
