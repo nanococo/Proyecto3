@@ -1785,7 +1785,7 @@ class History(ttk.Frame):
         label.place(x=0, y=0)
 
         buttonLastInserted = ttk.Button(self, text='Last insterted',
-                                  command=lambda: controller.show_frame('PENDIENTE'))
+                                  command=lambda: self.lastInserted())
         buttonLastInserted.place(x=10, y=40)
 
 
@@ -1821,6 +1821,18 @@ class History(ttk.Frame):
         buttonLeastFrequentUsers = ttk.Button(self, text='Least frequent users',
                             command=lambda: controller.show_frame('PENDIENTE'))
         buttonLeastFrequentUsers.place(x=130, y=160)
+
+    def lastInserted(self):
+        codeList = ["30", adminID]
+        s.send(pickle.dumps(codeList))
+        inserted = pickle.loads(s.recv(8192))
+        print(inserted)
+        if not inserted:
+            messagebox.showerror("ERROR", "Theres nothing to show.")
+        else:
+            messagebox.showinfo("Last inserted", inserted)
+
+
 
 class logIn(tk.Frame):
 
