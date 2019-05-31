@@ -1524,24 +1524,29 @@ class Modify(ttk.Frame):
     def modifyPrice(self,controller):
         self.clear()
         
-        self.searchKey=[]
+        self.routeEntry=ttk.Entry(self)
+        self.routeEntry.pack(pady=20)
 
-        self.trainType = ttk.Combobox(self, state="readonly")
-        self.trainType["values"] = ['01','02','03','04']
-        self.trainType.bind("<<ComboboxSelected>>", self.modifyUpdateTrains)
-        self.trainType.pack(pady=30)
-
-        self.trainList=ttk.Combobox(self, state="readonly")
-        self.trainList.bind("<<ComboboxSelected>>", self.routeList)
-        self.trainList.pack(pady=30)
-
-
-        self.routelist=tk.Listbox(self, width =20,selectmode=tk.SINGLE)
-        self.routelist.bind("<<ListboxSelect>>", self.getrouteInfo)
-        self.routelist.pack(pady=10)
+        self.vcmd = (self.register(self.validate), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+        self.newPrice = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
+        self.newPrice.pack(pady=20)
 
         button = ttk.Button(self, text='BACK',command=lambda :self.init_modify(controller))
         button.pack(side='bottom')
+
+    def validate(self, action, index, value_if_allowed, prior_value, text, validation_type, trigger_type, widget_name):
+        if text in '0123456789.-+':
+            try:
+                float(value_if_allowed)
+                return True
+            except ValueError:
+                if value_if_allowed == "":
+                    return True
+                else:
+                    return False
+
+        else:
+            return False
 
     def modifyUpdateTrains(self,event):
         self.searchKey=self.trainType.get()
