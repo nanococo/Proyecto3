@@ -920,128 +920,132 @@ class logIn(ttk.Frame):
         # Spain
         self.pin = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin = ImageTk.PhotoImage(self.pin)
-        self.pinButton = ttk.Button(self, command=lambda: self.create_window("90"))
+        self.pinButton = ttk.Button(self, command=lambda: self.openSelectCity("90"))
         self.pinButton.config(image=self.displayPin)
         self.pinButton.place(x=90, y=330)
 
         # Portugal
         self.pin2 = Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin2 = ImageTk.PhotoImage(self.pin2)
-        self.pinButton2 = ttk.Button(self, command=lambda: self.create_window("23"))
+        self.pinButton2 = ttk.Button(self, command=lambda: self.openSelectCity("23"))
         self.pinButton2.config(image=self.displayPin2)
         self.pinButton2.place(x=50, y=330)
 
         # France
         self.pin3 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin3 = ImageTk.PhotoImage(self.pin3)
-        self.pinButton3 = ttk.Button(self, command=lambda: self.create_window("78"))
+        self.pinButton3 = ttk.Button(self, command=lambda: self.openSelectCity("78"))
         self.pinButton3.config(image=self.displayPin3)
         self.pinButton3.place(x=150, y=270)
 
         # Switzerland
         self.pin4 = Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin4 = ImageTk.PhotoImage(self.pin4)
-        self.pinButton4 = ttk.Button(self, command=lambda: self.create_window("234"))
+        self.pinButton4 = ttk.Button(self, command=lambda: self.openSelectCity("234"))
         self.pinButton4.config(image=self.displayPin4)
         self.pinButton4.place(x=190, y=270)
 
         # UK
         self.pin6 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin6 = ImageTk.PhotoImage(self.pin6)
-        self.pinButton6 = ttk.Button(self, command=lambda: self.create_window("123"))
+        self.pinButton6 = ttk.Button(self, command=lambda: self.openSelectCity("123"))
         self.pinButton6.config(image=self.displayPin6)
         self.pinButton6.place(x=120, y=210)
 
         # Netherlands
         self.pin7 = Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin7 = ImageTk.PhotoImage(self.pin7)
-        self.pinButton7 = ttk.Button(self, command=lambda: self.create_window("134"))
+        self.pinButton7 = ttk.Button(self, command=lambda: self.openSelectCity("134"))
         self.pinButton7.config(image=self.displayPin7)
         self.pinButton7.place(x=175, y=210)
 
         # Turkey
         self.pin8 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin8 = ImageTk.PhotoImage(self.pin8)
-        self.pinButton8 = ttk.Button(self, command=lambda: self.create_window("24"))
+        self.pinButton8 = ttk.Button(self, command=lambda: self.openSelectCity("24"))
         self.pinButton8.config(image=self.displayPin8)
         self.pinButton8.place(x=380, y=330)
 
         # Belgium
         self.pin10 = Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin10 = ImageTk.PhotoImage(self.pin10)
-        self.pinButton10 = ttk.Button(self, command=lambda: self.create_window("32"))
+        self.pinButton10 = ttk.Button(self, command=lambda: self.openSelectCity("32"))
         self.pinButton10.config(image=self.displayPin10)
         self.pinButton10.place(x=165, y=230)
 
         # ITALY
         self.pin21 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin21 = ImageTk.PhotoImage(self.pin21)
-        self.pinButton21 = ttk.Button(self, command=lambda: self.create_window("05"))
+        self.pinButton21 = ttk.Button(self, command=lambda: self.openSelectCity("05"))
         self.pinButton21.config(image=self.displayPin21)
         self.pinButton21.place(x=220, y=320)
 
         # Greece
         self.pin12 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin12 = ImageTk.PhotoImage(self.pin12)
-        self.pinButton12 = ttk.Button(self, command=lambda: self.create_window("02"))
+        self.pinButton12 = ttk.Button(self, command=lambda: self.openSelectCity("02"))
         self.pinButton12.config(image=self.displayPin12)
         self.pinButton12.place(x=315, y=353)
 
         # Czech republic
         self.pin13 = Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin13 = ImageTk.PhotoImage(self.pin13)
-        self.pinButton13 = ttk.Button(self, command=lambda: self.create_window("456"))
+        self.pinButton13 = ttk.Button(self, command=lambda: self.openSelectCity("456"))
         self.pinButton13.config(image=self.displayPin13)
         self.pinButton13.place(x=235, y=240)
 
         # Poland
         self.pin14 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin14 = ImageTk.PhotoImage(self.pin14)
-        self.pinButton14 = ttk.Button(self, command=lambda: self.create_window("120"))
+        self.pinButton14 = ttk.Button(self, command=lambda: self.openSelectCity("120"))
         self.pinButton14.config(image=self.displayPin14)
         self.pinButton14.place(x=260, y=205)
 
         # Romain
         self.pin15 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin15 = ImageTk.PhotoImage(self.pin15)
-        self.pinButton15 = ttk.Button(self, command=lambda: self.create_window("149"))
+        self.pinButton15 = ttk.Button(self, command=lambda: self.openSelectCity("149"))
         self.pinButton15.config(image=self.displayPin15)
         self.pinButton15.place(x=315, y=270)
 
         # Ukraine
         self.pin16 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin16 = ImageTk.PhotoImage(self.pin16)
-        self.pinButton16 = ttk.Button(self, command=lambda: self.create_window("256"))
+        self.pinButton16 = ttk.Button(self, command=lambda: self.openSelectCity("256"))
         self.pinButton16.config(image=self.displayPin16)
         self.pinButton16.place(x=350, y=220)
 
         # Bulgaria
         self.pin17 = Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin17 = ImageTk.PhotoImage(self.pin17)
-        self.pinButton17 = ttk.Button(self, command=lambda: self.create_window("280"))
+        self.pinButton17 = ttk.Button(self, command=lambda: self.openSelectCity("280"))
         self.pinButton17.config(image=self.displayPin17)
         self.pinButton17.place(x=330, y=310)
 
         # Finland
         self.pin18 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin18 = ImageTk.PhotoImage(self.pin18)
-        self.pinButton18 = ttk.Button(self, command=lambda: self.create_window("18"))
+        self.pinButton18 = ttk.Button(self, command=lambda: self.openSelectCity("18"))
         self.pinButton18.config(image=self.displayPin18)
         self.pinButton18.place(x=280, y=90)
 
         # Sweden
         self.pin19 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin19 = ImageTk.PhotoImage(self.pin19)
-        self.pinButton19 = ttk.Button(self, command=lambda: self.create_window("180"))
+        self.pinButton19 = ttk.Button(self, command=lambda: self.openSelectCity("180"))
         self.pinButton19.config(image=self.displayPin19)
         self.pinButton19.place(x=230, y=90)
 
         # Germany
         self.pin20 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin20 = ImageTk.PhotoImage(self.pin20)
-        self.pinButton20 = ttk.Button(self, command=lambda: self.create_window("499"))
+        self.pinButton20 = ttk.Button(self, command=lambda: self.openSelectCity("499"))
         self.pinButton20.config(image=self.displayPin20)
         self.pinButton20.place(x=200, y=220)
+
+
+    def openSelectCity(self, countryCode):
+        self.newWindow = customWindowCountry(countryCode)
 
     def drawBilling(self):
         global reservations
@@ -1296,6 +1300,15 @@ class logIn(ttk.Frame):
 
         else:
             return False
+
+class customWindowCountry:
+
+    def __init__(self, countryCode):
+        self.drawWindow(countryCode)
+
+    def drawWindow(self, countryCode):
+        pass
+
 
 
 class Queries(ttk.Frame):
