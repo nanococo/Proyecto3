@@ -1551,7 +1551,7 @@ class Modify(ttk.Frame):
         buttonModifyPrice.place(x=10, y=40)
 
         buttonModifyTime = ttk.Button(self, text='Times',
-                                      command=lambda: controller.show_frame('PENDIENTE'))
+                                      command=lambda: self.draw_checkConnections(controller))
         buttonModifyTime.place(x=10, y=80)
 
         buttonModifySeats = ttk.Button(self, text='Seats',
@@ -1579,6 +1579,8 @@ class Modify(ttk.Frame):
             child.pack_forget()
             child.place_forget()
 
+
+    #Price
     def modifyPrice(self,controller):
         self.clear()
         
@@ -1589,9 +1591,130 @@ class Modify(ttk.Frame):
         self.newPrice = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
         self.newPrice.pack(pady=20)
 
+        self.changePrice=ttk.Button(self, text="Change Price", command= lambda : self.getPriceModifyData(controller))
+        self.changePrice.pack(pady=20)
+
         button = ttk.Button(self, text='BACK',command=lambda :self.init_modify(controller))
         button.pack(side='bottom')
 
+    def getPriceModifyData(self,controller):
+        print(self.routeEntry.get())
+        print(self.newPrice.get())
+
+        codeList = ["24", "", self.routeEntry.get(), self.newPrice.get()]
+        s.send(pickle.dumps(codeList))
+        confirmation = pickle.loads(s.recv(8192))
+
+        if confirmation:
+            messagebox.showinfo("", "Price changed")
+            self.init_modify(controller)
+
+    #Connections
+    def draw_checkConnections(self,controller):
+
+        global adminID
+
+        self.clear()
+
+        self.searchKey = []
+
+        codeList = ["03", adminID]
+        s.send(pickle.dumps(codeList))
+        countries = pickle.loads(s.recv(8192))
+
+        self.countryList = ttk.Combobox(self, state="readonly")
+        self.countryList["values"] = countries
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.countryList.place(x=153, y=50)
+        self.countryListLabel = ttk.Label(self, text="Select a country")
+        self.countryListLabel.place(x=183, y=30)
+
+        self.cityList = ttk.Combobox(self, state="readonly")
+        self.cityList.bind("<<ComboboxSelected>>", self.selectCity)
+        self.cityList.place(x=153, y=130)
+        self.cityListLabel = ttk.Label(self, text="Select a city")
+        self.cityListLabel.place(x=193, y=100)
+
+        self.label = tk.Label(self, text='')
+        self.label.config(font=('Calibri', 10))
+
+        self.connectionListbox = tk.Listbox(self, width=50)
+        self.connectionListbox.bind("<<ListboxSelect>>", self.getConnectionCode)
+        self.connectionListbox.place(x=73, y=250)
+
+        self.vcmd = (self.register(self.validate), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+        self.newTime = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
+        self.newTime.place(x=200,y=500)
+
+        self.changeTime=ttk.Button(self,text="ChangePrice", command=lambda :self.modifyTimeConfirm(controller))
+        self.changeTime.pack(side="bottom")
+
+        Continue = ttk.Button(self, text='Continue',
+                              command=lambda: self.fillWithConnections())
+        Continue.place(x=188, y=180)
+
+        button = ttk.Button(self, text='BACK',command=lambda :self.init_modify(controller))
+        button.pack(side='bottom')
+    def fillWithConnections(self):
+        global adminID
+        self.connectionListbox.delete(0, tk.END)
+
+        countryCode = self.countryList.get().split(' ')[0]
+        cityCode = self.cityList.get().split(' ')[0]
+
+        if countryCode == '':
+            messagebox.showerror('ERROR', 'Please select a country')
+        elif cityCode == '':
+            messagebox.showerror('ERROR', 'Please select a city')
+        else:
+
+            codeList = ["05", adminID, countryCode, cityCode]
+            s.send(pickle.dumps(codeList))
+            connections = pickle.loads(s.recv(8192))
+
+            if not connections:
+                self.label.configure(text=self.cityList.get() + ' does not have registered connections')
+                self.label.place(x=73, y=230)
+
+            else:
+                self.label.configure(text='The connections of ' + self.cityList.get() + ' are:')
+                self.label.place(x=123, y=230)
+                index = 0
+                for connection in connections:
+                    self.connectionListbox.insert(index, connection)
+                    print(connection[0])
+    def updateCitiesOnSelection(self, event):
+        global adminID
+        self.searchKey = [self.countryList.get().split(" ")[0]]
+        print(self.searchKey[0])
+        codeList = ["04", adminID, self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        cities = pickle.loads(s.recv(8192))
+        self.cityList["values"] = cities
+        print(self.searchKey)
+    def selectCity(self, event):
+
+        if len(self.searchKey) == 1:
+            self.searchKey += [self.cityList.get().split(" ")[0]]
+        else:
+            self.searchKey[1] = self.cityList.get().split(" ")[0]
+        print(self.searchKey)
+    def getConnectionCode(self,event):
+        if len(self.searchKey)==2:
+            self.searchKey+=[self.connectionListbox.get(self.connectionListbox.curselection())[0]]
+            print(self.searchKey[2])
+        elif len(self.searchKey)==3:
+            self.searchKey[2]=self.connectionListbox.get(self.connectionListbox.curselection())[0]
+    def modifyTimeConfirm(self,controller):
+        codeList = ["25", "", self.searchKey[0], self.searchKey[1],self.searchKey[2],self.newTime.get()]
+        s.send(pickle.dumps(codeList))
+        confirmation = pickle.loads(s.recv(8192))
+
+        if confirmation:
+            messagebox.showinfo("", "Time changed")
+            self.init_modify(controller)
+
+    #Misc
     def validate(self, action, index, value_if_allowed, prior_value, text, validation_type, trigger_type, widget_name):
         if text in '0123456789.-+':
             try:
@@ -1605,36 +1728,6 @@ class Modify(ttk.Frame):
 
         else:
             return False
-
-    def modifyUpdateTrains(self,event):
-        self.searchKey=self.trainType.get()
-        print(self.searchKey)
-        codeList = ["06", "",self.searchKey]
-        s.send(pickle.dumps(codeList))
-        trainListServer = pickle.loads(s.recv(8192))
-        trainListServer = self.sliceTrains(trainListServer)
-        self.trainList["values"] = trainListServer
-
-
-    def routeList(self, event):
-        self.routelist.delete(0,tk.END)
-        codeList = ["07", "", self.trainList.get().split(" ")[0]]
-        s.send(pickle.dumps(codeList))
-        pricesServer = pickle.loads(s.recv(8192))
-
-        for i in pricesServer:
-            self.routelist.insert(tk.END,i)
-
-    def getrouteInfo(self, event):
-
-        print(self.routelist.get())
-
-    def sliceTrains(self, list):
-        newList = []
-        for i in list:
-            newList += [i[1]+' '+i[2]]
-        return newList
-
 
 
 #########
