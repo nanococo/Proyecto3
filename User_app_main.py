@@ -1043,9 +1043,9 @@ class logIn(ttk.Frame):
         self.pinButton20.config(image=self.displayPin20)
         self.pinButton20.place(x=200, y=220)
 
-
     def openSelectCity(self, countryCode):
-        self.newWindow = customWindowCountry(countryCode)
+        pass
+
 
     def drawBilling(self):
         global reservations
@@ -1300,14 +1300,6 @@ class logIn(ttk.Frame):
 
         else:
             return False
-
-class customWindowCountry:
-
-    def __init__(self, countryCode):
-        self.drawWindow(countryCode)
-
-    def drawWindow(self, countryCode):
-        pass
 
 
 
