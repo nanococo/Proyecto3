@@ -1043,7 +1043,37 @@ class logIn(ttk.Frame):
         self.pinButton20.config(image=self.displayPin20)
         self.pinButton20.place(x=200, y=220)
 
+        self.byPriceVar=tk.IntVar()
+        self.byTimeVar=tk.IntVar()
+        self.byPrice=ttk.Checkbutton(self, text="Route by price", variable=self.byPriceVar,onvalue=1, offvalue=0, command=self.getCheckBox)
+        self.byPrice.place(x=70,y=420)
+        self.byTime=ttk.Checkbutton(self, text="Route by Time", variable=self.byTimeVar,onvalue=1, offvalue=0, command=self.getCheckBox)
+        self.byTime.place(x=290,y=420)
 
+        self.cities1=ttk.Combobox(self, state="readonly")
+
+        """
+        self.cities1["values"]= #la lista que le de la gana
+        """
+
+        self.cities1.place(x=70,y=460)
+
+        self.cities1 = ttk.Combobox(self, state="readonly")
+
+        """
+        self.cities1["values"]= #la lista que le de la gana
+        """
+
+        self.cities1.place(x=290, y=460)
+    def getCheckBox(self):
+        if self.byPriceVar.get()==1:
+            self.byTime.config(state="disabled")
+        elif self.byPriceVar.get()==0:
+            self.byTime.config(state="normal")
+        if self.byTimeVar.get()==1:
+            self.byPrice.config(state="disabled")
+        elif self.byTimeVar.get()==0:
+            self.byPrice.config(state="normal")
 
     def openSelectCity(self, countryCode):
         pass
