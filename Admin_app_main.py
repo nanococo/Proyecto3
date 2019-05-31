@@ -1628,15 +1628,80 @@ class Modify(ttk.Frame):
         self.newPrice = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
         self.newPrice.pack(pady=20)
 
-<<<<<<< HEAD
+
         self.buttonBackToModify(controller)
-=======
+
         self.changePrice=ttk.Button(self, text="Change Price", command= lambda : self.getPriceModifyData(controller))
         self.changePrice.pack(pady=20)
 
+
+    def getPriceModifyData(self,controller):
+        print(self.routeEntry.get())
+        print(self.newPrice.get())
+
+        codeList = ["24", "", self.routeEntry.get(), self.newPrice.get()]
+        s.send(pickle.dumps(codeList))
+        confirmation = pickle.loads(s.recv(8192))
+
+        if confirmation:
+            messagebox.showinfo("", "Price changed")
+            self.init_modify(controller)
+
+    #Connections
+    def draw_checkConnections(self,controller):
+
+        global adminID
+
+        self.clear()
+
+        self.searchKey = []
+
+        codeList = ["03", adminID]
+        s.send(pickle.dumps(codeList))
+        countries = pickle.loads(s.recv(8192))
+
+        self.countryList = ttk.Combobox(self, state="readonly")
+        self.countryList["values"] = countries
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.countryList.place(x=153, y=50)
+        self.countryListLabel = ttk.Label(self, text="Select a country")
+        self.countryListLabel.place(x=183, y=30)
+
+        self.cityList = ttk.Combobox(self, state="readonly")
+        self.cityList.bind("<<ComboboxSelected>>", self.selectCity)
+        self.cityList.place(x=153, y=130)
+        self.cityListLabel = ttk.Label(self, text="Select a city")
+        self.cityListLabel.place(x=193, y=100)
+
+        self.label = tk.Label(self, text='')
+        self.label.config(font=('Calibri', 10))
+
+        self.connectionListbox = tk.Listbox(self, width=50)
+        self.connectionListbox.bind("<<ListboxSelect>>", self.getConnectionCode)
+        self.connectionListbox.place(x=73, y=250)
+
+        self.vcmd = (self.register(self.validate), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+        self.newTime = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
+        self.newTime.place(x=200,y=500)
+
+        self.changeTime=ttk.Button(self,text="ChangePrice", command=lambda :self.modifyTimeConfirm(controller))
+        self.changeTime.pack(side="bottom")
+
+        Continue = ttk.Button(self, text='Continue',
+                              command=lambda: self.fillWithConnections())
+        Continue.place(x=188, y=180)
+
+>>>>>>> 55fb15be605d6f8de36efd7a19f0ed4b1bb73945
         button = ttk.Button(self, text='BACK',command=lambda :self.init_modify(controller))
         button.pack(side='bottom')
+    def fillWithConnections(self):
+        global adminID
+        self.connectionListbox.delete(0, tk.END)
 
+        countryCode = self.countryList.get().split(' ')[0]
+        cityCode = self.cityList.get().split(' ')[0]
+
+<<<<<<< HEAD
     def getPriceModifyData(self,controller):
         print(self.routeEntry.get())
         print(self.newPrice.get())
@@ -1703,6 +1768,8 @@ class Modify(ttk.Frame):
         cityCode = self.cityList.get().split(' ')[0]
 >>>>>>> 55fb15be605d6f8de36efd7a19f0ed4b1bb73945
 
+=======
+>>>>>>> 55fb15be605d6f8de36efd7a19f0ed4b1bb73945
         if countryCode == '':
             messagebox.showerror('ERROR', 'Please select a country')
         elif cityCode == '':
@@ -1771,6 +1838,7 @@ class Modify(ttk.Frame):
             return False
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     def modifyUpdateTrains(self,event):
         self.searchKey=self.trainType.get()
         print(self.searchKey)
@@ -1809,6 +1877,8 @@ class Modify(ttk.Frame):
                             command=lambda: controller.show_frame(AdminMainMenu))
         button.place(x=200,y=550)
 
+=======
+>>>>>>> 55fb15be605d6f8de36efd7a19f0ed4b1bb73945
 =======
 >>>>>>> 55fb15be605d6f8de36efd7a19f0ed4b1bb73945
 
