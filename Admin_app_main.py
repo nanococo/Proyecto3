@@ -5,6 +5,7 @@ from tkinter import *
 from PIL import Image,ImageTk
 from tkinter import Tk, Canvas
 import socket, os, pickle
+import time
 
 adminID = ""
 
@@ -58,6 +59,9 @@ class mainApp(tk.Tk):
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+
+
+
 
 class AdminMainMenu(ttk.Frame):
 
@@ -1762,7 +1766,6 @@ class Modify(ttk.Frame):
 
         else:
             return False
-
     def buttonBackToModify(self, controller):
         button = ttk.Button(self, text='BACK',
                             command=lambda: self.init_modify(controller))
@@ -1778,11 +1781,16 @@ class Modify(ttk.Frame):
 
 class History(ttk.Frame):
 
+
     def __init__(self, parent, controller):
         ttk.Frame.__init__(self, parent)
         label = tk.Label(self, text='See history of:')
         label.config(font=('Calibri', 11))
         label.place(x=0, y=0)
+
+        self.init_history(controller)
+
+    def init_history(self, controller):
 
         buttonLastInserted = ttk.Button(self, text='Last insterted',
                                   command=lambda: self.lastInserted())
@@ -1790,7 +1798,7 @@ class History(ttk.Frame):
 
 
         buttonLastDeleted = ttk.Button(self, text='Last deleted',
-                            command=lambda: controller.show_frame('PENDIENTE'))
+                            command=lambda: self.lastDeleted())
         buttonLastDeleted.place(x=10, y=80)
 
 
@@ -1822,15 +1830,67 @@ class History(ttk.Frame):
                             command=lambda: controller.show_frame('PENDIENTE'))
         buttonLeastFrequentUsers.place(x=130, y=160)
 
+        self.showSuggestedInfo = tk.Listbox(self, width=39)
+        self.showSuggestedInfo.place(x=10, y=200)
+
+
     def lastInserted(self):
+
+        self.showSuggestedInfo.delete(0,tk.END)
+
         codeList = ["30", adminID]
         s.send(pickle.dumps(codeList))
         inserted = pickle.loads(s.recv(8192))
         print(inserted)
+
         if not inserted:
             messagebox.showerror("ERROR", "Theres nothing to show.")
         else:
-            messagebox.showinfo("Last inserted", inserted)
+            index = 0
+            for item in inserted:
+                self.showSuggestedInfo.insert(index, item)
+            self.countdown(60)
+            self.showSuggestedInfo.delete(0, tk.END)
+
+    def lastDeleted(self):
+
+        self.showSuggestedInfo.delete(0, tk.END)
+
+        codeList = ["31", adminID]
+        s.send(pickle.dumps(codeList))
+        deleted = pickle.loads(s.recv(8192))
+        print(deleted)
+
+        if not deleted:
+            messagebox.showerror("ERROR", "Theres nothing to show.")
+        else:
+            index = 0
+            for item in deleted:
+                self.showSuggestedInfo.insert(index, item)
+            self.countdown(60)
+            self.showSuggestedInfo.delete(0, tk.END)
+
+    def mostVisited(self):
+
+    def leastVisited(self):
+
+    def mostUsed(self):
+
+    def leastUsed(self):
+
+    def mostFrequentUsers(self):
+
+    def leastFrequentUsers(self): ]5
+
+
+
+    def countdown(self, t):
+        while t != 0:
+            self.update()
+            time.sleep(1)
+            t -= 1
+        return t
+
 
 
 

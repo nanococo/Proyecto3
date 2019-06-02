@@ -1426,9 +1426,7 @@ class Queries(ttk.Frame):
 
 
 
-            self.continueToCities=ttk.Button(self, text="Continue", command=self.cities2)
-            self.continueToCities.pack()
-
+            self.continueToCities=ttk.Button(self, text="Continue", command=self.cities2)ti b   ti
             self.back = ttk.Button(self, text="back", command=self.init)
             self.back.pack()
         else:
