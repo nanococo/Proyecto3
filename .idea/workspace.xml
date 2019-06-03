@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e0eb49f2-0f39-4f8b-862d-e71b6bfdc6d9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/User_app_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/User_app_main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,48 +12,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/User_app_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="1072" column="38" lean-forward="true" selection-start-line="1072" selection-start-column="38" selection-end-line="1072" selection-end-column="38" />
+            <state relative-caret-position="210">
+              <caret line="1099" column="30" selection-start-line="1099" selection-start-column="30" selection-end-line="1099" selection-end-column="30" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
-                <element signature="e#6801#37860#0" />
-                <element signature="e#7012#9524#0" />
-                <element signature="e#9200#11716#0" />
-                <element signature="e#14655#16419#0" />
-                <element signature="e#11940#12220#0" />
-                <element signature="e#16778#18171#0" />
-                <element signature="e#18214#20345#0" />
-                <element signature="e#20387#21784#0" />
-                <element signature="e#21813#22450#0" />
-                <element signature="e#22494#23524#0" />
-                <element signature="e#23556#25685#0" />
-                <element signature="e#25739#26752#0" />
-                <element signature="e#26792#28180#0" />
-                <element signature="e#28222#28870#0" />
-                <element signature="e#29077#30100#0" />
-                <element signature="e#30133#30780#0" />
                 <element signature="e#30818#33700#0" />
                 <element signature="e#33743#37743#0" />
-                <element signature="e#24559#25310#0" />
-                <element signature="e#25353#25706#0" />
-                <element signature="e#25748#25965#0" />
-                <element signature="e#26028#26452#0" />
-                <element signature="e#26293#26368#0" />
-                <element signature="e#26500#26717#0" />
-                <element signature="e#26781#27205#0" />
-                <element signature="e#27255#27472#0" />
-                <element signature="e#27535#28084#0" />
-                <element signature="e#28134#28370#0" />
-                <element signature="e#28408#28509#0" />
-                <element signature="e#28550#29950#0" />
-                <element signature="e#29993#31428#0" />
-                <element signature="e#31471#31911#0" />
-                <element signature="e#31954#33107#0" />
-                <element signature="e#33153#33426#0" />
-                <element signature="e#33555#33866#0" />
               </folding>
             </state>
           </provider>
@@ -63,7 +29,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1728">
+            <state relative-caret-position="155">
               <caret line="394" column="114" selection-start-line="394" selection-start-column="114" selection-end-line="394" selection-end-column="114" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
@@ -73,18 +39,9 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dataFiles/Rutas.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2">
+            <state relative-caret-position="3184">
               <caret line="199" selection-start-line="199" selection-end-line="211" selection-end-column="30" />
             </state>
           </provider>
@@ -107,7 +64,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/loadData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
+            <state relative-caret-position="8816">
               <caret line="551" column="33" lean-forward="true" selection-start-line="551" selection-start-column="33" selection-end-line="551" selection-end-column="33" />
             </state>
           </provider>
@@ -122,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dataFiles/Usuarios.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="23" column="35" lean-forward="true" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
+            <state relative-caret-position="352">
+              <caret line="22" column="7" lean-forward="true" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -144,7 +101,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>deleteCity</find>
       <find>billing</find>
       <find>CU</find>
       <find>deleteTra</find>
@@ -174,6 +130,7 @@
       <find>cus</find>
       <find>custom</find>
       <find>custo</find>
+      <find>04</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -196,7 +153,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1400" />
@@ -207,7 +164,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -229,6 +185,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -408,17 +365,6 @@
       <window_info anchor="right" id="R Packages" order="4" />
     </layout>
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/User_app_main.py</url>
-          <line>458</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/User app.py" />
     <entry file="file://$PROJECT_DIR$/Admin_App_Beta1.py" />
@@ -439,13 +385,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2">
-          <caret line="199" selection-start-line="199" selection-end-line="211" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dataFiles/PaisesO.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
@@ -453,48 +392,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Conexiones.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="2" column="25" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dataFiles/Atracciones.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="48">
           <caret line="3" column="33" lean-forward="true" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Trenes.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="22" column="25" lean-forward="true" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/RutasO.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/loadData.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="551" column="33" lean-forward="true" selection-start-line="551" selection-start-column="33" selection-end-line="551" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Ciudades.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="18" column="6" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Rutas.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -570,9 +471,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dataFiles/Rutas.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="14" column="30" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3184">
+          <caret line="199" selection-start-line="199" selection-end-line="211" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataFiles/RutasO.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataFiles/Trenes.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="22" column="25" lean-forward="true" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loadData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8816">
+          <caret line="551" column="33" lean-forward="true" selection-start-line="551" selection-start-column="33" selection-end-line="551" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataFiles/Conexiones.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="2" column="25" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataFiles/Ciudades.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="18" column="6" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/PIL/Image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-288" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1728">
+        <state relative-caret-position="155">
           <caret line="394" column="114" selection-start-line="394" selection-start-column="114" selection-end-line="394" selection-end-column="114" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
@@ -580,55 +531,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Usuarios.txt">
+    <entry file="file://$PROJECT_DIR$/User_app_main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="23" column="35" lean-forward="true" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
+        <state relative-caret-position="210">
+          <caret line="1099" column="30" selection-start-line="1099" selection-start-column="30" selection-end-line="1099" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+            <element signature="e#30818#33700#0" />
+            <element signature="e#33743#37743#0" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/User_app_main.py">
+    <entry file="file://$PROJECT_DIR$/dataFiles/Usuarios.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="1072" column="38" lean-forward="true" selection-start-line="1072" selection-start-column="38" selection-end-line="1072" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#6801#37860#0" />
-            <element signature="e#7012#9524#0" />
-            <element signature="e#9200#11716#0" />
-            <element signature="e#14655#16419#0" />
-            <element signature="e#11940#12220#0" />
-            <element signature="e#16778#18171#0" />
-            <element signature="e#18214#20345#0" />
-            <element signature="e#20387#21784#0" />
-            <element signature="e#21813#22450#0" />
-            <element signature="e#22494#23524#0" />
-            <element signature="e#23556#25685#0" />
-            <element signature="e#25739#26752#0" />
-            <element signature="e#26792#28180#0" />
-            <element signature="e#28222#28870#0" />
-            <element signature="e#29077#30100#0" />
-            <element signature="e#30133#30780#0" />
-            <element signature="e#30818#33700#0" />
-            <element signature="e#33743#37743#0" />
-            <element signature="e#24559#25310#0" />
-            <element signature="e#25353#25706#0" />
-            <element signature="e#25748#25965#0" />
-            <element signature="e#26028#26452#0" />
-            <element signature="e#26293#26368#0" />
-            <element signature="e#26500#26717#0" />
-            <element signature="e#26781#27205#0" />
-            <element signature="e#27255#27472#0" />
-            <element signature="e#27535#28084#0" />
-            <element signature="e#28134#28370#0" />
-            <element signature="e#28408#28509#0" />
-            <element signature="e#28550#29950#0" />
-            <element signature="e#29993#31428#0" />
-            <element signature="e#31471#31911#0" />
-            <element signature="e#31954#33107#0" />
-            <element signature="e#33153#33426#0" />
-            <element signature="e#33555#33866#0" />
-          </folding>
+        <state relative-caret-position="352">
+          <caret line="22" column="7" lean-forward="true" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="18" />
         </state>
       </provider>
     </entry>
