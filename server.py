@@ -58,6 +58,7 @@ class SocketServer(socket.socket):
                 if data == '':
                     break
             except Exception:
+                print(Exception)
                 print("Error with data receive")
                 break
 
@@ -1125,6 +1126,7 @@ class SocketServer(socket.socket):
         permList = []
         for i in itertools.permutations(routeList): permList.append(list(i))
 
+
         realLists = []
         for i in permList:
             tempList = []
@@ -1162,19 +1164,21 @@ class SocketServer(socket.socket):
             i.append(distance)
 
 
-
         finalList = []
         for i in realLists:
-            if i[len(i)-2][2] == OarrCountry and i[len(i)-2][3]==OarrCity:
-                tempFinalList = []
-                for j in self.dat.trainRoutes:
-                    for k in j[6]:
-                        if k == i[0]:
-                            tempFinalList.append(j[:6] + [i[0]])
-                        elif k == i[1]:
-                            tempFinalList.append(j[:6] + [i[1]])
-                tempFinalList.append(i[len(i) - 1])
-                finalList.append(tempFinalList)
+            if len(i)>1:
+                if i[len(i) - 2][2] == OarrCountry and i[len(i) - 2][3] == OarrCity:
+                    tempFinalList = []
+                    for j in self.dat.trainRoutes:
+                        for k in j[6]:
+                            if k == i[0]:
+                                tempFinalList.append(j[:6] + [i[0]])
+                            elif k == i[1]:
+                                tempFinalList.append(j[:6] + [i[1]])
+                    tempFinalList.append(i[len(i) - 1])
+                    finalList.append(tempFinalList)
+            else:
+                i = []
         if flag:
             return self.getFastestCustom(finalList)
         else:

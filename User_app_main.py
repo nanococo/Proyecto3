@@ -1868,9 +1868,10 @@ if __name__ == '__main__':
     main_window.resizable(0,0)
     app = MainApp(main_window)
 
-    # #codeList = ["41", "", "02", "67", "499", "140", True]
-    # codeList = ["41", "", "02", "67", "24", "451", True]
+    # codeList = ["41", "", "78", "302", "02", "67", True]
+    # # codeList = ["41", "", "02", "67", "24", "451", True]
     # s.send(pickle.dumps(codeList))
     # possibleLists = pickle.loads(s.recv(8192))
+    # print(possibleLists)
 
     app.mainloop()
