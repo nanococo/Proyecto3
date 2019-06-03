@@ -959,42 +959,42 @@ class logIn(ttk.Frame):
         # France
         self.pin3 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin3 = ImageTk.PhotoImage(self.pin3)
-        self.pinButton3 = ttk.Button(self, command=lambda: self.openSelectCity("78"))
+        self.pinButton3 = ttk.Button(self, command=lambda: self.openSelectCity("78", 150, 270))
         self.pinButton3.config(image=self.displayPin3)
         self.pinButton3.place(x=150, y=270)
 
         # Switzerland
         self.pin4 = Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin4 = ImageTk.PhotoImage(self.pin4)
-        self.pinButton4 = ttk.Button(self, command=lambda: self.openSelectCity("234"))
+        self.pinButton4 = ttk.Button(self, command=lambda: self.openSelectCity("234", 190, 270))
         self.pinButton4.config(image=self.displayPin4)
         self.pinButton4.place(x=190, y=270)
 
         # UK
         self.pin6 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin6 = ImageTk.PhotoImage(self.pin6)
-        self.pinButton6 = ttk.Button(self, command=lambda: self.openSelectCity("123"))
+        self.pinButton6 = ttk.Button(self, command=lambda: self.openSelectCity("123", 120, 210))
         self.pinButton6.config(image=self.displayPin6)
         self.pinButton6.place(x=120, y=210)
 
         # Netherlands
         self.pin7 = Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin7 = ImageTk.PhotoImage(self.pin7)
-        self.pinButton7 = ttk.Button(self, command=lambda: self.openSelectCity("134"))
+        self.pinButton7 = ttk.Button(self, command=lambda: self.openSelectCity("134", 175, 210))
         self.pinButton7.config(image=self.displayPin7)
         self.pinButton7.place(x=175, y=210)
 
         # Turkey
         self.pin8 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin8 = ImageTk.PhotoImage(self.pin8)
-        self.pinButton8 = ttk.Button(self, command=lambda: self.openSelectCity("24"))
+        self.pinButton8 = ttk.Button(self, command=lambda: self.openSelectCity("24", 380, 330))
         self.pinButton8.config(image=self.displayPin8)
         self.pinButton8.place(x=380, y=330)
 
         # Belgium
         self.pin10 = Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin10 = ImageTk.PhotoImage(self.pin10)
-        self.pinButton10 = ttk.Button(self, command=lambda: self.openSelectCity("32"))
+        self.pinButton10 = ttk.Button(self, command=lambda: self.openSelectCity("32", 165, 230))
         self.pinButton10.config(image=self.displayPin10)
         self.pinButton10.place(x=165, y=230)
 
@@ -1015,58 +1015,91 @@ class logIn(ttk.Frame):
         # Czech republic
         self.pin13 = Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin13 = ImageTk.PhotoImage(self.pin13)
-        self.pinButton13 = ttk.Button(self, command=lambda: self.openSelectCity("456"))
+        self.pinButton13 = ttk.Button(self, command=lambda: self.openSelectCity("456", 235, 240))
         self.pinButton13.config(image=self.displayPin13)
         self.pinButton13.place(x=235, y=240)
 
         # Poland
         self.pin14 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin14 = ImageTk.PhotoImage(self.pin14)
-        self.pinButton14 = ttk.Button(self, command=lambda: self.openSelectCity("120"))
+        self.pinButton14 = ttk.Button(self, command=lambda: self.openSelectCity("120", 260, 205))
         self.pinButton14.config(image=self.displayPin14)
         self.pinButton14.place(x=260, y=205)
 
         # Romain
         self.pin15 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin15 = ImageTk.PhotoImage(self.pin15)
-        self.pinButton15 = ttk.Button(self, command=lambda: self.openSelectCity("149"))
+        self.pinButton15 = ttk.Button(self, command=lambda: self.openSelectCity("149", 315, 270))
         self.pinButton15.config(image=self.displayPin15)
         self.pinButton15.place(x=315, y=270)
 
         # Ukraine
         self.pin16 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin16 = ImageTk.PhotoImage(self.pin16)
-        self.pinButton16 = ttk.Button(self, command=lambda: self.openSelectCity("256"))
+        self.pinButton16 = ttk.Button(self, command=lambda: self.openSelectCity("256", 350, 220))
         self.pinButton16.config(image=self.displayPin16)
         self.pinButton16.place(x=350, y=220)
 
         # Bulgaria
         self.pin17 = Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin17 = ImageTk.PhotoImage(self.pin17)
-        self.pinButton17 = ttk.Button(self, command=lambda: self.openSelectCity("280"))
+        self.pinButton17 = ttk.Button(self, command=lambda: self.openSelectCity("280", 330, 310))
         self.pinButton17.config(image=self.displayPin17)
         self.pinButton17.place(x=330, y=310)
 
         # Finland
         self.pin18 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin18 = ImageTk.PhotoImage(self.pin18)
-        self.pinButton18 = ttk.Button(self, command=lambda: self.openSelectCity("18"))
+        self.pinButton18 = ttk.Button(self, command=lambda: self.openSelectCity("18", 280, 90))
         self.pinButton18.config(image=self.displayPin18)
         self.pinButton18.place(x=280, y=90)
 
         # Sweden
         self.pin19 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin19 = ImageTk.PhotoImage(self.pin19)
-        self.pinButton19 = ttk.Button(self, command=lambda: self.openSelectCity("180"))
+        self.pinButton19 = ttk.Button(self, command=lambda: self.openSelectCity("180", 230, 90))
         self.pinButton19.config(image=self.displayPin19)
         self.pinButton19.place(x=230, y=90)
 
         # Germany
         self.pin20 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin20 = ImageTk.PhotoImage(self.pin20)
-        self.pinButton20 = ttk.Button(self, command=lambda: self.openSelectCity("499"))
+        self.pinButton20 = ttk.Button(self, command=lambda: self.openSelectCity("499", 200, 220))
         self.pinButton20.config(image=self.displayPin20)
         self.pinButton20.place(x=200, y=220)
+
+        self.SeatLabel = ttk.Label(text="Seats")
+        self.SeatLabel.place(x=50, y=545)
+
+        self.vcmd = (self.register(self.validate), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+        self.amountOfSeats = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
+        self.amountOfSeats.place(x=70, y=500)
+
+        self.sendCustomRoutesButton = ttk.Button(self, text = "Find Routes", command= lambda: self.sendCustomToServer())
+        self.sendCustomRoutesButton.place(x=290, y=500)
+
+
+    def sendCustomToServer(self):
+        print(self.byPriceVar.get())
+        print(self.byTimeVar.get())
+        print(self.departCountry)
+        print(self.departCity)
+        print(self.arriveCountry)
+        print(self.arriveCity)
+        print(self.amountOfSeats)
+
+        if self.byTimeVar.get():
+            timeFlag = True
+        else:
+            timeFlag = False
+
+        codeList = ["41", "", self.departCountry, self.departCity, self.arriveCountry, self.arriveCity, timeFlag]
+        s.send(pickle.dumps(codeList))
+        possibleLists = pickle.loads(s.recv(8192))
+
+        # possibleLists tiene las listas posibles. Estas son las que hay que imprimir. Tambien Deje en esa nueva ventana un espacio para precio total y la opcions de aceptar o no reservar nada
+
+
 
 
     def getCheckBox(self):
@@ -1087,10 +1120,12 @@ class logIn(ttk.Frame):
             self.pinButtonM.config(image=self.displayPinM)
             self.pinButtonM.place(x=x, y=y)
             self.pinCount+=1
+            self.departCountry = countryCode
 
             codeList = ["04", "", countryCode]
             s.send(pickle.dumps(codeList))
             self.cities1["values"] = pickle.loads(s.recv(8192))
+            self.cities1.bind("<<ComboboxSelected>>", self.setDepartCity)
         elif self.pinCount == 1:
             self.pinN = Image.open("newDataFiles/Assets/resized/redPin.png")
             self.displayPinN = ImageTk.PhotoImage(self.pinM)
@@ -1098,11 +1133,19 @@ class logIn(ttk.Frame):
             self.pinButtonN.config(image=self.displayPinN)
             self.pinButtonN.place(x=x, y=y)
             self.pinCount += 1
+            self.arriveCountry = countryCode
 
             codeList = ["04", "", countryCode]
             s.send(pickle.dumps(codeList))
             self.cities2["values"] = pickle.loads(s.recv(8192))
+            self.cities2.bind("<<ComboboxSelected>>", self.setArriveCity)
 
+    def setArriveCity(self):
+        self.arriveCity = [self.departureCountryList.get().split(" ")[0]]
+
+
+    def setDepartCity(self):
+        self.departCity = [self.departureCountryList.get().split(" ")[0]]
 
     def deletePinM(self):
         self.pinButtonM.place_forget()
