@@ -1093,10 +1093,12 @@ class logIn(ttk.Frame):
         else:
             timeFlag = False
 
-        codeList = ["41", "", self.departCountry, self.departCity, self.arriveCountry, self.arriveCity, timeFlag]
+        codeList = ["41", "", self.departCountry, self.departCity[0], self.arriveCountry, self.arriveCity[0], timeFlag]
         s.send(pickle.dumps(codeList))
         possibleLists = pickle.loads(s.recv(8192))
 
+        print("HOLIS")
+        print(possibleLists)
         # possibleLists tiene las listas posibles. Estas son las que hay que imprimir. Tambien Deje en esa nueva ventana un espacio para precio total y la opcions de aceptar o no reservar nada
 
 
@@ -1140,12 +1142,12 @@ class logIn(ttk.Frame):
             self.cities2["values"] = pickle.loads(s.recv(8192))
             self.cities2.bind("<<ComboboxSelected>>", self.setArriveCity)
 
-    def setArriveCity(self):
-        self.arriveCity = [self.departureCountryList.get().split(" ")[0]]
+    def setArriveCity(self,event):
+        self.arriveCity = [self.cities2.get().split(" ")[0]]
 
 
-    def setDepartCity(self):
-        self.departCity = [self.departureCountryList.get().split(" ")[0]]
+    def setDepartCity(self,event):
+        self.departCity = [self.cities1.get().split(" ")[0]]
 
     def deletePinM(self):
         self.pinButtonM.place_forget()
