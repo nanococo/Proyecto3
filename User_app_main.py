@@ -1083,10 +1083,10 @@ class logIn(ttk.Frame):
         print(self.byPriceVar.get())
         print(self.byTimeVar.get())
         print(self.departCountry)
-        print(self.departCity)
+        print(self.departCity[0])
         print(self.arriveCountry)
-        print(self.arriveCity)
-        print(self.amountOfSeats)
+        print(self.arriveCity[0])
+        print(self.amountOfSeats.get())
 
         if self.byTimeVar.get():
             timeFlag = True
@@ -1868,8 +1868,9 @@ if __name__ == '__main__':
     main_window.resizable(0,0)
     app = MainApp(main_window)
 
-    # codeList = ["41", "", "02", "67", "24", "551"]
+    # #codeList = ["41", "", "02", "67", "499", "140", True]
+    # codeList = ["41", "", "02", "67", "24", "451", True]
     # s.send(pickle.dumps(codeList))
-    # confirmation = pickle.loads(s.recv(8192))
+    # possibleLists = pickle.loads(s.recv(8192))
 
     app.mainloop()

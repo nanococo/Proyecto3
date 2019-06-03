@@ -392,7 +392,7 @@ class SocketServer(socket.socket):
             elif dataList[0] == "41":
                 # validateAdmin
                 # [0] is code 41
-                returnValue = self.getCustomRoutes(dataList[2], dataList[3], dataList[4], dataList[5], dataList[5])
+                returnValue = self.getCustomRoutes(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6])
                 client.send(pickle.dumps(returnValue))
 
             elif dataList[0] == "42":
@@ -1107,6 +1107,7 @@ class SocketServer(socket.socket):
 
 
     def getCustomRoutes(self, depCountry, depCity, arrCountry, arrCity, flag):
+        print(depCountry, depCity, arrCountry, arrCity, flag)
         """Returns custom routes for user selections"""
         OdepCountry = depCountry
         OdepCity = depCity
@@ -1132,7 +1133,7 @@ class SocketServer(socket.socket):
             arrCountry = OarrCountry
             arrCity = OarrCity
             for j in i:
-                if depCountry==arrCountry and depCity==arrCity:
+                if depCountry==arrCountry and depCity==arrCity and arrCity==OarrCity and arrCountry==OarrCountry:
                     break
                 else:
                     if (j[0] == depCountry and j[1] == depCity) and (j[2]!=OdepCountry and j[3]!=OdepCity):
@@ -1143,6 +1144,7 @@ class SocketServer(socket.socket):
             depCity = OdepCity
             arrCountry = OarrCountry
             arrCity = OarrCity
+
             if len(tempList)==1:
                 if tempList[0]==depCountry and tempList[1]==depCity and tempList[2]==arrCountry and tempList[3]==arrCity:
                     if tempList not in realLists:
@@ -1163,17 +1165,16 @@ class SocketServer(socket.socket):
 
         finalList = []
         for i in realLists:
-            print(i)
-            tempFinalList = []
-            for j in self.dat.trainRoutes:
-                for k in j[6]:
-                    if k == i[0]:
-                        tempFinalList.append(j[:6]+[i[0]])
-                    elif k==i[1]:
-                        tempFinalList.append(j[:6]+[i[1]])
-            tempFinalList.append(i[len(i)-1])
-            finalList.append(tempFinalList)
-
+            if i[len(i)-2][2] == OarrCountry and i[len(i)-2][3]==OarrCity:
+                tempFinalList = []
+                for j in self.dat.trainRoutes:
+                    for k in j[6]:
+                        if k == i[0]:
+                            tempFinalList.append(j[:6] + [i[0]])
+                        elif k == i[1]:
+                            tempFinalList.append(j[:6] + [i[1]])
+                tempFinalList.append(i[len(i) - 1])
+                finalList.append(tempFinalList)
         if flag:
             return self.getFastestCustom(finalList)
         else:
@@ -1181,42 +1182,45 @@ class SocketServer(socket.socket):
 
 
     def getFastestCustom(self, customRoute):
-
-        fastest = 0
-        count = 0
-        chosenRoute = []
-        for i in customRoute:
-            for j in range(len(i)):
-                if j == len(i) - 1:
-                    if count == 0:
-                        fastest = i[j]
-                        chosenRoute.append(i)
-                        count += 1
-                    if i[j] < fastest:
-                        chosenRoute = []
-
-        return chosenRoute[0]
+        if customRoute:
+            fastest = 0
+            count = 0
+            chosenRoute = []
+            for i in customRoute:
+                for j in range(len(i)):
+                    if j == len(i) - 1:
+                        if count == 0:
+                            fastest = i[j]
+                            chosenRoute.append(i)
+                            count += 1
+                        if i[j] < fastest:
+                            chosenRoute = []
+            return chosenRoute[0]
+        else:
+            return []
 
     def getCheapestCustom(self, customRoute):
-        choseRoute = []
-        price = 0
-        count = 0
+        if customRoute:
+            choseRoute = []
+            price = 0
+            count = 0
 
-        for i in customRoute:
-            tempSum = 0
-            for j in range(len(i)):
-                if j != len(i)-1:
-                    tempSum+=int(i[j][6][4])
+            for i in customRoute:
+                tempSum = 0
+                for j in range(len(i)):
+                    if j != len(i) - 1:
+                        tempSum += int(i[j][6][4])
 
-            if count == 0:
-                price = tempSum
-                choseRoute = i
-                count+=1
-            if tempSum<price:
-                price = tempSum
-                choseRoute = i
-
-        return choseRoute
+                if count == 0:
+                    price = tempSum
+                    choseRoute = i
+                    count += 1
+                if tempSum < price:
+                    price = tempSum
+                    choseRoute = i
+            return choseRoute
+        else:
+            return []
 
 
 
