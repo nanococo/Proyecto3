@@ -1085,13 +1085,13 @@ class SocketServer(socket.socket):
         """Returns latest inserts"""
         returnList = []
         if self.dat.lastCountryInsert:
-            returnList.append("Last inserted country: " + self.dat.lastCountryInsert[0] + ", " + self.dat.lastCountryInsert[1])
+            returnList.append("Last inserted country: " + self.dat.lastCountryInsert[0] + ", " + self.dat.lastCountryInsert[1]+"\n" )
         if self.dat.lastCityInsert:
-            returnList.append("Last inserted city: " + self.dat.lastCityInsert[0] + ", " + self.dat.lastCityInsert[1] + ", " + self.dat.lastCityInsert[2])
+            returnList.append("Last inserted city: " + self.dat.lastCityInsert[0] + ", " + self.dat.lastCityInsert[1] + ", " + self.dat.lastCityInsert[2]+"\n")
         if self.dat.lastRouteInsert:
-            returnList.append("Last inserted route: " + self.dat.lastRouteInsert[0] + ", " + self.dat.lastRouteInsert[1] + ". From " + self.dat.lastRouteInsert[2] + ", " + self.dat.lastRouteInsert[3] + ", To" + self.dat.lastRouteInsert[4] + ", " + self.dat.lastRouteInsert[5])
+            returnList.append("Last inserted route: " + self.dat.lastRouteInsert[0] + ", " + self.dat.lastRouteInsert[1] + ". From " + self.dat.lastRouteInsert[2] + ", " + self.dat.lastRouteInsert[3] + ", To " + self.dat.lastRouteInsert[4] + ", " + self.dat.lastRouteInsert[5]+"\n")
         if self.dat.lastConnectionInsert:
-            returnList.append("Last inserted connection: " + self.dat.lastRouteInsert[0] + ", " + self.dat.lastRouteInsert[1] + ", " + self.dat.lastRouteInsert[2] + ", " + self.dat.lastRouteInsert[3])
+            returnList.append("Last inserted connection: " + self.dat.lastRouteInsert[0] + ", " + self.dat.lastRouteInsert[1] + ", " + self.dat.lastRouteInsert[2] + ", " + self.dat.lastRouteInsert[3]+"\n")
         if self.dat.lastTrainInsert:
             returnList.append("Last train city: " + self.dat.lastTrainInsert[0] + ", " + self.dat.lastTrainInsert[1] + ", " + self.dat.lastTrainInsert[2])
         return returnList
@@ -1100,7 +1100,7 @@ class SocketServer(socket.socket):
         """Returns latest deletes"""
         returnList = []
         if self.dat.lastDeletedRoute:
-            returnList.append("Last deleted route: " + self.dat.lastDeletedRoute[0] + ", " + self.dat.lastDeletedRoute[1] + ". From " + self.dat.lastDeletedRoute[2] + ", " + self.dat.lastDeletedRoute[3] + ", To" + self.dat.lastDeletedRoute[4] + ", " + self.dat.lastDeletedRoute[5])
+            returnList.append("Last deleted route: " + self.dat.lastDeletedRoute[0] + ", " + self.dat.lastDeletedRoute[1] + ". From " + self.dat.lastDeletedRoute[2] + ", " + self.dat.lastDeletedRoute[3] + ", To" + self.dat.lastDeletedRoute[4] + ", " + self.dat.lastDeletedRoute[5]+"\n")
         if self.dat.lastDeletedTrain:
             returnList.append("Last deleted train: " + self.dat.lastDeletedTrain[0] + ", " + self.dat.lastDeletedTrain[1])
         return returnList
