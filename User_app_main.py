@@ -912,6 +912,29 @@ class logIn(ttk.Frame):
             child.place_forget()
             child.pack_forget()
 
+        self.byPriceVar=tk.IntVar()
+        self.byTimeVar=tk.IntVar()
+        self.byPrice=ttk.Checkbutton(self, text="Route by price", variable=self.byPriceVar,onvalue=1, offvalue=0, command=self.getCheckBox)
+        self.byPrice.place(x=70,y=420)
+        self.byTime=ttk.Checkbutton(self, text="Route by Time", variable=self.byTimeVar,onvalue=1, offvalue=0, command=self.getCheckBox)
+        self.byTime.place(x=290,y=420)
+
+        self.cities1=ttk.Combobox(self, state="readonly")
+
+        """
+        self.cities1["values"]= #la lista que le de la gana
+        """
+
+        self.cities1.place(x=70,y=460)
+
+        self.cities1 = ttk.Combobox(self, state="readonly")
+
+        """
+        self.cities1["values"]= #la lista que le de la gana
+        """
+
+        self.cities1.place(x=290, y=460)
+
         self.img = Image.open("newDataFiles/Assets/europe_map(3).png")
         self.display = ImageTk.PhotoImage(self.img)
         self.map = tk.Label(self, image=self.display, bd=5, relief="ridge")
@@ -983,14 +1006,14 @@ class logIn(ttk.Frame):
         # Greece
         self.pin12 = Image.open("newDataFiles/Assets/pin(2).png")
         self.displayPin12 = ImageTk.PhotoImage(self.pin12)
-        self.pinButton12 = ttk.Button(self, command=lambda: self.openSelectCity("02"))
+        self.pinButton12 = ttk.Button(self, command=lambda: self.openSelectCity("02", self.pinButton13))
         self.pinButton12.config(image=self.displayPin12)
         self.pinButton12.place(x=315, y=353)
 
         # Czech republic
         self.pin13 = Image.open("newDataFiles/Assets/rsz_pin2.png")
         self.displayPin13 = ImageTk.PhotoImage(self.pin13)
-        self.pinButton13 = ttk.Button(self, command=lambda: self.openSelectCity("456"))
+        self.pinButton13 = ttk.Button(self, command=lambda: self.openSelectCity("456", self.pinButton13))
         self.pinButton13.config(image=self.displayPin13)
         self.pinButton13.place(x=235, y=240)
 
@@ -1043,28 +1066,7 @@ class logIn(ttk.Frame):
         self.pinButton20.config(image=self.displayPin20)
         self.pinButton20.place(x=200, y=220)
 
-        self.byPriceVar=tk.IntVar()
-        self.byTimeVar=tk.IntVar()
-        self.byPrice=ttk.Checkbutton(self, text="Route by price", variable=self.byPriceVar,onvalue=1, offvalue=0, command=self.getCheckBox)
-        self.byPrice.place(x=70,y=420)
-        self.byTime=ttk.Checkbutton(self, text="Route by Time", variable=self.byTimeVar,onvalue=1, offvalue=0, command=self.getCheckBox)
-        self.byTime.place(x=290,y=420)
 
-        self.cities1=ttk.Combobox(self, state="readonly")
-
-        """
-        self.cities1["values"]= #la lista que le de la gana
-        """
-
-        self.cities1.place(x=70,y=460)
-
-        self.cities1 = ttk.Combobox(self, state="readonly")
-
-        """
-        self.cities1["values"]= #la lista que le de la gana
-        """
-
-        self.cities1.place(x=290, y=460)
     def getCheckBox(self):
         if self.byPriceVar.get()==1:
             self.byTime.config(state="disabled")
@@ -1075,8 +1077,10 @@ class logIn(ttk.Frame):
         elif self.byTimeVar.get()==0:
             self.byPrice.config(state="normal")
 
-    def openSelectCity(self, countryCode):
-        pass
+    def openSelectCity(self, countryCode, button):
+        self.pinM = Image.open("newDataFiles/Assets/resized/redPin.png")
+        self.displayPinM = ImageTk.PhotoImage(self.pinM)
+        button.configure(image=self.displayPinM)
 
 
     def drawBilling(self):
@@ -1788,8 +1792,8 @@ if __name__ == '__main__':
     main_window.resizable(0,0)
     app = MainApp(main_window)
 
-    codeList = ["41", "", "02", "67", "24", "551"]
-    s.send(pickle.dumps(codeList))
-    confirmation = pickle.loads(s.recv(8192))
+    # codeList = ["41", "", "02", "67", "24", "551"]
+    # s.send(pickle.dumps(codeList))
+    # confirmation = pickle.loads(s.recv(8192))
 
     app.mainloop()
