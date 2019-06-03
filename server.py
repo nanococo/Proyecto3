@@ -349,7 +349,7 @@ class SocketServer(socket.socket):
             elif dataList[0] == "34":
                 # validateAdmin
                 # [0] is code 34
-                returnValue = self.dat.getMostVisitedCountry()
+                returnValue = self.dat.gettMostVisitedCountry()
                 client.send(pickle.dumps(returnValue))
 
             elif dataList[0] == "35":
