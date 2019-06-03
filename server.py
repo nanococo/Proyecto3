@@ -392,7 +392,7 @@ class SocketServer(socket.socket):
             elif dataList[0] == "41":
                 # validateAdmin
                 # [0] is code 41
-                returnValue = self.getCustomRoutes(dataList[2], dataList[3], dataList[4], dataList[5])
+                returnValue = self.getCustomRoutes(dataList[2], dataList[3], dataList[4], dataList[5], dataList[5])
                 client.send(pickle.dumps(returnValue))
 
             elif dataList[0] == "42":
