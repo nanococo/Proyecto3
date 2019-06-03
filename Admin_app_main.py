@@ -1803,31 +1803,31 @@ class History(ttk.Frame):
 
 
         buttonMostUsed = ttk.Button(self, text='Most Used',
-                            command=lambda: controller.show_frame('PENDIENTE'))
+                            command=lambda: self.mostUsed())
         buttonMostUsed.place(x=10, y=120)
 
 
         buttonLeastUsed = ttk.Button(self, text='Least Used',
-                            command=lambda: controller.show_frame('PENDIENTE'))
+                            command=lambda: self.leastUsed())
         buttonLeastUsed.place(x=10, y=160)
 
         buttonMostVisited = ttk.Button(self, text='Most visited',
-                            command=lambda: controller.show_frame('PENDIENTE'))
+                            command=lambda: self.mostVisited())
         buttonMostVisited.place(x=130, y=40)
 
 
         buttonLeastVisited = ttk.Button(self, text='Least visited',
-                            command=lambda: controller.show_frame('PENDIENTE'))
+                            command=lambda: self.leastVisited())
         buttonLeastVisited.place(x=130, y=80)
 
 
         buttonMostFrequentUsers = ttk.Button(self, text='Most frequent users',
-                            command=lambda: controller.show_frame('PENDIENTE'))
+                            command=lambda: self.mostFrequentUsers())
         buttonMostFrequentUsers.place(x=130, y=120)
 
 
         buttonLeastFrequentUsers = ttk.Button(self, text='Least frequent users',
-                            command=lambda: controller.show_frame('PENDIENTE'))
+                            command=lambda: self.leastFrequentUsers())
         buttonLeastFrequentUsers.place(x=130, y=160)
 
         self.showSuggestedInfo = tk.Listbox(self, width=39)
@@ -1844,7 +1844,7 @@ class History(ttk.Frame):
         print(inserted)
 
         if not inserted:
-            messagebox.showerror("ERROR", "Theres nothing to show.")
+            messagebox.showerror("ERROR", "There's nothing to show.")
         else:
             index = 0
             for item in inserted:
@@ -1862,7 +1862,7 @@ class History(ttk.Frame):
         print(deleted)
 
         if not deleted:
-            messagebox.showerror("ERROR", "Theres nothing to show.")
+            messagebox.showerror("ERROR", "There's nothing to show.")
         else:
             index = 0
             for item in deleted:
@@ -1872,15 +1872,55 @@ class History(ttk.Frame):
 
     def mostVisited(self):
 
+        self.showSuggestedInfo.delete(0, tk.END)
+
+        codeList = ["34", adminID]
+        s.send(pickle.dumps(codeList))
+        mostVisitedCountry = pickle.loads(s.recv(8192))
+
+        codeList = ["35", adminID]
+        s.send(pickle.dumps(codeList))
+        mostVisitedCity = pickle.loads(s.recv(8192))
+
+        if not (mostVisitedCity and mostVisitedCountry):
+            messagebox.showerror("ERROR", "There's nothing to show.")
+        else:
+            index = 0
+            self.showSuggestedInfo.insert(index, mostVisitedCountry)
+            self.showSuggestedInfo.insert(index + 1, mostVisitedCity)
+
+            self.countdown(60)
+            self.showSuggestedInfo.delete(0, tk.END)
+
     def leastVisited(self):
 
-    def mostUsed(self):
+        self.showSuggestedInfo.delete(0, tk.END)
 
-    def leastUsed(self):
+        codeList = ["34", adminID]
+        s.send(pickle.dumps(codeList))
+        mostVisitedCountry = pickle.loads(s.recv(8192))
 
-    def mostFrequentUsers(self):
+        codeList = ["35", adminID]
+        s.send(pickle.dumps(codeList))
+        mostVisitedCity = pickle.loads(s.recv(8192))
 
-    def leastFrequentUsers(self): ]5
+        if not (mostVisitedCity and mostVisitedCountry):
+            messagebox.showerror("ERROR", "There's nothing to show.")
+        else:
+            index = 0
+            self.showSuggestedInfo.insert(index, mostVisitedCountry)
+            self.showSuggestedInfo.insert(index + 1, mostVisitedCity)
+
+            self.countdown(60)
+            self.showSuggestedInfo.delete(0, tk.END)
+
+    # def mostUsed(self):
+    #
+    # def leastUsed(self):
+    #
+    # def mostFrequentUsers(self):
+    #
+    # def leastFrequentUsers(self):
 
 
 
