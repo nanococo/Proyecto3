@@ -1080,6 +1080,9 @@ class logIn(ttk.Frame):
 
 
     def sendCustomToServer(self):
+
+        global reservations
+
         print(self.byPriceVar.get())
         print(self.byTimeVar.get())
         print(self.departCountry)
@@ -1097,11 +1100,39 @@ class logIn(ttk.Frame):
         s.send(pickle.dumps(codeList))
         possibleLists = pickle.loads(s.recv(8192))
 
-        print("HOLIS")
-        print(possibleLists)
-        # possibleLists tiene las listas posibles. Estas son las que hay que imprimir. Tambien Deje en esa nueva ventana un espacio para precio total y la opcions de aceptar o no reservar nada
+        if possibleLists != "1" :
+            for child in self.winfo_children():
+                child.place_forget()
+                child.pack_forget()
+
+            self.showRoutes=tk.Listbox(self, width=50)
+            for i in [1,2,4,5]:
+                self.showRoutes.insert(tk.END,i)
+
+            self.showRoutes.pack(pady=10)
+
+            self.priceTag=ttk.Label(self, text="The price is: "+"AQUI METE EL PRECIO")
+            self.priceTag.pack(pady=20)
+
+            acceptReservation=ttk.Button(self, text="Accept", command= self.getCustomRoute)
+            acceptReservation.pack(pady=10)
+
+            cancelReservation = ttk.Button(self, text="Cancel", command= self.drawCustomRecervation)
+            cancelReservation.pack(pady=10)
 
 
+
+
+        else:
+            messagebox.showinfo("Access denied","Server is blocked")
+
+    def getCustomRoute(self):
+        global reservations
+        print(self.showRoutes.get(self.showRoutes.curselection()))
+
+        reservations += [self.showRoutes.get(self.showRoutes.curselection())]
+        self.chooseRecervation()
+        messagebox.showinfo("", "Reservation added")
 
 
     def getCheckBox(self):
