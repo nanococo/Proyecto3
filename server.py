@@ -1346,7 +1346,6 @@ class SocketServer(socket.socket):
         """" Returns a list with all atractions """
         return self.dat.attractions
 
-
     def broadcast(self, message):
         #Sending message to all clients
         for client in self.clients:

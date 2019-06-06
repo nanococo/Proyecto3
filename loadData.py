@@ -410,7 +410,7 @@ class loadData:
                 comp = i[1]
         for i in self.citiesByUsage:
             if i[1] == comp:
-                returnList.append("Country: " + i[0][0] + ", City: " + i[0][1][0] + ", " + i[0][1][1] + ". Uses: " + str(i[1]))
+                returnList.append(" City: " + i[0][1][0] + ", " + i[0][1][1] + ". Uses: " + str(i[1]))
         return returnList
 
     def getHighestUsageUser(self):
@@ -455,7 +455,7 @@ class loadData:
                 comp = i[1]
         for i in self.trainsByUsage:
             if i[1] == comp:
-                returnList.append("Train type: " + i[0][0] + ". Train Code: " + i[0][1] + ". Name: " + i[0][2] + ". Uses: " + str(i[1]))
+                returnList.append(i[0][0] + ". Train Code: " + i[0][1] + ". Name: " + i[0][2] + ". Uses: " + str(i[1]))
         return returnList
 
     def getLowestUsageTrain(self):
@@ -468,7 +468,7 @@ class loadData:
                 comp = i[1]
         for i in self.trainsByUsage:
             if i[1] == comp:
-                returnList.append("Train type: " + i[0][0] + ". Train Code: " + i[0][1] + ". Name: " + i[0][2] + ". Uses: " + str(i[1]))
+                returnList.append(i[0][0] + ". Train Code: " + i[0][1] + ". Name: " + i[0][2] + ". Uses: " + str(i[1]))
         return returnList
 
     def reduceSeatsBy(self, num, trainType, trainCode, arrivalCity):

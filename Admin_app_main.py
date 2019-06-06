@@ -1863,32 +1863,44 @@ class History(ttk.Frame):
 
         self.drawTheInfo(controller, "32")
 
-    # def leastUsed(self, controller):
-    #
-    # def mostFrequentUsers(self, controller):
-    #
-    # def leastFrequentUsers(self, controller):
+    def leastUsed(self, controller):
 
-    def countdown(self, t):
-        while t != 0:
-            self.update()
-            time.sleep(1)
-            t -= 1
-        return t
+        self.clear()
+
+        self.drawTheInfo(controller, "33")
+
+    def mostFrequentUsers(self, controller):
+
+        self.clear()
+
+        self.drawTheInfo(controller, "36")
+
+    def leastFrequentUsers(self, controller):
+
+        self.clear()
+
+        self.drawTheInfo(controller, "37")
+
 
     def drawTheInfo(self, controller, code):
 
 
-        self.infoListBox = tk.Listbox(self, width=30, height=20)
-        self.infoListBox.place(x=138, y=100)
+        self.infoListBox = tk.Listbox(self, width=53, height=20)
+        self.infoListBox.place(x=77, y=100)
         codeList = [code, adminID]
         s.send(pickle.dumps(codeList))
         info = pickle.loads(s.recv(8192))
         print(info)
-        index = 0
-        for item in info:
-            self.infoListBox.insert(index, item)
+
+        if not info:
+            self.infoListBox.insert(0,"Nothing to show.")
+        else:
+            index = 0
+            for item in info:
+                self.infoListBox.insert(index, item)
         self.buttonBackToMenu(controller)
+
+
     def clear(self):
         for child in self.winfo_children():
             child.pack_forget()
