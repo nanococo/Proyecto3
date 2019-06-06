@@ -4,7 +4,6 @@ def printIterable(iterable):
     for i in iterable:
         print(i)
 
-
 def countryQuerySection(s):
     codeList = ["03"]
     s.send(pickle.dumps(codeList))
@@ -14,7 +13,6 @@ def countryQuerySection(s):
     print("These are the found countries: ")
     printIterable(countryList)
     input("Press enter to continue...")
-
 
 def cityQuerySection(s):
     codeList = ["03"]
@@ -159,7 +157,6 @@ def routesQuerySection(s):
             input("Press enter to continue...")
             end = True
 
-
 def customRoutes(s):
     reservations = []
     end = False
@@ -210,8 +207,6 @@ def customRoutes(s):
                         if i[j]<cheapest:
                             chosenRoute = []
             print(chosenRoute)
-
-
 
 def reservationQuerySection(s):
     end = False
@@ -893,7 +888,6 @@ def getMostVisitedCity(s):
         print("Found routes:")
         printIterable(results)
         input("Press enter to continue...")
-
 
 def getHighestUsageUser(s):
     codeList = ["36"]

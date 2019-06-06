@@ -1094,7 +1094,7 @@ class SocketServer(socket.socket):
         if self.dat.lastConnectionInsert:
             returnList.append("Last inserted connection: " + self.dat.lastRouteInsert[0] + ", " + self.dat.lastRouteInsert[1] + ", " + self.dat.lastRouteInsert[2] + ", " + self.dat.lastRouteInsert[3]+"\n")
         if self.dat.lastTrainInsert:
-            returnList.append("Last train city: " + self.dat.lastTrainInsert[0] + ", " + self.dat.lastTrainInsert[1] + ", " + self.dat.lastTrainInsert[2])
+            returnList.append("Last inserted train: " + self.dat.lastTrainInsert[0] + ", " + self.dat.lastTrainInsert[1] + ", " + self.dat.lastTrainInsert[2])
         return returnList
 
     def lastDeletes(self):

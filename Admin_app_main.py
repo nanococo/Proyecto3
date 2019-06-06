@@ -1792,13 +1792,15 @@ class History(ttk.Frame):
 
     def init_history(self, controller):
 
+        self.clear()
+
         buttonLastInserted = ttk.Button(self, text='Last insterted',
-                                  command=lambda: self.lastInserted())
+                                  command=lambda: self.lastInserted(controller))
         buttonLastInserted.place(x=10, y=40)
 
 
         buttonLastDeleted = ttk.Button(self, text='Last deleted',
-                            command=lambda: self.lastDeleted())
+                            command=lambda: self.lastDeleted(controller))
         buttonLastDeleted.place(x=10, y=80)
 
 
@@ -1815,84 +1817,24 @@ class History(ttk.Frame):
                             command=lambda: self.mostVisited())
         buttonMostVisited.place(x=130, y=40)
 
-
-        buttonLeastVisited = ttk.Button(self, text='Least visited',
-                            command=lambda: self.leastVisited())
-        buttonLeastVisited.place(x=130, y=80)
-
-
         buttonMostFrequentUsers = ttk.Button(self, text='Most frequent users',
                             command=lambda: self.mostFrequentUsers())
-        buttonMostFrequentUsers.place(x=130, y=120)
+        buttonMostFrequentUsers.place(x=130, y=80)
 
 
         buttonLeastFrequentUsers = ttk.Button(self, text='Least frequent users',
                             command=lambda: self.leastFrequentUsers())
-        buttonLeastFrequentUsers.place(x=130, y=160)
+        buttonLeastFrequentUsers.place(x=130, y=120)
 
-        self.showSuggestedInfo = tk.Listbox(self, width=39)
-        self.showSuggestedInfo.place(x=10, y=200)
+    def lastInserted(self, controller):
 
+        self.drawTheInfo(controller, "30", "")
 
-    def lastInserted(self):
+    def lastDeleted(self, controller):
 
-        self.showSuggestedInfo.delete(0,tk.END)
+        self.drawTheInfo(controller, "31", "")
 
-        codeList = ["30", adminID]
-        s.send(pickle.dumps(codeList))
-        inserted = pickle.loads(s.recv(8192))
-        print(inserted)
-
-        if not inserted:
-            messagebox.showerror("ERROR", "There's nothing to show.")
-        else:
-            index = 0
-            for item in inserted:
-                self.showSuggestedInfo.insert(index, item)
-            self.countdown(60)
-            self.showSuggestedInfo.delete(0, tk.END)
-
-    def lastDeleted(self):
-
-        self.showSuggestedInfo.delete(0, tk.END)
-
-        codeList = ["31", adminID]
-        s.send(pickle.dumps(codeList))
-        deleted = pickle.loads(s.recv(8192))
-        print(deleted)
-
-        if not deleted:
-            messagebox.showerror("ERROR", "There's nothing to show.")
-        else:
-            index = 0
-            for item in deleted:
-                self.showSuggestedInfo.insert(index, item)
-            self.countdown(60)
-            self.showSuggestedInfo.delete(0, tk.END)
-
-    def mostVisited(self):
-
-        self.showSuggestedInfo.delete(0, tk.END)
-
-        codeList = ["34", adminID]
-        s.send(pickle.dumps(codeList))
-        mostVisitedCountry = pickle.loads(s.recv(8192))
-
-        codeList = ["35", adminID]
-        s.send(pickle.dumps(codeList))
-        mostVisitedCity = pickle.loads(s.recv(8192))
-
-        if not (mostVisitedCity and mostVisitedCountry):
-            messagebox.showerror("ERROR", "There's nothing to show.")
-        else:
-            index = 0
-            self.showSuggestedInfo.insert(index, mostVisitedCountry)
-            self.showSuggestedInfo.insert(index + 1, mostVisitedCity)
-
-            self.countdown(60)
-            self.showSuggestedInfo.delete(0, tk.END)
-
-    def leastVisited(self):
+    def mostVisited(self, controller):
 
         self.showSuggestedInfo.delete(0, tk.END)
 
@@ -1922,8 +1864,6 @@ class History(ttk.Frame):
     #
     # def leastFrequentUsers(self):
 
-
-
     def countdown(self, t):
         while t != 0:
             self.update()
@@ -1931,7 +1871,42 @@ class History(ttk.Frame):
             t -= 1
         return t
 
+    def drawTheInfo(self, controller, code, aditionalCode):
 
+        self.clear()
+
+        self.infoListBox = tk.Listbox(self, width=30, height=20)
+        self.infoListBox.place(x=138, y=50)
+
+        if not aditionalCode:
+            codeList = [code, adminID]
+            s.send(pickle.dumps(codeList))
+            info = pickle.loads(s.recv(8192))
+            print(info)
+            index = 0
+            for item in info:
+                self.infoListBox.insert(index, item)
+
+        else:
+            codeList1 = [code, adminID]
+            s.send(pickle.dumps(codeList1))
+            info1 = pickle.loads(s.recv(8192))
+            print(info1)
+
+            codeList2 = [aditionalCode, adminID]
+            s.send(pickle.dumps(codeList2))
+            info2 = pickle.loads(s.recv(8192))
+            print(info2)
+
+        self.buttonBackToMenu(controller)
+    def clear(self):
+        for child in self.winfo_children():
+            child.pack_forget()
+            child.place_forget()
+    def buttonBackToMenu(self, controller):
+        buttonBACK = ttk.Button(self, text='BACK',
+                                command=lambda: self.init_history(controller))
+        buttonBACK.place(x=188, y=500)
 
 
 class logIn(tk.Frame):
