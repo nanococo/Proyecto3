@@ -1589,11 +1589,11 @@ class Modify(ttk.Frame):
         label.place(x=0, y=0)
 
         buttonModifyPrice = ttk.Button(self, text='Prices',
-                                       command=lambda: self.modifyPrice(controller))
+                                       command=lambda: self.draw_modifyPrice(controller))
         buttonModifyPrice.place(x=10, y=40)
 
         buttonModifyTime = ttk.Button(self, text='Times',
-                                      command=lambda: self.draw_checkConnections(controller))
+                                      command=lambda: self.draw_changeTimes(controller))
         buttonModifyTime.place(x=10, y=80)
 
         buttonModifySeats = ttk.Button(self, text='Seats',
@@ -1614,42 +1614,51 @@ class Modify(ttk.Frame):
 
         self.buttonBackToMenu(controller)
 
-    def clear(self):
-        for child in self.winfo_children():
-            child.pack_forget()
-            child.place_forget()
+
 
 
     #Price
-    def modifyPrice(self,controller):
+    def draw_modifyPrice(self,controller):
         self.clear()
-        
-        self.routeEntry=ttk.Entry(self)
-        self.routeEntry.pack(pady=20)
 
+        self.routeLabel = ttk.Label(self, text="Enter a route code")
+        self.routeLabel.place(x=190, y=50)
+        self.routeEntry=ttk.Entry(self)
+        self.routeEntry.place(x=177, y=80)
+
+        self.priceLabel = ttk.Label(self, text="Enter a new price")
+        self.priceLabel.place(x=190, y=130)
         self.vcmd = (self.register(self.validate), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
         self.newPrice = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
-        self.newPrice.pack(pady=20)
+        self.newPrice.place(x=177, y=160)
 
+        self.changePrice = ttk.Button(self, text="Change Price", command=lambda: self.getPriceModifyData(controller))
+        self.changePrice.place(x=200, y=200)
 
         self.buttonBackToModify(controller)
+    def getPriceModifyData(self, controller):
 
-        self.changePrice=ttk.Button(self, text="Change Price", command= lambda : self.getPriceModifyData(controller))
-        self.changePrice.pack(pady=20)
-    def getPriceModifyData(self,controller):
-        print(self.routeEntry.get())
-        print(self.newPrice.get())
+        route = self.routeEntry.get()
+        newPrice = self.newPrice.get()
 
-        codeList = ["24", "", self.routeEntry.get(), self.newPrice.get()]
-        s.send(pickle.dumps(codeList))
-        confirmation = pickle.loads(s.recv(8192))
+        if not (route or newPrice):
+            messagebox.showerror("ERROR", "Please fill all the gaps.")
+        else:
+            codeList = ["24", "", route, newPrice]
+            s.send(pickle.dumps(codeList))
+            confirmation = pickle.loads(s.recv(8192))
 
-        if confirmation:
-            messagebox.showinfo("", "Price changed")
-            self.init_modify(controller)
+            if confirmation:
+                messagebox.showinfo("DONE", "Price changed")
+                self.draw_modifyPrice(controller)
+            else:
+                messagebox.showerror("ERROR","Could not change price.")
+
+
+
 
     # Time
-    def draw_checkConnections(self,controller):
+    def draw_changeTimes(self,controller):
 
         global adminID
 
@@ -1664,36 +1673,39 @@ class Modify(ttk.Frame):
         self.countryList = ttk.Combobox(self, state="readonly")
         self.countryList["values"] = countries
         self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
-        self.countryList.place(x=153, y=50)
+        self.countryList.place(x=168, y=50)
         self.countryListLabel = ttk.Label(self, text="Select a country")
-        self.countryListLabel.place(x=183, y=30)
+        self.countryListLabel.place(x=198, y=30)
 
         self.cityList = ttk.Combobox(self, state="readonly")
         self.cityList.bind("<<ComboboxSelected>>", self.selectCity)
-        self.cityList.place(x=153, y=130)
+        self.cityList.place(x=168, y=130)
         self.cityListLabel = ttk.Label(self, text="Select a city")
-        self.cityListLabel.place(x=193, y=100)
+        self.cityListLabel.place(x=203, y=100)
+
+        Continue = ttk.Button(self, text='Continue',
+                              command=lambda: self.fillWithConnections())
+        Continue.place(x=200, y=180)
 
         self.label = tk.Label(self, text='')
         self.label.config(font=('Calibri', 10))
 
         self.connectionListbox = tk.Listbox(self, width=50)
         self.connectionListbox.bind("<<ListboxSelect>>", self.getConnectionCode)
-        self.connectionListbox.place(x=73, y=250)
+        self.connectionListbox.place(x=88, y=230)
+
+        self.newTimeLabel = ttk.Label(self, text="Enter a new duration")
+        self.newTimeLabel.place(x=181, y=420)
 
         self.vcmd = (self.register(self.validate), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
         self.newTime = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
-        self.newTime.place(x=200,y=500)
+        self.newTime.place(x=175,y=450)
 
-        self.changeTime=ttk.Button(self,text="ChangePrice", command=lambda :self.modifyTimeConfirm(controller))
-        self.changeTime.pack(side="bottom")
+        self.changeTime=ttk.Button(self,text="Change duration", command=lambda :self.modifyTimeConfirm(controller))
+        self.changeTime.place(x=188,y=500)
 
-        Continue = ttk.Button(self, text='Continue',
-                              command=lambda: self.fillWithConnections())
-        Continue.place(x=188, y=180)
+        self.buttonBackToModify(controller)
 
-        button = ttk.Button(self, text='BACK',command=lambda :self.init_modify(controller))
-        button.pack(side='bottom')
     def fillWithConnections(self):
         global adminID
         self.connectionListbox.delete(0, tk.END)
@@ -1738,19 +1750,40 @@ class Modify(ttk.Frame):
             self.searchKey[1] = self.cityList.get().split(" ")[0]
         print(self.searchKey)
     def getConnectionCode(self,event):
+
         if len(self.searchKey)==2:
             self.searchKey+=[self.connectionListbox.get(self.connectionListbox.curselection())[0]]
             print(self.searchKey[2])
         elif len(self.searchKey)==3:
             self.searchKey[2]=self.connectionListbox.get(self.connectionListbox.curselection())[0]
     def modifyTimeConfirm(self,controller):
-        codeList = ["25", "", self.searchKey[0], self.searchKey[1],self.searchKey[2],self.newTime.get()]
-        s.send(pickle.dumps(codeList))
-        confirmation = pickle.loads(s.recv(8192))
 
-        if confirmation:
-            messagebox.showinfo("", "Time changed")
-            self.init_modify(controller)
+        if not self.searchKey:
+            messagebox.showerror("ERROR", "Please fill all the gaps.")
+        elif len(self.searchKey) == 1:
+            messagebox.showerror("ERROR", "Please select a city.")
+        elif len(self.searchKey) == 2:
+            messagebox.showerror("ERROR", "Please select a connection.")
+        else:
+
+            country = self.searchKey[0]
+            city = self.searchKey[1]
+            connection = self.searchKey[2]
+            newTime = self.newTime.get()
+
+            if not newTime:
+                messagebox.showerror("ERROR", "Please enter a new duration.")
+            else:
+                codeList = ["25", "", country, city, connection, newTime]
+                s.send(pickle.dumps(codeList))
+                confirmation = pickle.loads(s.recv(8192))
+
+                if confirmation:
+                    messagebox.showinfo("DONE", "Time changed")
+                    self.draw_changeTimes(controller)
+                else:
+                    messagebox.showerror("ERROR", "Could not change time.")
+
 
     #Misc
     def validate(self, action, index, value_if_allowed, prior_value, text, validation_type, trigger_type, widget_name):
@@ -1774,7 +1807,10 @@ class Modify(ttk.Frame):
         button = ttk.Button(self, text='BACK',
                             command=lambda: controller.show_frame(AdminMainMenu))
         button.place(x=200,y=550)
-
+    def clear(self):
+        for child in self.winfo_children():
+            child.pack_forget()
+            child.place_forget()
 
 
 #########
