@@ -1100,8 +1100,9 @@ class SocketServer(socket.socket):
     def lastDeletes(self):
         """Returns latest deletes"""
         returnList = []
+        print(self.dat.lastDeletedRoute)
         if self.dat.lastDeletedRoute:
-            returnList.append("Last deleted route: " + self.dat.lastDeletedRoute[0] + ", " + self.dat.lastDeletedRoute[1] + ". From " + self.dat.lastDeletedRoute[2] + ", " + self.dat.lastDeletedRoute[3] + ", To" + self.dat.lastDeletedRoute[4] + ", " + self.dat.lastDeletedRoute[5]+"\n")
+            returnList.append("Last deleted route ID: " + self.dat.lastDeletedRoute[0]+"\n")
         if self.dat.lastDeletedTrain:
             returnList.append("Last deleted train: " + self.dat.lastDeletedTrain[0] + ", " + self.dat.lastDeletedTrain[1])
         return returnList
