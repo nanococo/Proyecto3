@@ -464,6 +464,9 @@ class SocketServer(socket.socket):
                 returnValue = self.getAllAttractions()
                 client.send(pickle.dumps(returnValue))
 
+            elif dataList[0] == "55":
+                returnValue = self.getAllRoutes()
+                client.send(pickle.dumps(returnValue))
         else:
             returnValue = "1"
             client.send(pickle.dumps(returnValue))
@@ -1345,6 +1348,16 @@ class SocketServer(socket.socket):
     def getAllAttractions(self):
         """" Returns a list with all atractions """
         return self.dat.attractions
+
+    def getAllRoutes(self):
+        """Returns all routes"""
+        result = []
+        for i in self.dat.trainRoutes:
+            if i[6]:
+                for j in i[6]:
+                    result.append(j)
+        return result
+
 
     def broadcast(self, message):
         #Sending message to all clients
