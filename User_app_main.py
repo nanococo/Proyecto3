@@ -1068,15 +1068,17 @@ class logIn(ttk.Frame):
         self.pinButton20.config(image=self.displayPin20)
         self.pinButton20.place(x=200, y=220)
 
-        self.SeatLabel = ttk.Label(text="Seats")
+        self.SeatLabel = ttk.Label(self,text="Seats")
         self.SeatLabel.place(x=50, y=545)
 
         self.vcmd = (self.register(self.validate), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
         self.amountOfSeats = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
         self.amountOfSeats.place(x=70, y=500)
 
+        backButton=ttk.Button(self, text="Back", command= lambda : self.chooseRecervation())
+        backButton.place(x=290,y=500)
         self.sendCustomRoutesButton = ttk.Button(self, text = "Find Routes", command= lambda: self.sendCustomToServer())
-        self.sendCustomRoutesButton.place(x=290, y=500)
+        self.sendCustomRoutesButton.place(x=380, y=500)
 
 
     def sendCustomToServer(self):
@@ -1099,19 +1101,20 @@ class logIn(ttk.Frame):
         codeList = ["41", "", self.departCountry, self.departCity[0], self.arriveCountry, self.arriveCity[0], timeFlag]
         s.send(pickle.dumps(codeList))
         possibleLists = pickle.loads(s.recv(8192))
-
-        if possibleLists != "1" :
+        print(possibleLists)
+        if possibleLists != "1" and possibleLists!=[]:
             for child in self.winfo_children():
                 child.place_forget()
                 child.pack_forget()
 
+
             self.showRoutes=tk.Listbox(self, width=50)
-            for i in [1,2,4,5]:
+            for i in possibleLists[:len(possibleLists)-1]:#Que no entre el precio aqui
                 self.showRoutes.insert(tk.END,i)
 
             self.showRoutes.pack(pady=10)
 
-            self.priceTag=ttk.Label(self, text="The price is: "+"AQUI METE EL PRECIO")
+            self.priceTag=ttk.Label(self, text="The price is: "+"META AQUI EL PRECIO")
             self.priceTag.pack(pady=20)
 
             acceptReservation=ttk.Button(self, text="Accept", command= self.getCustomRoute)
@@ -1124,7 +1127,10 @@ class logIn(ttk.Frame):
 
 
         else:
-            messagebox.showinfo("Access denied","Server is blocked")
+            if possibleLists=="1":
+                messagebox.showinfo("Access denied","Server is blocked")
+            elif possibleLists==[]:
+                messagebox.showinfo("","There is no posible routes")
 
     def getCustomRoute(self):
         global reservations
@@ -1508,6 +1514,9 @@ class Queries(ttk.Frame):
             for child in self.winfo_children():
                 child.pack_forget()
 
+            self.countryLabel=ttk.Label(self,text="Countries")
+            self.countryLabel.pack(pady=10)
+
             self.countryList=tk.Listbox(self, width=50)
 
             for i in countryListServer:
@@ -1531,6 +1540,9 @@ class Queries(ttk.Frame):
 
             self.searchKey=[]
 
+            label=ttk.Label(self,text="Select a country")
+            label.pack(pady=10)
+
             self.selectCountry=ttk.Combobox(self)
 
             self.selectCountry["values"] = countriesServerList
@@ -1538,8 +1550,9 @@ class Queries(ttk.Frame):
             self.selectCountry.pack()
 
 
-
             self.continueToCities=ttk.Button(self, text="Continue", command=self.cities2)
+            self.continueToCities.pack(pady=10)
+
             self.back = ttk.Button(self, text="back", command=self.init)
             self.back.pack()
         else:
@@ -1557,6 +1570,9 @@ class Queries(ttk.Frame):
                 child.place_forget()
                 child.pack_forget()
 
+            label=ttk.Label(self, text="Cities")
+            label.pack(pady=10)
+
             self.cityList = tk.Listbox(self, width=50)
 
 
@@ -1570,6 +1586,7 @@ class Queries(ttk.Frame):
             self.back.pack()
         else:
             messagebox.showinfo("Access denied", "Server is blocked")
+
     def conections1(self):
         for child in self.winfo_children():
             child.place_forget()
@@ -1621,6 +1638,9 @@ class Queries(ttk.Frame):
             child.place_forget()
             child.pack_forget()
 
+        label = ttk.Label(self, text="Conections")
+        label.pack(pady=10)
+
         self.conectionsList = tk.Listbox(self, width=50)
 
         codeList = ["05", "", self.searchKey[0], self.searchKey[1]]
@@ -1640,13 +1660,16 @@ class Queries(ttk.Frame):
             child.place_forget()
             child.pack_forget()
 
+        label1 = ttk.Label(self, text="Select train type")
+        label1.pack(pady=10)
+
         self.trainType=ttk.Combobox(self)
         self.trainType["values"]=['01','02','03','04']
         self.trainType.bind("<<ComboboxSelected>>", self.trains_get)
         self.trainType.pack()
 
         self.continueToTrains=ttk.Button(self, text="Continue", command=self.trains2)
-        self.continueToTrains.pack()
+        self.continueToTrains.pack(pady=10)
 
 
         self.back=ttk.Button(self, text="Back", command=self.init)
@@ -1665,9 +1688,10 @@ class Queries(ttk.Frame):
                 child.place_forget()
                 child.pack_forget()
 
+            label = ttk.Label(self, text="Trains")
+            label.pack(pady=10)
+
             self.trainList = tk.Listbox(self, width=50)
-
-
 
             for i in trainListServer:
                 self.trainList.insert(tk.END, i[0:5])
@@ -1687,16 +1711,18 @@ class Queries(ttk.Frame):
 
         self.searchKey=[]
 
+        label = ttk.Label(self, text="Enter train code")
+        label.pack(pady=10)
 
         self.trainCode=ttk.Entry(self)
         self.trainCode.pack()
 
 
         self.continueToRoutes=ttk.Button(self, text="Continue", command = self.prices2)
-        self.continueToRoutes.pack(side=tk.BOTTOM)
+        self.continueToRoutes.pack(pady=10)
 
         self.back=ttk.Button(self, text="Back", command=self.init)
-        self.back.pack(side=tk.BOTTOM)
+        self.back.pack()
     def prices2(self):
         codeList = ["07", "", self.trainCode.get()]
         s.send(pickle.dumps(codeList))
@@ -1733,14 +1759,17 @@ class Queries(ttk.Frame):
 
         self.searchKey = []
 
+        label = ttk.Label(self, text="Enter train code")
+        label.pack(pady=10)
+
         self.trainCode = ttk.Entry(self)
         self.trainCode.pack()
 
         self.continueToRoutes = ttk.Button(self, text="Continue", command=self.seats2)
-        self.continueToRoutes.pack(side=tk.BOTTOM)
+        self.continueToRoutes.pack(pady=10)
 
         self.back = ttk.Button(self, text="Back", command=self.init)
-        self.back.pack(side=tk.BOTTOM)
+        self.back.pack()
     def seats2(self):
         codeList = ["08", "", self.trainCode.get()]
         s.send(pickle.dumps(codeList))
@@ -1757,6 +1786,9 @@ class Queries(ttk.Frame):
             for child in self.winfo_children():
                 child.place_forget()
                 child.pack_forget()
+
+            label = ttk.Label(self, text="Seats")
+            label.pack(pady=10)
 
             self.seats = tk.Listbox(self, width=50)
 
@@ -1843,9 +1875,10 @@ class Queries(ttk.Frame):
                 child.place_forget()
                 child.pack_forget()
 
+            label = ttk.Label(self, text="Routes")
+            label.pack(pady=10)
+            
             self.routeList = tk.Listbox(self, width=50)
-
-
 
             for i in routesServer:
                 self.routeList.insert(tk.END,i)
