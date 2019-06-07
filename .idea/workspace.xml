@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e0eb49f2-0f39-4f8b-862d-e71b6bfdc6d9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/User_app_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/User_app_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin_app_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Admin_app_main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,11 +12,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/User_app_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="1879" column="12" lean-forward="true" selection-start-line="1879" selection-start-column="12" selection-end-line="1879" selection-end-column="12" />
+            <state relative-caret-position="170">
+              <caret line="1680" column="23" selection-start-line="1680" selection-start-column="20" selection-end-line="1680" selection-end-column="23" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
                 <element signature="e#30818#33700#0" />
@@ -24,6 +24,7 @@
                 <element signature="e#42710#50498#0" expanded="true" />
                 <element signature="e#50544#52081#0" expanded="true" />
                 <element signature="e#70630#71145#0" expanded="true" />
+                <element signature="e#76947#77737#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -38,13 +39,18 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Admin_app_main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3888">
-              <caret line="1854" selection-start-line="1854" selection-end-line="1854" />
+            <state relative-caret-position="142">
+              <caret line="1830" column="27" selection-start-line="1830" selection-start-column="27" selection-end-line="1830" selection-end-column="27" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
+                <element signature="e#58122#59509#0" expanded="true" />
+                <element signature="e#61024#62857#0" expanded="true" />
+                <element signature="e#64997#66038#0" expanded="true" />
+                <element signature="e#66094#67120#0" expanded="true" />
+                <element signature="e#67374#68736#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -53,10 +59,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="1108" selection-start-line="1108" selection-end-line="1108" />
+            <state relative-caret-position="122">
+              <caret line="288" column="48" selection-start-line="288" selection-start-column="48" selection-end-line="288" selection-end-column="48" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
+                <element signature="e#42305#42845#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -116,11 +123,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>256</find>
-      <find>deleteA</find>
-      <find>11</find>
-      <find>getCit</find>
-      <find>switzerland</find>
       <find>getCountr</find>
       <find>loadRo</find>
       <find>E763F</find>
@@ -134,7 +136,6 @@
       <find>loadConnections</find>
       <find>deleteRo</find>
       <find>loadConn</find>
-      <find>updateSeats</find>
       <find>getFa</find>
       <find>04</find>
       <find>custom</find>
@@ -146,6 +147,12 @@
       <find>31</find>
       <find>last</find>
       <find>lastDeletedRoute</find>
+      <find>modify</find>
+      <find>updatePrice</find>
+      <find>updateSeats</find>
+      <find>getTrainBy</find>
+      <find>updateSea</find>
+      <find>&quot;06</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -161,10 +168,10 @@
         <option value="$PROJECT_DIR$/client.py" />
         <option value="$PROJECT_DIR$/dataFiles/Atracciones.txt" />
         <option value="$PROJECT_DIR$/loadData.py" />
-        <option value="$PROJECT_DIR$/Admin_app_main.py" />
-        <option value="$PROJECT_DIR$/server.py" />
         <option value="$PROJECT_DIR$/dataFiles/Usuarios.txt" />
         <option value="$PROJECT_DIR$/User_app_main.py" />
+        <option value="$PROJECT_DIR$/server.py" />
+        <option value="$PROJECT_DIR$/Admin_app_main.py" />
       </list>
     </option>
   </component>
@@ -226,7 +233,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.User_app_main">
+  <component name="RunManager" selected="Python.Admin_app_main">
     <configuration name="Admin_App_Beta1" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Proyecto_3" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -334,9 +341,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.User_app_main" />
-        <item itemvalue="Python.server" />
         <item itemvalue="Python.Admin_app_main" />
+        <item itemvalue="Python.server" />
+        <item itemvalue="Python.User_app_main" />
         <item itemvalue="Python.client" />
         <item itemvalue="Python.Admin_App_Beta1" />
       </list>
@@ -359,7 +366,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17931548" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17931548" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -367,7 +374,7 @@
       <window_info anchor="bottom" id="Debug" order="2" weight="0.39886847" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="Run" order="5" visible="true" weight="0.27168575" />
+      <window_info active="true" anchor="bottom" id="Run" order="5" visible="true" weight="0.27168575" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
@@ -450,37 +457,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Admin_app_main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3888">
-          <caret line="1854" selection-start-line="1854" selection-end-line="1854" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="1108" selection-start-line="1108" selection-end-line="1108" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
           <caret line="162" column="11" selection-start-line="162" selection-start-column="11" selection-end-line="162" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataFiles/Paises.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="17" column="9" lean-forward="true" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -498,10 +478,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dataFiles/Paises.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="17" column="9" lean-forward="true" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="288" column="48" selection-start-line="288" selection-start-column="48" selection-end-line="288" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#42305#42845#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/User_app_main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="1879" column="12" lean-forward="true" selection-start-line="1879" selection-start-column="12" selection-end-line="1879" selection-end-column="12" />
+        <state relative-caret-position="170">
+          <caret line="1680" column="23" selection-start-line="1680" selection-start-column="20" selection-end-line="1680" selection-end-column="23" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <element signature="e#30818#33700#0" />
@@ -509,6 +507,22 @@
             <element signature="e#42710#50498#0" expanded="true" />
             <element signature="e#50544#52081#0" expanded="true" />
             <element signature="e#70630#71145#0" expanded="true" />
+            <element signature="e#76947#77737#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Admin_app_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="1830" column="27" selection-start-line="1830" selection-start-column="27" selection-end-line="1830" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+            <element signature="e#58122#59509#0" expanded="true" />
+            <element signature="e#61024#62857#0" expanded="true" />
+            <element signature="e#64997#66038#0" expanded="true" />
+            <element signature="e#66094#67120#0" expanded="true" />
+            <element signature="e#67374#68736#0" expanded="true" />
           </folding>
         </state>
       </provider>

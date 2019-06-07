@@ -1597,7 +1597,7 @@ class Modify(ttk.Frame):
         buttonModifyTime.place(x=10, y=80)
 
         buttonModifySeats = ttk.Button(self, text='Seats',
-                                       command=lambda: controller.show_frame('PENDIENTE'))
+                                       command=lambda: self.draw_updateSeats(controller))
         buttonModifySeats.place(x=10, y=120)
 
         buttonModifyRoute = ttk.Button(self, text='Route',
@@ -1613,9 +1613,6 @@ class Modify(ttk.Frame):
         buttonModifyMigratoryStatus.place(x=130, y=120)
 
         self.buttonBackToMenu(controller)
-
-
-
 
     #Price
     def draw_modifyPrice(self,controller):
@@ -1653,9 +1650,6 @@ class Modify(ttk.Frame):
                 self.draw_modifyPrice(controller)
             else:
                 messagebox.showerror("ERROR","Could not change price.")
-
-
-
 
     # Time
     def draw_changeTimes(self,controller):
@@ -1705,7 +1699,6 @@ class Modify(ttk.Frame):
         self.changeTime.place(x=188,y=500)
 
         self.buttonBackToModify(controller)
-
     def fillWithConnections(self):
         global adminID
         self.connectionListbox.delete(0, tk.END)
@@ -1783,6 +1776,67 @@ class Modify(ttk.Frame):
                     self.draw_changeTimes(controller)
                 else:
                     messagebox.showerror("ERROR", "Could not change time.")
+
+    #Seats
+    def draw_updateSeats(self,controller):
+        self.clear()
+
+        self.modifyKey=[]
+
+        trainTypelabel=ttk.Label(self,text="Select train Type")
+        trainTypelabel.pack(pady=10)
+
+        self.trainType=ttk.Combobox(self)
+        self.trainType["values"]=['01','02','03','04']
+        self.trainType.bind("<<ComboboxSelected>>", self.updateTrains)
+        self.trainType.pack()
+
+        trainCodelabel=ttk.Label(self,text="Select Train")
+        trainCodelabel.pack(pady=10)
+
+        self.trains=ttk.Combobox(self)
+        self.trains.bind("<<ComboboxSelected>>", self.getTrain)
+        self.trains.pack()
+
+        trainSeatslabel=ttk.Label(self, text=" New seats")
+        trainSeatslabel.pack(pady=10)
+
+        self.vcmd = (self.register(self.validate), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+        self.newSeats = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
+        self.newSeats.pack()
+
+        modify=ttk.Button(self, text="Modify", command=lambda:self.modifySeats(controller))
+        modify.pack(pady=10)
+
+        self.buttonBackToModify(controller)
+
+    def updateTrains(self, event):
+        self.modifyKey=[self.trainType.get()]
+
+        codeList = ["06", "",self.modifyKey[0]]
+        s.send(pickle.dumps(codeList))
+        trainElement = pickle.loads(s.recv(8192))
+
+        self.trains["values"]=trainElement
+    def getTrain(self, event):
+        if len(self.modifyKey)==1:
+            self.modifyKey+=[self.trains.get().split(" ")[1]]
+        elif len(self.modifyKey)==2:
+            self.modifyKey[1]=self.trains.get().split(" ")[1]
+        print(self.modifyKey)
+    def modifySeats(self,controller):
+        if self.newSeats.get()=="" or len(self.modifyKey)!=2:
+            messagebox.showinfo("","All info is necessary")
+        else:
+            codeList = ["26", "", self.modifyKey[0], self.modifyKey[1], self.newSeats.get()]
+            s.send(pickle.dumps(codeList))
+            updateSeats = pickle.loads(s.recv(8192))
+
+            self.init_modify(controller)
+            messagebox.showinfo("","Seats updated successfully")
+
+
+
 
 
     #Misc
