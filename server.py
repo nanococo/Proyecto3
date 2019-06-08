@@ -464,6 +464,7 @@ class SocketServer(socket.socket):
                 returnValue = self.getAllAttractions()
                 client.send(pickle.dumps(returnValue))
 
+
         else:
             returnValue = "1"
             client.send(pickle.dumps(returnValue))
@@ -924,6 +925,7 @@ class SocketServer(socket.socket):
         """Updates the prices of a route"""
         success = False
         tempTrainRoutes = []
+
         for i in self.dat.trainRoutes:
             tempTrainRoutes.append(i[:6]+[[]])
 

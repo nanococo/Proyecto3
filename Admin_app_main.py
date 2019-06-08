@@ -644,7 +644,7 @@ class Insert(tk.Frame):
                                     self.availableCountries.get())
     #
 
-    #Insert connectio
+    #Insert connection
     def draw_insertConnection(self, controller):
         global adminID
         self.clear()
@@ -1601,15 +1601,15 @@ class Modify(ttk.Frame):
         buttonModifySeats.place(x=10, y=120)
 
         buttonModifyRoute = ttk.Button(self, text='Route',
-                                       command=lambda: controller.show_frame('PENDIENTE'))
+                                       command=lambda: self.draw_modifyRoutes(controller))
         buttonModifyRoute.place(x=130, y=40)
 
         buttonModifyTrain = ttk.Button(self, text='Train',
-                                       command=lambda: controller.show_frame('PENDIENTE'))
+                                       command=lambda: self.draw_modifyTrain(controller))
         buttonModifyTrain.place(x=130, y=80)
 
         buttonModifyMigratoryStatus = ttk.Button(self, text='Migratory Status',
-                                                 command=lambda: controller.show_frame('PENDIENTE'))
+                                                 command=lambda: self.draw_modifyMigratoryStatus(controller))
         buttonModifyMigratoryStatus.place(x=130, y=120)
 
         self.buttonBackToMenu(controller)
@@ -1699,10 +1699,6 @@ class Modify(ttk.Frame):
         self.changeTime.place(x=188,y=500)
 
         self.buttonBackToModify(controller)
-<<<<<<< HEAD
-        
-=======
->>>>>>> 193fcf42d39bdcae075726ad37d1acfe2566add7
     def fillWithConnections(self):
         global adminID
         self.connectionListbox.delete(0, tk.END)
@@ -1730,22 +1726,6 @@ class Modify(ttk.Frame):
                 for connection in connections:
                     self.connectionListbox.insert(index, connection)
                     print(connection[0])
-    def updateCitiesOnSelection(self, event):
-        global adminID
-        self.searchKey = [self.countryList.get().split(" ")[0]]
-        print(self.searchKey[0])
-        codeList = ["04", adminID, self.searchKey[0]]
-        s.send(pickle.dumps(codeList))
-        cities = pickle.loads(s.recv(8192))
-        self.cityList["values"] = cities
-        print(self.searchKey)
-    def selectCity(self, event):
-
-        if len(self.searchKey) == 1:
-            self.searchKey += [self.cityList.get().split(" ")[0]]
-        else:
-            self.searchKey[1] = self.cityList.get().split(" ")[0]
-        print(self.searchKey)
     def getConnectionCode(self,event):
 
         if len(self.searchKey)==2:
@@ -1787,33 +1767,36 @@ class Modify(ttk.Frame):
 
         self.modifyKey=[]
 
+        codeList = ["51", adminID]
+        s.send(pickle.dumps(codeList))
+        types = pickle.loads(s.recv(8192))
+        print(types)
+
         trainTypelabel=ttk.Label(self,text="Select train Type")
-        trainTypelabel.pack(pady=10)
+        trainTypelabel.place(x=190, y=30)
 
         self.trainType=ttk.Combobox(self)
-        self.trainType["values"]=['01','02','03','04']
+        self.trainType["values"] = types
         self.trainType.bind("<<ComboboxSelected>>", self.updateTrains)
-        self.trainType.pack()
+        self.trainType.place(x=165, y=50)
 
         trainCodelabel=ttk.Label(self,text="Select Train")
-        trainCodelabel.pack(pady=10)
+        trainCodelabel.place(x=203, y=90)
 
         self.trains=ttk.Combobox(self)
         self.trains.bind("<<ComboboxSelected>>", self.getTrain)
-        self.trains.pack()
+        self.trains.place(x=165, y=110)
 
-        trainSeatslabel=ttk.Label(self, text=" New seats")
-        trainSeatslabel.pack(pady=10)
-
+        trainSeatslabel=ttk.Label(self, text="New seats")
+        trainSeatslabel.place(x=205, y=150)
         self.vcmd = (self.register(self.validate), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
         self.newSeats = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
-        self.newSeats.pack()
+        self.newSeats.place(x=175, y=170)
 
         modify=ttk.Button(self, text="Modify", command=lambda:self.modifySeats(controller))
-        modify.pack(pady=10)
+        modify.place(x=200,y=220)
 
         self.buttonBackToModify(controller)
-
     def updateTrains(self, event):
         self.modifyKey=[self.trainType.get()]
 
@@ -1829,16 +1812,136 @@ class Modify(ttk.Frame):
             self.modifyKey[1]=self.trains.get().split(" ")[1]
         print(self.modifyKey)
     def modifySeats(self,controller):
+
         if self.newSeats.get()=="" or len(self.modifyKey)!=2:
-            messagebox.showinfo("","All info is necessary")
+            messagebox.showerror("ERROR","Please fill all the gaps.")
         else:
             codeList = ["26", "", self.modifyKey[0], self.modifyKey[1], self.newSeats.get()]
             s.send(pickle.dumps(codeList))
-            updateSeats = pickle.loads(s.recv(8192))
+            success = pickle.loads(s.recv(8192))
 
-            self.init_modify(controller)
-            messagebox.showinfo("","Seats updated successfully")
+            if success:
+                messagebox.showinfo("DONE", "Seats updated successfully.")
+                self.draw_updateSeats(controller)
+            else:
+                messagebox.showerror("ERROR","Could not update seats.")
 
+    #Routes
+    def draw_modifyRoutes(self, controller):
+
+        self.clear()
+
+        self.buttonBackToModify(controller)
+
+    #Train
+    def draw_modifyTrain(self, controller):
+
+        self.clear()
+
+        # [4] newTrainName
+        # [5] newTrainCapacity
+        # [6] newTrainCountry
+        # [7] newTrainCity
+
+        codeList = ["43", adminID]
+        s.send(pickle.dumps(codeList))
+        self.trains = pickle.loads(s.recv(8192))
+        self.short_trains = self.sliceTrains(self.trains)
+
+        self.trainLabel = ttk.Label(self, text="Select a train to modify")
+        self.trainLabel.place(x=176, y=30)
+
+        self.trainCode = ttk.Combobox(self, state="readonly")
+        self.trainCode["values"] = self.short_trains
+        self.trainCode.bind("<<ComboboxSelected>>")
+        self.trainCode.place(x=168, y=50)
+        self.buttonBackToModify(controller)
+
+        instruction = ttk.Label(self, text="Fill only what you desire to modify")
+        instruction.place(x=150, y=90)
+
+        newNameLabel = ttk.Label(self, text="New name")
+        newNameLabel.place(x=205, y=150)
+        self.newName = ttk.Entry(self)
+        self.newName.place(x=175, y=170)
+
+        newCapacityLabel = ttk.Label(self, text="New capacity")
+        newCapacityLabel.place(x=198, y=210)
+        self.newCapacity = ttk.Entry(self)
+        self.newCapacity.place(x=175, y=230)
+
+        codeList = ["03", adminID]
+        s.send(pickle.dumps(codeList))
+        countries = pickle.loads(s.recv(8192))
+
+        self.countryList = ttk.Combobox(self, state="readonly")
+        self.countryList["values"] = countries
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.countryList.place(x=168, y=300)
+        self.countryListLabel = ttk.Label(self, text="New country")
+        self.countryListLabel.place(x=203, y=280)
+
+        self.cityList = ttk.Combobox(self, state="readonly")
+        self.cityList.bind("<<ComboboxSelected>>", self.selectCity)
+        self.cityList.place(x=168, y=360)
+        self.cityListLabel = ttk.Label(self, text="New city")
+        self.cityListLabel.place(x=213, y=340)
+
+        self.updateTrain = ttk.Button(self, text="Update",
+                                      command=lambda: self.modifyTrain(controller))
+        self.updateTrain.place(x=200, y=410)
+    def modifyTrain(self, controller):
+
+        train = self.getSelectedTrain()
+
+        if not train:
+            messagebox.showerror("ERROR", "Please select a train.")
+        else:
+            type = train[0]
+            code = train[1]
+            newName = self.newName.get()
+            if not newName:
+                newName = train[2]
+            newCapacity = self.newCapacity.get()
+            if not newCapacity:
+                newCapacity = train[3]
+            newCountry = self.countryList.get()
+            if not newCountry:
+                newCountry = train[4]
+            newCity = self.cityList.get()
+            if not newCity and newCountry != train[4]:
+                messagebox.showerror("ERROR", "Please select a city of the new country.")
+
+            codeList = ["28", adminID, type, code, newName,
+                        newCapacity, newCountry, newCity]
+            s.send(pickle.dumps(codeList))
+            success = pickle.loads(s.recv(8192))
+
+            if success:
+                messagebox.showinfo("DONE", "The train was successfully updated.")
+                self.draw_modifyTrain(controller)
+            else:
+                messagebox.showerror("ERROR", "Could not update train.")
+    def sliceTrains(self, trains):
+        newList = []
+        for train in trains:
+            newList += [[train[1], train[2]]]
+        return newList
+    def getSelectedTrain(self):
+
+        self.selected = []
+        searchFor = self.trainCode.get().split(" ")[0]
+        for train in self.trains:
+            if train[1] == searchFor:
+                self.selected = train
+        return self.selected
+
+    #Migratory status
+    def draw_modifyMigratoryStatus(self, controller):
+
+        self.clear()
+
+        self.buttonBackToModify(controller)
 
 
 
@@ -1869,6 +1972,22 @@ class Modify(ttk.Frame):
         for child in self.winfo_children():
             child.pack_forget()
             child.place_forget()
+    def updateCitiesOnSelection(self, event):
+        global adminID
+        self.searchKey = [self.countryList.get().split(" ")[0]]
+        print(self.searchKey[0])
+        codeList = ["04", adminID, self.searchKey[0]]
+        s.send(pickle.dumps(codeList))
+        cities = pickle.loads(s.recv(8192))
+        self.cityList["values"] = cities
+        print(self.searchKey)
+    def selectCity(self, event):
+
+        if len(self.searchKey) == 1:
+            self.searchKey += [self.cityList.get().split(" ")[0]]
+        else:
+            self.searchKey[1] = self.cityList.get().split(" ")[0]
+        print(self.searchKey)
 
 
 #########

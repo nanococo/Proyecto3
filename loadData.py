@@ -107,6 +107,7 @@ def loadRoutes():
 
     return final
 
+
 def loadRoutesFull():
     # Loads routes file and add routes to a list
     countriesFile = open("dataFiles/Rutas.txt", 'r')
