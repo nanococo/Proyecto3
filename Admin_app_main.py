@@ -1432,47 +1432,78 @@ class Delete(tk.Frame):
     def draw_deleteRoute(self, controller):
         self.clear()
 
-        self.routeCodeLabel = ttk.Label(self, text="Please enter a route code to delete")
-        self.routeCodeLabel.place(x=142, y=20)
-        self.routeCode = ttk.Entry(self)
-        self.routeCode.place(x=175,y=40)
+        codeList = ["56", adminID]
+        s.send(pickle.dumps(codeList))
+        self.routes = pickle.loads(s.recv(8192))
+        # display_routes = self.prepareForDisplay()
+
+        self.routeCodeLabel = ttk.Label(self, text="Please select a route to delete")
+        self.routeCodeLabel.place(x=156, y=20)
+
+        self.routeCode = ttk.Combobox(self, state="readonly", width=30)
+        self.routeCode["values"] = self.routes
+        self.routeCode.bind("<<ComboboxSelected>>")
+        self.routeCode.place(x=133, y=50)
 
         Continue = ttk.Button(self, text='Continue',
                               command=lambda: self.confirmationRoute(controller))
         Continue.place(x=200, y=80)
 
         self.buttonBackToDelete(controller)
-    def confirmationRoute(self, controller):
+    # def confirmationRoute(self, controller):
+    #
+    #     self.selection = self.routeCode.get().split(" ")
+    #     print(self.selection)
+    #     print(self.routes)
+    #
+    #     if not self.selection:
+    #         messagebox.showerror("ERROR", "Please type a route code")
+    #     else:
+    #
+    #         self.confirmLabel = ttk.Label(self, text="Are you sure?")
+    #         self.confirmLabel.place(x=200,y=110)
+    #
+    #         self.yes = ttk.Button(self, text="YES",
+    #                               command=lambda: self.confirmationCommandRoute("YES", controller))
+    #         self.yes.place(x=150, y=150)
+    #
+    #         self.no = ttk.Button(self, text="NO",
+    #                              command=lambda: self.confirmationCommandRoute("NO", controller))
+    #         self.no.place(x=250, y=150)
+    # def confirmationCommandRoute(self, confirmation, controller):
+    #
+    #     if confirmation == "YES":
+    #
+    #         routeCode = self.getSelectedRoute()[2]
+    #         print(routeCode)
+    #
+    #         codeList = ["22", adminID, routeCode]
+    #         print(codeList)
+    #         s.send(pickle.dumps(codeList))
+    #         success = pickle.loads(s.recv(8192))
+    #
+    #         if success:
+    #             messagebox.showinfo("DONE", "The route was succesfully deleted.")
+    #         else:
+    #             messagebox.showerror("ERROR", "The route code does not exist.")
+    #
+    #     self.draw_deleteRoute(controller)
+    # def prepareForDisplay(self):
+    #     niceRoutes = []
+    #     for route in self.routes:
+    #         niceRoutes += [["CODE:",route[2],"(",route[3],",",route[4],")","-","(",route[5],",",route[6],")"]]
+    #     return niceRoutes
+    # def getSelectedRoute(self):
+    #
+    #     selected = ""
+    #     for route in self.routes:
+    #         if self.selection[1] == route[2]:
+    #             selected = route
+    #             return selected
 
-        if self.routeCode.get() == "":
-            messagebox.showerror("ERROR", "Please type a route code")
-        else:
 
-            self.confirmLabel = ttk.Label(self, text="Are you sure?")
-            self.confirmLabel.place(x=200,y=110)
 
-            self.yes = ttk.Button(self, text="YES",
-                                  command=lambda: self.confirmationCommandRoute("YES", controller))
-            self.yes.place(x=150, y=150)
 
-            self.no = ttk.Button(self, text="NO",
-                                 command=lambda: self.confirmationCommandRoute("NO", controller))
-            self.no.place(x=250, y=150)
-
-    def confirmationCommandRoute(self, confirmation, controller):
-
-        if confirmation == "YES":
-
-            codeList = ["22", adminID, self.routeCode.get()]
-            s.send(pickle.dumps(codeList))
-            success = pickle.loads(s.recv(8192))
-
-            if success:
-                messagebox.showinfo("DONE", "The route was succesfully deleted.")
-            else:
-                messagebox.showerror("ERROR", "The route code does not exist.")
-
-        self.draw_deleteRoute(controller)
     #
 
     #Delete Atraction
@@ -1899,29 +1930,45 @@ class Modify(ttk.Frame):
         else:
             type = train[0]
             code = train[1]
+            valid = True
+
             newName = self.newName.get()
             if not newName:
                 newName = train[2]
+
             newCapacity = self.newCapacity.get()
             if not newCapacity:
                 newCapacity = train[3]
-            newCountry = self.countryList.get()
+            elif not newCapacity.isdigit():
+                valid = False
+                messagebox.showerror("ERROR", "The new capacity must be an integral number.")
+
+            newCountry = self.countryList.get().split(" ")[0]
             if not newCountry:
                 newCountry = train[4]
-            newCity = self.cityList.get()
+
+            newCity = self.cityList.get().split(" ")[0]
             if not newCity and newCountry != train[4]:
+                valid = False
                 messagebox.showerror("ERROR", "Please select a city of the new country.")
+            elif not newCity:
+                newCity = train[5]
 
-            codeList = ["28", adminID, type, code, newName,
-                        newCapacity, newCountry, newCity]
-            s.send(pickle.dumps(codeList))
-            success = pickle.loads(s.recv(8192))
 
-            if success:
-                messagebox.showinfo("DONE", "The train was successfully updated.")
-                self.draw_modifyTrain(controller)
-            else:
-                messagebox.showerror("ERROR", "Could not update train.")
+            if valid:
+
+                print(type, code, newName, newCapacity, newCountry, newCity)
+
+                codeList = ["28", adminID, type, code, newName,
+                            newCapacity, newCountry, newCity]
+                s.send(pickle.dumps(codeList))
+                success = pickle.loads(s.recv(8192))
+
+                if success:
+                    messagebox.showinfo("DONE", "The train was successfully updated.")
+                    self.draw_modifyTrain(controller)
+                else:
+                    messagebox.showerror("ERROR", "Could not update train.")
     def sliceTrains(self, trains):
         newList = []
         for train in trains:

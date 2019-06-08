@@ -123,6 +123,7 @@ def loadRoutesFull():
     return final
 
 
+
 def loadUsers():
     # Loads users file and add users to a list
     countriesFile = open("dataFiles/Usuarios.txt", 'r', encoding='utf-8')
@@ -212,6 +213,22 @@ def mergeTrainRoute(trainsList, routesList, connectionsListForMerge):
                     routesForTrains.append(j[2:])
 
         final[i].append(routesForTrains)
+    return final
+
+def mergeTrainRouteWCode(trainsList, routesList, connectionsListForMerge):
+    # Merges the Train list with the Route List
+    final = trainsList
+
+    for i in range(len(trainsList)):
+        routesForTrains = []
+        key = trainsList[i][1]
+
+        for j in routesList:
+            if j[1] == key:
+                if connectionExists(j[3], j[4], j[5], j[6], connectionsListForMerge) and trainsList[i][4] == j[3] and trainsList[i][5] == j[4]:
+                    routesForTrains.append(j[2:])
+        final[i].append(routesForTrains)
+
     return final
 
 
@@ -504,6 +521,7 @@ class loadData:
         self.countriesCopy = copy.deepcopy(self.countries)
         self.citiesCopy = copy.deepcopy(self.cities)
         self.routesCopy = copy.deepcopy(self.routes)
+        self.routesCopyWCode = copy.deepcopy(self.routesWithCode)
 
         # Merging the Cities
         self.countryCities = mergeCountryCity(self.countriesCopy, self.citiesCopy)
@@ -517,7 +535,10 @@ class loadData:
         # Merging the routes and trains
         self.trains = self.loadTrains()
         self.trainsCopy = copy.deepcopy(self.trains)
+        self.trainsCopyForCodes = copy.deepcopy(self.trains)
         self.trainRoutes = mergeTrainRoute(self.trainsCopy, self.routesCopy, self.connectionsCopyForRoutes)
+        self.trainRoutesWCode = mergeTrainRouteWCode(self.trainsCopyForCodes, self.routesCopyWCode, self.connectionsCopyForRoutes)
+
 
         # Copies for Reports
         self.countriesReports = copy.deepcopy(self.countries)
@@ -555,4 +576,5 @@ class loadData:
         # print(self.cities)
         # print(self.trainRoutes)
         print(self.trainRoutes)
+        print(self.trainRoutesWCode)
         print(self.countryCitiesConnections)
