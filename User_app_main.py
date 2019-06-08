@@ -1938,4 +1938,6 @@ if __name__ == '__main__':
     # possibleLists = pickle.loads(s.recv(8192))
     # print(possibleLists)
 
+
+    print(possibleLists)
     app.mainloop()
