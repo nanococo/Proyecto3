@@ -933,9 +933,13 @@ class SocketServer(socket.socket):
         """Updates the prices of a route"""
         success = False
         tempTrainRoutes = []
+        tempTrainRoutesWCode = []
 
         for i in self.dat.trainRoutes:
             tempTrainRoutes.append(i[:6]+[[]])
+
+        for i in self.dat.trainRoutesWCode:
+            tempTrainRoutesWCode.append(i[:6]+[[]])
 
         for i in self.dat.routesWithCode:
             for k in self.dat.trainRoutes:
@@ -943,10 +947,20 @@ class SocketServer(socket.socket):
                     if i[2] != routeCode:
                         if i[0] == j[0] and i[1] == j[1]:
                             for l in k[6]:
-                                if l== i[3:]:
-                                    j[6] = i[3:]
+                                if l == i[3:]:
+                                    j[6] += [i[3:]]
 
+        for i in self.dat.routesWithCode:
+            for k in self.dat.trainRoutesWCode:
+                for j in tempTrainRoutesWCode:
+                    if i[2] != routeCode:
+                        if i[0] == j[0] and i[1] == j[1]:
+                            for l in k[6]:
+                                if l == i[2:]:
+                                    j[6] += [i[2:]]
 
+        if self.dat.trainRoutesWCode != tempTrainRoutesWCode:
+            self.dat.trainRoutesWCode = tempTrainRoutesWCode
 
         if self.dat.trainRoutes != tempTrainRoutes:
             self.dat.trainRoutes = tempTrainRoutes
@@ -1358,7 +1372,12 @@ class SocketServer(socket.socket):
 
     def getAllRoutesWithCode(self):
         """Returns all routes with code"""
-        return self.dat.routesWithCode
+        result = []
+        for i in self.dat.trainRoutesWCode:
+            if i[6]:
+                for j in i[6]:
+                    result.append(j)
+        return result
 
     def getAllRoutes(self):
         """Returns all routes"""

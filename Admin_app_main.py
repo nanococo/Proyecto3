@@ -1432,16 +1432,16 @@ class Delete(tk.Frame):
     def draw_deleteRoute(self, controller):
         self.clear()
 
-        codeList = ["56", adminID]
+        codeList = ["55", adminID]
         s.send(pickle.dumps(codeList))
         self.routes = pickle.loads(s.recv(8192))
-        # display_routes = self.prepareForDisplay()
+        display_routes = self.prepareForDisplay()
 
         self.routeCodeLabel = ttk.Label(self, text="Please select a route to delete")
         self.routeCodeLabel.place(x=156, y=20)
 
         self.routeCode = ttk.Combobox(self, state="readonly", width=30)
-        self.routeCode["values"] = self.routes
+        self.routeCode["values"] = display_routes
         self.routeCode.bind("<<ComboboxSelected>>")
         self.routeCode.place(x=133, y=50)
 
@@ -1450,56 +1450,53 @@ class Delete(tk.Frame):
         Continue.place(x=200, y=80)
 
         self.buttonBackToDelete(controller)
-    # def confirmationRoute(self, controller):
-    #
-    #     self.selection = self.routeCode.get().split(" ")
-    #     print(self.selection)
-    #     print(self.routes)
-    #
-    #     if not self.selection:
-    #         messagebox.showerror("ERROR", "Please type a route code")
-    #     else:
-    #
-    #         self.confirmLabel = ttk.Label(self, text="Are you sure?")
-    #         self.confirmLabel.place(x=200,y=110)
-    #
-    #         self.yes = ttk.Button(self, text="YES",
-    #                               command=lambda: self.confirmationCommandRoute("YES", controller))
-    #         self.yes.place(x=150, y=150)
-    #
-    #         self.no = ttk.Button(self, text="NO",
-    #                              command=lambda: self.confirmationCommandRoute("NO", controller))
-    #         self.no.place(x=250, y=150)
-    # def confirmationCommandRoute(self, confirmation, controller):
-    #
-    #     if confirmation == "YES":
-    #
-    #         routeCode = self.getSelectedRoute()[2]
-    #         print(routeCode)
-    #
-    #         codeList = ["22", adminID, routeCode]
-    #         print(codeList)
-    #         s.send(pickle.dumps(codeList))
-    #         success = pickle.loads(s.recv(8192))
-    #
-    #         if success:
-    #             messagebox.showinfo("DONE", "The route was succesfully deleted.")
-    #         else:
-    #             messagebox.showerror("ERROR", "The route code does not exist.")
-    #
-    #     self.draw_deleteRoute(controller)
-    # def prepareForDisplay(self):
-    #     niceRoutes = []
-    #     for route in self.routes:
-    #         niceRoutes += [["CODE:",route[2],"(",route[3],",",route[4],")","-","(",route[5],",",route[6],")"]]
-    #     return niceRoutes
-    # def getSelectedRoute(self):
-    #
-    #     selected = ""
-    #     for route in self.routes:
-    #         if self.selection[1] == route[2]:
-    #             selected = route
-    #             return selected
+    def confirmationRoute(self, controller):
+
+        self.selection = self.routeCode.get().split(" ")
+        print(self.selection)
+
+        if self.selection == [''] or not self.selection:
+            messagebox.showerror("ERROR", "Please select a route.")
+        else:
+
+            self.confirmLabel = ttk.Label(self, text="Are you sure?")
+            self.confirmLabel.place(x=200,y=110)
+
+            self.yes = ttk.Button(self, text="YES",
+                                  command=lambda: self.confirmationCommandRoute("YES", controller))
+            self.yes.place(x=150, y=150)
+
+            self.no = ttk.Button(self, text="NO",
+                                 command=lambda: self.confirmationCommandRoute("NO", controller))
+            self.no.place(x=250, y=150)
+
+    def confirmationCommandRoute(self, confirmation, controller):
+
+        if confirmation == "YES":
+
+            routeCode = self.getSelectedRoute()[0]
+
+            codeList = ["22", adminID, routeCode]
+            s.send(pickle.dumps(codeList))
+            success = pickle.loads(s.recv(8192))
+
+            if success:
+                messagebox.showinfo("DONE", "The route was succesfully deleted.")
+            else:
+                messagebox.showerror("ERROR", "Could not delete route.")
+
+        self.draw_deleteRoute(controller)
+    def prepareForDisplay(self):
+        niceRoutes = []
+        for route in self.routes:
+            niceRoutes += [["CODE:",route[0],"(",route[1],",",route[2],")","-","(",route[3],",",route[4],")"]]
+        return niceRoutes
+    def getSelectedRoute(self):
+        selected = ""
+        for route in self.routes:
+            if self.selection[1] == route[0]:
+                selected = route
+        return selected
 
 
 
