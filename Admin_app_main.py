@@ -1871,6 +1871,10 @@ class Modify(ttk.Frame):
         self.routeCode.place(x=133, y=50)
 
 
+        instruction = ttk.Label(self, text="There must be a connection between the two places.")
+        instruction.place(x=100, y=90)
+
+
         codeList = ["03", adminID]
         s.send(pickle.dumps(codeList))
         countries = pickle.loads(s.recv(8192))
@@ -1917,7 +1921,7 @@ class Modify(ttk.Frame):
             if not newArrCountry:
                 messagebox.showerror("ERROR", "Please select a new arrival country and city.")
             elif not newArrCity:
-                messagebox.showerror("ERROR", "Please select a nnew arrival city.")
+                messagebox.showerror("ERROR", "Please select a new arrival city.")
             else:
                 newArrCountryCode = newArrCountry.split(" ")[0]
                 newArrCityCode = newArrCity.split(" ")[0]
@@ -1937,11 +1941,10 @@ class Modify(ttk.Frame):
 
                 if success:
                     messagebox.showinfo("DONE", "The route was succesfully updated.")
-                    self.draw_modifyRoutes()
+                    self.draw_modifyRoutes(controller)
                 else:
-                    messagebox.showerror("ERROR", "Could not update route.")
-
-
+                    messagebox.showerror("ERROR", "There's no connection between ("+oldDepCountry+","+oldDepCity+
+                                         ") and ("+newArrCountryCode+","+newArrCityCode+")")
     def findTrainTypeOfRoute(self, depCountry, depCity, arrCountry, arrCity):
 
         codeList = ["57", adminID]
@@ -1958,8 +1961,6 @@ class Modify(ttk.Frame):
                         trainCode = train[1]
                         trainType = train[0]
         return [trainType, trainCode]
-
-
     def prepareForDisplay(self):
         niceRoutes = []
         for route in self.routes:
@@ -1995,7 +1996,6 @@ class Modify(ttk.Frame):
         self.trainCode["values"] = self.short_trains
         self.trainCode.bind("<<ComboboxSelected>>")
         self.trainCode.place(x=168, y=50)
-        self.buttonBackToModify(controller)
 
         instruction = ttk.Label(self, text="Fill only what you desire to modify")
         instruction.place(x=150, y=90)
@@ -2030,6 +2030,8 @@ class Modify(ttk.Frame):
         self.updateTrain = ttk.Button(self, text="Update",
                                       command=lambda: self.modifyTrain(controller))
         self.updateTrain.place(x=200, y=410)
+
+        self.buttonBackToModify(controller)
     def modifyTrain(self, controller):
 
         train = self.getSelectedTrain()
@@ -2097,9 +2099,48 @@ class Modify(ttk.Frame):
 
         self.clear()
 
+        codeList = ["58", adminID]
+        s.send(pickle.dumps(codeList))
+        self.users = pickle.loads(s.recv(8192))
+        display_users = self.usersDisplay()
+
+        self.usersLabel = ttk.Label(self, text="Select a user")
+        self.usersLabel.place(x=200, y=30)
+
+        self.users = ttk.Combobox(self, state="readonly", width=35)
+        self.users["values"] = display_users
+        self.users.bind("<<ComboboxSelected>>")
+        self.users.place(x=115, y=50)
+
+        self.update = ttk.Button(self, text="Update",
+                                      command=lambda: self.modifyMigratoryStatus(controller))
+        self.update.place(x=200, y=90)
+
         self.buttonBackToModify(controller)
 
+    def modifyMigratoryStatus(self, controller):
 
+        user = self.users.get().split(" ")
+        userID = user[0]
+        userNewStatus = "0"
+        if user[4] == "0":
+            userNewStatus = "1"
+
+        codeList = ["29", adminID, userID, userNewStatus]
+        s.send(pickle.dumps(codeList))
+        success = pickle.loads(s.recv(8192))
+
+        if success:
+            messagebox.showinfo("DONE", "Status updated from "+user[4]+" to "+userNewStatus+".")
+            self.draw_modifyMigratoryStatus(controller)
+        else:
+            messagebox.showerror("ERROR", "Could not change status.")
+
+    def usersDisplay(self):
+        display_users = []
+        for user in self.users:
+            display_users += [[user[2],user[3].split(" ")[0],user[3].split(" ")[1],":",user[4]]]
+        return display_users
 
 
     #Misc

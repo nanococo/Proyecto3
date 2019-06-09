@@ -496,6 +496,10 @@ class SocketServer(socket.socket):
                 returnValue = self.getTrainRoutes()
                 client.send(pickle.dumps(returnValue))
 
+            elif dataList[0] == "58":
+                returnValue = self.getAllUsers()
+                client.send(pickle.dumps(returnValue))
+
 
         else:
             returnValue = "1"
@@ -1031,6 +1035,7 @@ class SocketServer(socket.socket):
                 found = True
                 i[3] = newTrainSeats
 
+
         return found
 
     def updateRoute(self, rCode, oldRouteTrainType, oldRouteTrainCode,
@@ -1040,12 +1045,16 @@ class SocketServer(socket.socket):
         success = False
         if self.dat.connectionFullExists(oldRouteDepartCountry, oldRouteDepartCity, newRouteArrivalCountry, newRouteArrivalCity):
             for i in self.dat.trainRoutes:
+                print("Primera capa")
                 if  i[0] == oldRouteTrainType and i[1] == oldRouteTrainCode :
+                    print("Segunda capa")
                     for j in i[6]:
                         if j[0] == oldRouteDepartCountry \
                             and j[1] == oldRouteDepartCity \
                             and j[2] == oldRouteArrivalCountry \
                             and j[3] == oldRouteArrivalCity:
+
+                                print("tercera capa")
 
                                 j[0] = oldRouteDepartCountry
                                 j[1] = oldRouteDepartCity
@@ -1116,7 +1125,6 @@ class SocketServer(socket.socket):
                 success = True
         return success
 
-
     def lastInserts(self):
         """Returns latest inserts"""
         returnList = []
@@ -1141,7 +1149,6 @@ class SocketServer(socket.socket):
         if self.dat.lastDeletedTrain:
             returnList.append("Last deleted train: " + self.dat.lastDeletedTrain[0] + ", " + self.dat.lastDeletedTrain[1])
         return returnList
-
 
     def getCustomRoutes(self, depCountry, depCity, arrCountry, arrCity, flag):
         print(depCountry, depCity, arrCountry, arrCity, flag)
@@ -1220,7 +1227,6 @@ class SocketServer(socket.socket):
         else:
             return self.getCheapestCustom(finalList)
 
-
     def getFastestCustom(self, customRoute):
         if customRoute:
             fastest = 0
@@ -1261,8 +1267,6 @@ class SocketServer(socket.socket):
             return choseRoute
         else:
             return []
-
-
 
     def getCountryByCode(self, countryCode):
         """Returns a country name as standalone string
@@ -1401,6 +1405,10 @@ class SocketServer(socket.socket):
 
     def getTrainRoutes(self):
         return self.dat.trainRoutes
+
+    def getAllUsers(self):
+
+        return self.dat.users
 
     def broadcast(self, message):
         #Sending message to all clients
