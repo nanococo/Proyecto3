@@ -1040,7 +1040,7 @@ class SocketServer(socket.socket):
         success = False
         if self.dat.connectionFullExists(oldRouteDepartCountry, oldRouteDepartCity, newRouteArrivalCountry, newRouteArrivalCity):
             for i in self.dat.trainRoutes:
-                if i[1] == oldRouteTrainCode and i[0] == oldRouteTrainType:
+                if  i[0] == oldRouteTrainType and i[1] == oldRouteTrainCode :
                     for j in i[6]:
                         if j[0] == oldRouteDepartCountry \
                             and j[1] == oldRouteDepartCity \
@@ -1056,9 +1056,9 @@ class SocketServer(socket.socket):
             for i in self.dat.routesByUsage:
                 if i[0][0] == oldRouteTrainType \
                     and i[0][1] == oldRouteTrainCode \
-                    and i[0][3] == oldRouteDepartCountry\
+                    and i[0][3] == oldRouteDepartCountry \
                     and i[0][4] == oldRouteDepartCity \
-                    and i[0][5] == oldRouteArrivalCountry\
+                    and i[0][5] == oldRouteArrivalCountry \
                     and i[0][6] == oldRouteArrivalCity:
 
                         i[0][3] = oldRouteDepartCountry
