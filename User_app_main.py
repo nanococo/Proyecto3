@@ -1118,7 +1118,7 @@ class logIn(ttk.Frame):
             self.priceTag=ttk.Label(self, text="The price is: "+str(price))
             self.priceTag.pack(pady=20)
 
-            acceptReservation=ttk.Button(self, text="Accept", command= self.getCustomRoute)
+            acceptReservation=ttk.Button(self, text="Accept", command= lambda: self.getCustomRoute(possibleLists[:len(possibleLists)-1], self.amountOfSeats.get()))
             acceptReservation.pack(pady=10)
 
             cancelReservation = ttk.Button(self, text="Cancel", command= self.drawCustomRecervation)
@@ -1133,10 +1133,16 @@ class logIn(ttk.Frame):
             elif possibleLists==[]:
                 messagebox.showinfo("","There is no posible routes")
 
-    def getCustomRoute(self):
+    def getCustomRoute(self, possibleLists, seats):
         global reservations
-        print(self.showRoutes.get(self.showRoutes.curselection()))
 
+        print(possibleLists)
+
+        for i in possibleLists:
+            temp = [i[0], i[1], i[2], i[4], i[5], i[6][2], i[6][3], i[6][4], i[3], int(seats), (int(i[3])*int(seats))]
+            reservations+=[temp]
+
+        print(reservations)
         reservations += [self.showRoutes.get(self.showRoutes.curselection())]
         self.chooseRecervation()
         messagebox.showinfo("", "Reservation added")
@@ -1225,6 +1231,7 @@ class logIn(ttk.Frame):
         print("meta aqui la ostia")
         global reservations
         global userID
+        
         codeList = ["11", "", reservations, userID]
         s.send(pickle.dumps(codeList))
         confirmation = pickle.loads(s.recv(8192))
