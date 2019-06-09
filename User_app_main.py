@@ -1109,10 +1109,10 @@ class logIn(ttk.Frame):
 
             price = 0
             self.showRoutes=tk.Listbox(self, width=50)
-            for i in possibleLists[:len(possibleLists)-1]:#Que no entre el precio aqui
+            for i in possibleLists[:len(possibleLists)-1]:
                 self.showRoutes.insert(tk.END,i)
                 price += int(i[6][4])
-
+            price*=int(self.amountOfSeats.get())
             self.showRoutes.pack(pady=10)
 
             self.priceTag=ttk.Label(self, text="The price is: "+str(price))
