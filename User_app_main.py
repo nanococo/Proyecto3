@@ -1107,14 +1107,15 @@ class logIn(ttk.Frame):
                 child.place_forget()
                 child.pack_forget()
 
-
+            price = 0
             self.showRoutes=tk.Listbox(self, width=50)
             for i in possibleLists[:len(possibleLists)-1]:#Que no entre el precio aqui
                 self.showRoutes.insert(tk.END,i)
+                price += int(i[6][4])
 
             self.showRoutes.pack(pady=10)
 
-            self.priceTag=ttk.Label(self, text="The price is: "+"META AQUI EL PRECIO")
+            self.priceTag=ttk.Label(self, text="The price is: "+str(price))
             self.priceTag.pack(pady=20)
 
             acceptReservation=ttk.Button(self, text="Accept", command= self.getCustomRoute)
@@ -1932,12 +1933,5 @@ if __name__ == '__main__':
     main_window.resizable(0,0)
     app = MainApp(main_window)
 
-    # codeList = ["41", "", "78", "302", "02", "67", True]
-    # # codeList = ["41", "", "02", "67", "24", "451", True]
-    # s.send(pickle.dumps(codeList))
-    # possibleLists = pickle.loads(s.recv(8192))
-    # print(possibleLists)
 
-
-    print(possibleLists)
     app.mainloop()
