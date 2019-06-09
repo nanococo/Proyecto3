@@ -466,7 +466,7 @@ class Consult(tk.Frame):
         buttonCheckTrains.place(x=130, y=120)
     #
 
-
+    # GENERAL METHODS
     def buttonBack(self):
         buttonBACK = ttk.Button(self, text='BACK',
                                 command=lambda: self.init_consults())
@@ -474,7 +474,7 @@ class Consult(tk.Frame):
     def clear(self):
         for child in self.winfo_children():
             child.place_forget()
-
+    #
 #########
 
 class DataBase(tk.Frame):
@@ -975,6 +975,7 @@ class Insert(tk.Frame):
                 messagebox.showerror("ERROR", "The type is already present.")
     #
 
+    #GENERAL METHODS
     def buttonBackToMenu(self, controller):
         buttonBACK = ttk.Button(self, text='BACK',
                                 command=lambda: controller.show_frame(AdminMainMenu))
@@ -1008,7 +1009,7 @@ class Insert(tk.Frame):
         else:
             self.searchKey[1] = self.cityList.get().split(" ")[0]
         print(self.searchKey)
-
+    #
 
 class Delete(tk.Frame):
 
@@ -1469,7 +1470,6 @@ class Delete(tk.Frame):
             self.no = ttk.Button(self, text="NO",
                                  command=lambda: self.confirmationCommandRoute("NO", controller))
             self.no.place(x=250, y=150)
-
     def confirmationCommandRoute(self, confirmation, controller):
 
         if confirmation == "YES":
@@ -1497,10 +1497,6 @@ class Delete(tk.Frame):
             if self.selection[1] == route[0]:
                 selected = route
         return selected
-
-
-
-
     #
 
     #Delete Atraction
@@ -1570,6 +1566,7 @@ class Delete(tk.Frame):
         return newList
     #
 
+    #GENERAL METHODS
     def updateCitiesOnSelection(self, event):
 
         global adminID
@@ -1598,6 +1595,7 @@ class Delete(tk.Frame):
     def clear(self):
         for child in self.winfo_children():
             child.place_forget()
+    #
 
 class Modify(ttk.Frame):
 
@@ -1657,7 +1655,7 @@ class Modify(ttk.Frame):
         self.newPrice = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
         self.newPrice.place(x=177, y=160)
 
-        self.changePrice = ttk.Button(self, text="Change Price", command=lambda: self.getPriceModifyData(controller))
+        self.changePrice = ttk.Button(self, text="Update", command=lambda: self.getPriceModifyData(controller))
         self.changePrice.place(x=200, y=200)
 
         self.buttonBackToModify(controller)
@@ -1723,8 +1721,8 @@ class Modify(ttk.Frame):
         self.newTime = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
         self.newTime.place(x=175,y=450)
 
-        self.changeTime=ttk.Button(self,text="Change duration", command=lambda :self.modifyTimeConfirm(controller))
-        self.changeTime.place(x=188,y=500)
+        self.changeTime=ttk.Button(self,text="Update", command=lambda :self.modifyTimeConfirm(controller))
+        self.changeTime.place(x=200,y=500)
 
         self.buttonBackToModify(controller)
     def fillWithConnections(self):
@@ -1821,7 +1819,7 @@ class Modify(ttk.Frame):
         self.newSeats = ttk.Entry(self, validate='key', validatecommand=self.vcmd)
         self.newSeats.place(x=175, y=170)
 
-        modify=ttk.Button(self, text="Modify", command=lambda:self.modifySeats(controller))
+        modify=ttk.Button(self, text="Update", command=lambda:self.modifySeats(controller))
         modify.place(x=200,y=220)
 
         self.buttonBackToModify(controller)
@@ -1859,7 +1857,121 @@ class Modify(ttk.Frame):
 
         self.clear()
 
+        codeList = ["55", adminID]
+        s.send(pickle.dumps(codeList))
+        self.routes = pickle.loads(s.recv(8192))
+        display_routes = self.prepareForDisplay()
+
+        self.routeCodeLabel = ttk.Label(self, text="Please select a route to modify")
+        self.routeCodeLabel.place(x=153, y=20)
+
+        self.routeCode = ttk.Combobox(self, state="readonly", width=30)
+        self.routeCode["values"] = display_routes
+        self.routeCode.bind("<<ComboboxSelected>>")
+        self.routeCode.place(x=133, y=50)
+
+
+        codeList = ["03", adminID]
+        s.send(pickle.dumps(codeList))
+        countries = pickle.loads(s.recv(8192))
+
+        self.countryListLabel = ttk.Label(self, text="New arrival country")
+        self.countryListLabel.place(x=184, y=110)
+        self.countryList = ttk.Combobox(self, state="readonly")
+        self.countryList["values"] = countries
+        self.countryList.bind("<<ComboboxSelected>>", self.updateCitiesOnSelection)
+        self.countryList.place(x=168, y=130)
+
+
+        self.cityListLabel = ttk.Label(self, text="New arrival city")
+        self.cityListLabel.place(x=195, y=170)
+        self.cityList = ttk.Combobox(self, state="readonly")
+        self.cityList.bind("<<ComboboxSelected>>", self.selectCity)
+        self.cityList.place(x=168, y=190)
+
+        modify = ttk.Button(self, text="Update", command=lambda: self.modifyRoute(controller))
+        modify.place(x=200, y=220)
+
         self.buttonBackToModify(controller)
+    def modifyRoute(self, controller):
+
+        self.selection = self.routeCode.get().split(" ")
+
+        if not self.selection or self.selection == ['']:
+            messagebox.showerror("ERROR", "Please select a route.")
+
+        else:
+            route = self.getSelectedRoute()
+            print(route)
+            code = route[0]
+            oldDepCountry = route[1]
+            oldDepCity = route[2]
+            oldArrCountry = route[3]
+            oldArrCity = route[4]
+            oldRouteTrainType = self.findTrainTypeOfRoute(oldDepCountry, oldDepCity,
+                                                               oldArrCountry, oldArrCity)[0]
+            oldRouteTrainCode = self.findTrainTypeOfRoute(oldDepCountry, oldDepCity,
+                                                              oldArrCountry, oldArrCity)[1]
+            newArrCountry = self.countryList.get()
+            newArrCity = self.cityList.get()
+            if not newArrCountry:
+                messagebox.showerror("ERROR", "Please select a new arrival country and city.")
+            elif not newArrCity:
+                messagebox.showerror("ERROR", "Please select a nnew arrival city.")
+            else:
+                newArrCountryCode = newArrCountry.split(" ")[0]
+                newArrCityCode = newArrCity.split(" ")[0]
+
+                codeList = ["27", adminID, code,
+                                  oldRouteTrainType,
+                                  oldRouteTrainCode,
+                                  oldDepCountry,
+                                  oldDepCity,
+                                  oldArrCountry,
+                                  oldArrCity,
+                                  newArrCountryCode,
+                                  newArrCityCode]
+                print(codeList)
+                s.send(pickle.dumps(codeList))
+                success = pickle.loads(s.recv(8192))
+
+                if success:
+                    messagebox.showinfo("DONE", "The route was succesfully updated.")
+                    self.draw_modifyRoutes()
+                else:
+                    messagebox.showerror("ERROR", "Could not update route.")
+
+
+    def findTrainTypeOfRoute(self, depCountry, depCity, arrCountry, arrCity):
+
+        codeList = ["57", adminID]
+        s.send(pickle.dumps(codeList))
+        trains = pickle.loads(s.recv(8192))
+
+        trainCode = ""
+        trainType = ""
+        for train in trains:
+
+            if train[6] and train[4] == depCountry and train[5] == depCity:
+                for route in train[6]:
+                    if arrCountry == route[2] and arrCity == route[3]:
+                        trainCode = train[1]
+                        trainType = train[0]
+        return [trainType, trainCode]
+
+
+    def prepareForDisplay(self):
+        niceRoutes = []
+        for route in self.routes:
+            niceRoutes += [
+                ["CODE:", route[0], "(", route[1], ",", route[2], ")", "-", "(", route[3], ",", route[4], ")"]]
+        return niceRoutes
+    def getSelectedRoute(self):
+        selected = ""
+        for route in self.routes:
+            if self.selection[1] == route[0]:
+                selected = route
+        return selected
 
     #Train
     def draw_modifyTrain(self, controller):

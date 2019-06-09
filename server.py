@@ -193,7 +193,9 @@ class SocketServer(socket.socket):
                 # [5] is arrCountryCode
                 # [6] is arrCityCode
                 # [7] is connDuration
-                returnValue = self.insertConnections(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7])
+                returnValue = self.insertConnections(dataList[2], dataList[3],
+                                                     dataList[4], dataList[5],
+                                                     dataList[6], dataList[7])
                 client.send(pickle.dumps(returnValue))
 
             elif dataList[0] == "17":
@@ -206,7 +208,10 @@ class SocketServer(socket.socket):
                 # [6] is arrCountryCode
                 # [7] is arrCityCode
                 # [8] is the duration
-                returnValue = self.insertRoute(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7], dataList[8])
+                returnValue = self.insertRoute(dataList[2], dataList[3],
+                                               dataList[4], dataList[5],
+                                               dataList[6], dataList[7],
+                                               dataList[8])
                 client.send(pickle.dumps(returnValue))
 
             elif dataList[0] == "18":
@@ -218,7 +223,9 @@ class SocketServer(socket.socket):
                 # [5] is newTrainSeats
                 # [6] is newTrainCountry
                 # [7] is newTrainCity
-                returnValue = self.insertTrain(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7])
+                returnValue = self.insertTrain(dataList[2], dataList[3],
+                                               dataList[4], dataList[5],
+                                               dataList[6], dataList[7])
                 client.send(pickle.dumps(returnValue))
 
             elif dataList[0] == "19":
@@ -244,7 +251,9 @@ class SocketServer(socket.socket):
                 # [4] delConnCode
                 # [5] delConnArrCountry
                 # [6] delConnArrCity
-                returnValue = self.deleteConnection(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6])
+                returnValue = self.deleteConnection(dataList[2], dataList[3],
+                                                    dataList[4], dataList[5],
+                                                    dataList[6])
                 client.send(pickle.dumps(returnValue))
 
             elif dataList[0] == "22":
@@ -277,7 +286,8 @@ class SocketServer(socket.socket):
                 # [3] newConnDepCity
                 # [4] newConnCode
                 # [5] newConnDuration
-                returnValue = self.updateTime(dataList[2], dataList[3], dataList[4], dataList[5])
+                returnValue = self.updateTime(dataList[2], dataList[3],
+                                              dataList[4], dataList[5])
                 client.send(pickle.dumps(returnValue))
 
             elif dataList[0] == "26":
@@ -292,15 +302,23 @@ class SocketServer(socket.socket):
             elif dataList[0] == "27":
                 # validateAdmin
                 # [0] is code 27
-                # [2] oldRouteTrainType
-                # [3] oldRouteTrainCode
-                # [4] oldRouteDepartCountry
-                # [5] oldRouteDepartCity
-                # [6] oldRouteArrivalCountry
-                # [7] oldRouteArrivalCity
-                # [8] newRouteArrivalCountry
-                # [9] newRouteArrivalCity
-                returnValue = self.updateRoute(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7], dataList[8], dataList[9])
+                # [2] route code
+                # [3] oldRouteTrainType
+                # [4] oldRouteTrainCode
+                # [5] oldRouteDepartCountry
+                # [6] oldRouteDepartCity
+                # [7] oldRouteArrivalCountry
+                # [8] oldRouteArrivalCity
+                # [9] newRouteArrivalCountry
+                # [10] newRouteArrivalCity
+                returnValue = self.updateRoute(dataList[2], dataList[3],
+                                               dataList[4], dataList[5],
+                                               dataList[6], dataList[7],
+                                               dataList[8], dataList[9],
+                                               dataList[10])
+
+
+
                 client.send(pickle.dumps(returnValue))
 
             elif dataList[0] == "28":
@@ -312,7 +330,9 @@ class SocketServer(socket.socket):
                 # [5] newTrainCapacity
                 # [6] newTrainCountry
                 # [7] newTrainCity
-                returnValue = self.updateTrain(dataList[2], dataList[3], dataList[4], dataList[5], dataList[6], dataList[7])
+                returnValue = self.updateTrain(dataList[2], dataList[3],
+                                               dataList[4], dataList[5],
+                                               dataList[6], dataList[7])
                 client.send(pickle.dumps(returnValue))
 
             elif dataList[0] == "29":
@@ -470,6 +490,10 @@ class SocketServer(socket.socket):
 
             elif dataList[0] == "56":
                 returnValue = self.getAllRoutes()
+                client.send(pickle.dumps(returnValue))
+
+            elif dataList[0] == "57":
+                returnValue = self.getTrainRoutes()
                 client.send(pickle.dumps(returnValue))
 
 
@@ -906,29 +930,6 @@ class SocketServer(socket.socket):
 
         return success
 
-    # def deleteRoute(self, newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity, newRouteArrivalCountry, newRouteArrivalCity):
-    #     """This deletes routes. Handle with care"""
-    #     trainRoutesHolder = copy.deepcopy(self.dat.trainRoutes)
-    #     success = True
-    #     # Empty Routes
-    #     if data.countryAndCityExistInList(newRouteDepartCountry, newRouteDepartCity, self.dat.countryCitiesConnections):
-    #         for i in self.dat.trainRoutes:
-    #             i[6] = []
-    #
-    #         for i in range(len(trainRoutesHolder)):
-    #             for j in range(len(trainRoutesHolder[i][6])):
-    #                 if not (trainRoutesHolder[i][0] == newRouteTrainType and trainRoutesHolder[i][1] == newRouteTrainCode and trainRoutesHolder[i][6][j][0] == newRouteDepartCountry and trainRoutesHolder[i][6][j][1] == newRouteDepartCity and trainRoutesHolder[i][6][j][
-    #                     2] == newRouteArrivalCountry and
-    #                         trainRoutesHolder[i][6][j][3] == newRouteArrivalCity):
-    #                     self.dat.trainRoutes[i][6].append(trainRoutesHolder[i][6][j])
-    #
-    #     if trainRoutesHolder == self.dat.trainRoutes:
-    #         pass
-    #     else:
-    #         self.dat.lastDeletedRoute = [newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity, newRouteArrivalCountry, newRouteArrivalCity]
-    #         success = True
-    #     return success
-
     def deleteRoute(self, routeCode):
         """Updates the prices of a route"""
         success = False
@@ -995,17 +996,6 @@ class SocketServer(socket.socket):
             success = True
         return success
 
-    # def updatePrice(self, newRouteTrainType, newRouteTrainCode, newRouteDepartCountry, newRouteDepartCity, newRouteArrivalCountry, newRouteArrivalCity, newRoutePrice):
-    #     """Updates the prices of a route"""
-    #     found = False
-    #     for i in self.dat.trainRoutes:
-    #         for k in i[6]:
-    #             if i[0] == newRouteTrainType and i[1] == newRouteTrainCode and k[0] == newRouteDepartCountry and k[1] == newRouteDepartCity and k[2] == newRouteArrivalCountry and k[3] == newRouteArrivalCity:
-    #                 k[4] = newRoutePrice
-    #                 found = True
-    #
-    #     return found
-
     def updatePrice(self, routeCode, newRoutePrice):
         """Updates the prices of a route"""
         success = False
@@ -1043,27 +1033,48 @@ class SocketServer(socket.socket):
 
         return found
 
-    def updateRoute(self, oldRouteTrainType, oldRouteTrainCode, oldRouteDepartCountry, oldRouteDepartCity, oldRouteArrivalCountry, oldRouteArrivalCity, newRouteArrivalCountry, newRouteArrivalCity):
+    def updateRoute(self, rCode, oldRouteTrainType, oldRouteTrainCode,
+                          oldRouteDepartCountry, oldRouteDepartCity,
+                          oldRouteArrivalCountry, oldRouteArrivalCity,
+                          newRouteArrivalCountry, newRouteArrivalCity):
         success = False
         if self.dat.connectionFullExists(oldRouteDepartCountry, oldRouteDepartCity, newRouteArrivalCountry, newRouteArrivalCity):
             for i in self.dat.trainRoutes:
-                if i[0] == oldRouteTrainType and i[1] == oldRouteTrainCode:
+                if i[1] == oldRouteTrainCode and i[0] == oldRouteTrainType:
                     for j in i[6]:
-                        if j[0] == oldRouteDepartCountry and j[1] == oldRouteDepartCity and j[2] == oldRouteArrivalCountry and j[3] == oldRouteArrivalCity:
-                            j[0] = oldRouteDepartCountry
-                            j[1] = oldRouteDepartCity
-                            j[2] = newRouteArrivalCountry
-                            j[3] = newRouteArrivalCity
-                            success = True
+                        if j[0] == oldRouteDepartCountry \
+                            and j[1] == oldRouteDepartCity \
+                            and j[2] == oldRouteArrivalCountry \
+                            and j[3] == oldRouteArrivalCity:
+
+                                j[0] = oldRouteDepartCountry
+                                j[1] = oldRouteDepartCity
+                                j[2] = newRouteArrivalCountry
+                                j[3] = newRouteArrivalCity
+                                success = True
 
             for i in self.dat.routesByUsage:
-                if i[0][0] == oldRouteTrainType and i[0][1] == oldRouteTrainCode and i[0][3] == oldRouteDepartCountry and i[0][4] == oldRouteDepartCity and i[0][5] == oldRouteArrivalCountry and i[0][6] == oldRouteArrivalCity:
-                    i[0][3] = oldRouteDepartCountry
-                    i[0][4] = oldRouteDepartCity
-                    i[0][5] = newRouteArrivalCountry
-                    i[0][6] = newRouteArrivalCity
+                if i[0][0] == oldRouteTrainType \
+                    and i[0][1] == oldRouteTrainCode \
+                    and i[0][3] == oldRouteDepartCountry\
+                    and i[0][4] == oldRouteDepartCity \
+                    and i[0][5] == oldRouteArrivalCountry\
+                    and i[0][6] == oldRouteArrivalCity:
 
+                        i[0][3] = oldRouteDepartCountry
+                        i[0][4] = oldRouteDepartCity
+                        i[0][5] = newRouteArrivalCountry
+                        i[0][6] = newRouteArrivalCity
 
+            for train in self.dat.trainRoutesWCode:
+                if  train[1] == oldRouteTrainCode and train[0] == oldRouteTrainType:
+                    for j in train[6]:
+                        if rCode == j[0]:
+                                j[1] = oldRouteDepartCountry
+                                j[2] = oldRouteDepartCity
+                                j[3] = newRouteArrivalCountry
+                                j[4] = newRouteArrivalCity
+                                success = True
         return success
 
     def updateTrain(self, trainType, trainCode, newTrainName, newTrainCapacity, newTrainCountry, newTrainCity):
@@ -1387,6 +1398,9 @@ class SocketServer(socket.socket):
                 for j in i[6]:
                     result.append(j)
         return result
+
+    def getTrainRoutes(self):
+        return self.dat.trainRoutes
 
     def broadcast(self, message):
         #Sending message to all clients
