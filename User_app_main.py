@@ -1109,16 +1109,16 @@ class logIn(ttk.Frame):
 
             price = 0
             self.showRoutes=tk.Listbox(self, width=50)
-            for i in possibleLists[:len(possibleLists)-1]:#Que no entre el precio aqui
+            for i in possibleLists[:len(possibleLists)-1]:
                 self.showRoutes.insert(tk.END,i)
                 price += int(i[6][4])
-
+            price*=int(self.amountOfSeats.get())
             self.showRoutes.pack(pady=10)
 
             self.priceTag=ttk.Label(self, text="The price is: "+str(price))
             self.priceTag.pack(pady=20)
 
-            acceptReservation=ttk.Button(self, text="Accept", command= self.getCustomRoute)
+            acceptReservation=ttk.Button(self, text="Accept", command= lambda : self.getCustomRoute(possibleLists, price))
             acceptReservation.pack(pady=10)
 
             cancelReservation = ttk.Button(self, text="Cancel", command= self.drawCustomRecervation)
@@ -1133,11 +1133,14 @@ class logIn(ttk.Frame):
             elif possibleLists==[]:
                 messagebox.showinfo("","There is no posible routes")
 
-    def getCustomRoute(self):
+    def getCustomRoute(self, list,price):
         global reservations
-        print(self.showRoutes.get(self.showRoutes.curselection()))
+        #list for recervation
+        print(list)
+        #total price(not price per seat)
+        print(price)
 
-        reservations += [self.showRoutes.get(self.showRoutes.curselection())]
+        reservations += [list]
         self.chooseRecervation()
         messagebox.showinfo("", "Reservation added")
 
