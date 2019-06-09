@@ -1143,7 +1143,6 @@ class logIn(ttk.Frame):
             reservations+=[temp]
 
         print(reservations)
-        reservations += [self.showRoutes.get(self.showRoutes.curselection())]
         self.chooseRecervation()
         messagebox.showinfo("", "Reservation added")
 
@@ -1228,7 +1227,6 @@ class logIn(ttk.Frame):
         self.backButton=ttk.Button(self,text="Back", command=self.chooseRecervation)
         self.backButton.pack(side=tk.BOTTOM)
     def acceptReservations(self):
-        print("meta aqui la ostia")
         global reservations
         global userID
         
